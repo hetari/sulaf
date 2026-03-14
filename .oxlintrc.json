@@ -1,0 +1,37 @@
+{
+  "$schema": "https://unpkg.com/oxlint/configuration_schema.json",
+  "plugins": ["unicorn", "typescript", "oxc", "vue", "vitest"],
+  "jsPlugins": ["eslint-plugin-regexp"],
+  "categories": {
+    "correctness": "error",
+    "suspicious": "warn",
+    "perf": "warn"
+  },
+  "rules": {
+    "no-console": "warn",
+    "no-await-in-loop": "off",
+    "unicorn/no-array-sort": "off",
+    "no-restricted-globals": "error",
+    "typescript/consistent-type-imports": "error"
+  },
+  "overrides": [
+    {
+      "files": ["app/*", "packages/*"],
+      "rules": {
+        "no-console": "off"
+      }
+    }
+  ],
+  "ignorePatterns": [
+    "*/.output/**",
+    "*/.data/**",
+    "*/.nuxt/**",
+    "*/.nitro/**",
+    "*/.cache/**",
+    "*/dist/**",
+    "*/node_modules/**",
+    "*/coverage/**",
+    "*/playwright-report/**",
+    "*/test-results/**"
+  ]
+}

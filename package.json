@@ -15,7 +15,11 @@
     "lint:fix": "oxlint --fix",
     "check": "bun fmt && bun lint",
     "fix": "bun fmt && bun lint:fix",
-    "prepare": "husky"
+    "prepare": "husky",
+    "docs:dev": "bun --filter ./apps/www dev",
+    "docs:build": "bun --filter ./apps/www build",
+    "docs:preview": "bun --filter ./apps/www preview",
+    "docs:generate": "bun --filter ./apps/www generate"
   },
   "devDependencies": {
     "@commitlint/cli": "^20.4.4",
