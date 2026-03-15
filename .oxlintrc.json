@@ -1,7 +1,6 @@
 {
   "$schema": "https://unpkg.com/oxlint/configuration_schema.json",
   "plugins": ["unicorn", "typescript", "oxc", "vue", "vitest"],
-  "jsPlugins": ["eslint-plugin-regexp"],
   "categories": {
     "correctness": "error",
     "suspicious": "warn",
