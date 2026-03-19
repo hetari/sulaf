@@ -19,7 +19,8 @@
     "docs:dev": "bun --filter ./apps/www dev",
     "docs:build": "bun --filter ./apps/www build",
     "docs:preview": "bun --filter ./apps/www preview",
-    "docs:generate": "bun --filter ./apps/www generate"
+    "docs:generate": "bun --filter ./apps/www generate",
+    "registry:build": "bun --filter ./packages/registry build"
   },
   "devDependencies": {
     "@commitlint/cli": "^20.4.4",

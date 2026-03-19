@@ -1,0 +1,23 @@
+{
+  "name": "@sulaf/registry",
+  "type": "module",
+  "private": true,
+  "exports": {
+    "./ui/*": "./default/*/index.ts",
+    "./blocks/*": "./default/*/index.ts"
+  },
+  "scripts": {
+    "build": "shadcn-vue build --output ../../apps/docs/public/r"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@sulaf/ui": "workspace:*",
+    "lucide-vue-next": "^0.562.0",
+    "vue": "^3.5.24"
+  }
+}

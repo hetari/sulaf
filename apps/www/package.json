@@ -1,5 +1,5 @@
 {
-  "name": "www",
+  "name": "@sulaf/www",
   "type": "module",
   "private": true,
   "scripts": {

@@ -1,0 +1,16 @@
+{
+  "$schema": "https://shadcn-vue.com/schema/registry.json",
+  "name": "sulaf",
+  "homepage": "https://sulaf.netlify.app/",
+  "items": [
+    {
+      "name": "autocomplete",
+      "type": "registry:component",
+      "title": "Autocomplete",
+      "description": "A flexible autocomplete component with async support.",
+      "dependencies": ["reka-ui", "@vueuse/core"],
+      "registryDependencies": ["combobox", "input-group"],
+      "files": [{ "path": "default/hello-world/HelloWorld.vue", "type": "registry:component" }]
+    }
+  ]
+}
