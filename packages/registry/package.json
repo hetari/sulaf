@@ -7,7 +7,7 @@
     "./blocks/*": "./default/*/index.ts"
   },
   "scripts": {
-    "build": "shadcn-vue build --output ../../apps/docs/public/r"
+    "build": "rm -rf ../../apps/www/public/r && shadcn-vue build --output ../../apps/www/public/r"
   },
   "devDependencies": {
     "@types/bun": "latest"

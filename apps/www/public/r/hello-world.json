@@ -1,0 +1,16 @@
+{
+  "$schema": "https://shadcn-vue.com/schema/registry-item.json",
+  "name": "hello-world",
+  "type": "registry:component",
+  "title": "Hello World",
+  "description": "A simple hello world component.",
+  "dependencies": [],
+  "registryDependencies": ["combobox", "input-group"],
+  "files": [
+    {
+      "path": "default/hello-world/HelloWorld.vue",
+      "content": "<script setup lang=\"ts\">\nimport { Button } from '@sulaf/ui/components/ui/button';\n</script>\n\n<template>\n  <div>Hello</div>\n  <Button>World from sulaf</Button>\n</template>\n",
+      "type": "registry:component"
+    }
+  ]
+}
