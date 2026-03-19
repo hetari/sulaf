@@ -7,6 +7,13 @@
   "devDependencies": {
     "typescript": "~5.9.3"
   },
+  "exports": {
+    "./lib/*": {
+      "types": "./dist/src/lib/*.d.ts",
+      "default": "./src/lib/*.ts"
+    },
+    "./components/*": "./src/components/*/index.ts"
+  },
   "dependencies": {
     "@tanstack/vue-table": "^8.21.3",
     "@unovis/ts": "^1.6.2",
