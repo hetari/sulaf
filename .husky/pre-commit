@@ -1,1 +1,2 @@
+bun run registry:test
 bun ./node_modules/.bin/nano-staged

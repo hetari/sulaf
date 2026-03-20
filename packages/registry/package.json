@@ -7,13 +7,15 @@
     "./blocks/*": "./default/*/index.ts"
   },
   "scripts": {
-    "build": "bun ./scripts/registry-builder.ts"
+    "build": "bun ./scripts/registry-builder.ts",
+    "test": "bunx --bun vitest"
   },
   "devDependencies": {
     "@types/bun": "latest",
     "@vue/compiler-sfc": "^3.5.30",
     "shadcn-vue": "^2.4.3",
-    "ts-morph": "^27.0.2"
+    "ts-morph": "^27.0.2",
+    "vitest": "^4.1.0"
   },
   "peerDependencies": {
     "typescript": "^5"

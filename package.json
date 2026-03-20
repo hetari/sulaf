@@ -21,7 +21,8 @@
     "docs:preview": "bun --filter ./apps/www preview",
     "docs:generate": "bun --filter ./apps/www generate",
     "docs:postinstall": "bun --filter ./apps/www postinstall",
-    "registry:build": "bun --filter ./packages/registry build"
+    "registry:build": "bun --filter ./packages/registry build",
+    "registry:test": "bun --filter ./packages/registry test"
   },
   "catalog": {
     "@vueuse/core": "^14.2.1",
