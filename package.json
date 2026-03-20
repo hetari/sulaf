@@ -22,7 +22,8 @@
     "docs:generate": "bun --filter ./apps/www generate",
     "docs:postinstall": "bun --filter ./apps/www postinstall",
     "registry:build": "bun --filter ./packages/registry build",
-    "registry:test": "bun --filter ./packages/registry test"
+    "test": "bun --filter ./packages/registry test",
+    "changeset": "changeset"
   },
   "catalog": {
     "@vueuse/core": "^14.2.1",
@@ -37,6 +38,7 @@
     "zod": "^3.25.76"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.30.0",
     "@commitlint/cli": "^20.4.4",
     "@commitlint/config-conventional": "^20.4.4",
     "@types/bun": "latest",
