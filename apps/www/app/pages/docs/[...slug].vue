@@ -1,6 +1,13 @@
 <script lang="ts" setup>
 import type { ContentCollectionItem } from '@nuxt/content'
-import { ArrowLeft, ArrowRight, ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-vue-next'
+import {
+  ArrowLeft,
+  ArrowRight,
+  ArrowUpRight,
+  ChevronLeft,
+  ChevronRight,
+  Clock,
+} from 'lucide-vue-next'
 
 type DocPage = ContentCollectionItem & {
   rawbody?: string

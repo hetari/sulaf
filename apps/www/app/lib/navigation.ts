@@ -12,7 +12,7 @@ export const NAV_SECTIONS: NavItem[] = [
 export const SIDEBAR_EXCLUDED_SECTIONS: string[] = []
 
 /** Individual page paths that should be hidden from the sidebar page list. */
-export const SIDEBAR_EXCLUDED_PAGES: string[] = ['/docs/getting-started/introduction']
+export const SIDEBAR_EXCLUDED_PAGES: string[] = []
 
 /**
  * Top-level/main site navigation items primarily used in the site header.

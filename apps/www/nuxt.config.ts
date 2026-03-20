@@ -17,16 +17,11 @@ export default defineNuxtConfig({
   ],
 
   routeRules: {
-    // Home page - static content, prerender at build time
-    '/': {
-      prerender: true,
-    },
-    // Docs layout - uses navigation data, cache for 1 hour
-    '/docs': {
-      isr: 3600,
-    },
-    // All docs pages - content pages that don't change frequently
+    // Docs layout - uses navigation data, all docs pages
     // ISR: Generate at build/first request, cache for 1 hour, regenerate in background
+    '/docs/getting-started': {
+      redirect: { to: '/docs/getting-started/introduction', statusCode: 301 },
+    },
     '/docs/**': {
       isr: 3600,
     },

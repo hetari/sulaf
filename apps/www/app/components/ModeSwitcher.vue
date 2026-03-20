@@ -8,6 +8,17 @@ function toggleTheme() {
   const nextIndex = (index + 1) % preferences.length
   colorMode.preference = preferences[nextIndex] as any
 }
+
+function transitionTheme(fn: () => void) {
+  if (document.startViewTransition) {
+    document.startViewTransition(() => {
+      fn()
+    })
+    return
+  }
+
+  fn()
+}
 </script>
 
 <template>
@@ -16,7 +27,7 @@ function toggleTheme() {
     size="icon"
     class="group/toggle extend-touch-target size-8"
     title="Toggle theme"
-    @click="toggleTheme"
+    @click="transitionTheme(toggleTheme)"
   >
     <svg
       xmlns="http://www.w3.org/2000/svg"
