@@ -2,13 +2,13 @@
 import { ConfigProvider, TooltipProvider } from 'reka-ui'
 import { siteConfig } from '~/lib/siteConfig'
 
-const projectName = 'Sulaf UI'
-const title = `${projectName} - Beautiful Vue Components Built for shadcn-vue`
-const description = `Beautiful, accessible Vue components built for shadcn-vue. Copy, paste, and customize to create stunning applications with ease. A modern component library for Vue.js developers.`
+const projectName = 'Sulaf'
+const title = `${projectName} - shadcn-vue registry`
+const description = `Discover beautiful, accessible, and customizable Vue components built with shadcn-vue. Build modern and stunning applications with ease using Sulaf.`
 
 useHead({
   title,
-  titleTemplate: '%s | Sulaf UI',
+  titleTemplate: `%s | ${projectName}`,
   meta: [
     // Basic SEO
     {
@@ -17,8 +17,7 @@ useHead({
     },
     {
       name: 'keywords',
-      content:
-        'vue, vuejs, shadcn-vue, ui components, vue components, tailwindcss, accessible components, vue ui library, sulaf, sulaf ui',
+      content: `vue, vuejs, shadcn-vue, ui components, vue components, tailwindcss, accessible components, vue ui library, ${projectName.toLowerCase()}, ${projectName.toLowerCase()}`,
     },
     { name: 'author', content: 'Ebraheem Alhetrai' },
     { name: 'robots', content: 'index, follow' },
@@ -33,46 +32,49 @@ useHead({
       property: 'og:description',
       content: description,
     },
-    { property: 'og:image', content: siteConfig.ogImage },
+    // { property: 'og:image', content: siteConfig.ogImage },
     {
       property: 'og:image:alt',
-      content: 'Sulaf UI Components Preview',
+      content: `${projectName} Components Preview`,
     },
     { property: 'og:image:width', content: '1200' },
     { property: 'og:image:height', content: '630' },
-    { property: 'og:site_name', content: 'Sulaf UI' },
+    { property: 'og:site_name', content: `${projectName}` },
     { property: 'og:locale', content: 'en_US' },
 
     // Twitter
     { name: 'twitter:card', content: 'summary_large_image' },
-    { name: 'twitter:url', content: siteConfig.url || 'https://sulaf-ui.com' },
-    { name: 'twitter:title', content: 'Sulaf UI - Beautiful Vue Components Built for shadcn-vue' },
+    { name: 'twitter:url', content: siteConfig.url },
+    {
+      name: 'twitter:title',
+      content: `${projectName} - Beautiful Vue Components Built for shadcn-vue`,
+    },
     {
       name: 'twitter:description',
       content: description,
     },
-    { name: 'twitter:image', content: siteConfig.ogImage },
-    { name: 'twitter:image:alt', content: 'Sulaf UI Components Preview' },
-    { name: 'twitter:site', content: '@sulafui' },
-    { name: 'twitter:creator', content: '@sulafui' },
+    // { name: 'twitter:image', content: siteConfig.ogImage },
+    { name: 'twitter:image:alt', content: `${projectName} Components Preview` },
+    { name: 'twitter:site', content: `@${projectName.toLowerCase()}ui` },
+    { name: 'twitter:creator', content: `@${projectName.toLowerCase()}ui` },
 
     // Additional SEO & Mobile
     { name: 'apple-mobile-web-app-capable', content: 'yes' },
     { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' },
-    { name: 'apple-mobile-web-app-title', content: 'Sulaf UI' },
+    { name: 'apple-mobile-web-app-title', content: `${projectName}` },
     { name: 'theme-color', content: '#ffffff', media: '(prefers-color-scheme: light)' },
     { name: 'theme-color', content: '#0a0a0a', media: '(prefers-color-scheme: dark)' },
 
     // Canonical URL (as meta)
-    { name: 'canonical', content: siteConfig.url || 'https://sulaf-ui.com' },
+    { name: 'canonical', content: siteConfig.url },
 
     // Additional Open Graph
-    { property: 'og:email', content: 'hello@sulaf-ui.com' },
+    { property: 'og:email', content: `hello@${projectName.toLowerCase()}-ui.com` },
     { property: 'og:phone_number', content: '' },
     { property: 'og:country-name', content: 'USA' },
   ],
   link: [
-    { rel: 'canonical', href: siteConfig.url || 'https://sulaf-ui.com' },
+    { rel: 'canonical', href: siteConfig.url },
     { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
     { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32x32.png' },
     { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon-16x16.png' },
@@ -84,7 +86,7 @@ useHead({
   },
 })
 
-defineOgImage('Custom', {
+defineOgImage('Custom.takumi', {
   title,
   description,
 })

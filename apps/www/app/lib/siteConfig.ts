@@ -7,7 +7,7 @@ export type Links = {
 export type SiteConfig = {
   name: string
   url: string
-  ogImage: string
+  // ogImage: string
   description: string
   links: Links
 }
@@ -17,7 +17,7 @@ const repoUrl = 'https://github.com/hetari/sulaf'
 export const siteConfig: SiteConfig = {
   name: 'sulaf',
   url: repoUrl,
-  ogImage: 'https://raw.githubusercontent.com/hetari/sulaf/master/public/og.png',
+  // ogImage: 'https://raw.githubusercontent.com/hetari/sulaf/master/public/og.png',
   description:
     'Simple, powerful and flexible site generation framework with everything you love from Nuxt.js & Shadcn Vue',
   links: {
