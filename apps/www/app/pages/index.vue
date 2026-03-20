@@ -15,7 +15,7 @@ const version = 'v0.0.1'
             class="text font-semibold tracking-wider animate-in fade-in zoom-in duration-500 text-sm"
           >
             <span
-              class="shiny inline-block bg-[linear-gradient(120deg,rgba(255,255,255,0)_40%,rgba(255,255,255,0.8)_50%,rgba(255,255,255,0)_60%)] dark:bg-[linear-gradient(120deg,rgba(0,0,0,0)_40%,rgba(0,0,0,0.8)_50%,rgba(0,0,0,0)_60%)] bg-size-[200%_100%] bg-clip-text font-medium text-primary-foreground/60"
+              class="shiny inline-block bg-[linear-gradient(120deg,var(--secondary-foreground)_40%,var(--secondary)_50%,var(--secondary-foreground)_60%)] dark:bg-[linear-gradient(120deg,var(--secondary)_40%,var(--secondary-foreground)_50%,var(--secondary)_60%)] bg-size-[200%_100%] bg-clip-text font-medium text-primary-foreground/60"
             >
               ✨ Sulaf UI {{ version }} is here!
             </span>
