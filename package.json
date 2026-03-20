@@ -23,7 +23,10 @@
     "docs:postinstall": "bun --filter ./apps/www postinstall",
     "registry:build": "bun --filter ./packages/registry build",
     "test": "bun --filter ./packages/registry test",
-    "changeset": "changeset"
+    "changeset": "changeset",
+    "version": "changeset version",
+    "publish": "changeset publish",
+    "release": "bun run version && bun run publish"
   },
   "catalog": {
     "@vueuse/core": "^14.2.1",
