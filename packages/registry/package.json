@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@sulaf/ui": "workspace:*",
-    "lucide-vue-next": "^0.562.0",
-    "vue": "^3.5.24"
+    "lucide-vue-next": "catalog:",
+    "vue": "catalog:"
   }
 }
