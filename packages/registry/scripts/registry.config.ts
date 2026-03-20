@@ -3,7 +3,7 @@ export const registryConfig = {
    * The base URL for the registry.
    * This is used for generating full URLs in registry JSON files.
    */
-  baseUrl: 'https://sulaf-ui.vercel.app', // Update this to your deployed URL
+  baseUrl: 'https://sulaf.netlify.app',
 
   /**
    * Directory containing the source components to be registered.
@@ -25,8 +25,8 @@ export const registryConfig = {
    * Information about the registry itself.
    */
   registry: {
-    name: 'sulaf-ui',
-    homepage: 'https://github.com/hetari/sulaf-ui',
+    name: 'sulaf',
+    homepage: 'https://github.com/hetari/sulaf',
   },
 
   /**
