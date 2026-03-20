@@ -187,7 +187,7 @@ export async function generateAllJson(options: {
         const analysis = analyzeDependencies(imports, allowedDeps, allowedDevDeps, {
           filePath: f.path,
           currentGroup: group,
-          skipAiComponentDeps: true,
+          skipAiComponentDeps: false,
           typesDevDepsMap,
         })
         analysis.dependencies.forEach(dep => allDependencies.add(dep))
@@ -216,7 +216,7 @@ export async function generateAllJson(options: {
     files: allFiles,
     dependencies: Array.from(allDependencies),
     devDependencies: Array.from(allDevDependencies),
-    registryDependencies: Array.from(allRegistryDependencies),
+    registryDependencies: Array.from(allRegistryDependencies).filter(dep => !groupMap.has(dep)),
   }
 
   if (validateRegistryItem(allJson, 'all')) {

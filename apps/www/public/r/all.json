@@ -18,5 +18,5 @@
   ],
   "dependencies": [],
   "devDependencies": [],
-  "registryDependencies": []
+  "registryDependencies": ["button"]
 }
