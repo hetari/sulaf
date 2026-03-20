@@ -1,0 +1,34 @@
+{
+  "name": "@sulaf/cli",
+  "version": "0.0.0",
+  "private": false,
+  "description": "Sulaf is a custom registry built on top of shadcn-vue to help you build applications faster.",
+  "license": "MIT",
+  "homepage": "https://sulaf.netlify.app",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hetari/sulaf.git",
+    "directory": "packages/cli"
+  },
+  "keywords": [
+    "nuxt",
+    "vue",
+    "shadcn-vue",
+    "registry",
+    "cli"
+  ],
+  "bin": {
+    "sulaf": "index.js"
+  },
+  "files": [
+    "LICENSE",
+    "README.md",
+    "index.js"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=20.19.0"
+  }
+}
