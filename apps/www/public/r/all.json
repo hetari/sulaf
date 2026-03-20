@@ -1,0 +1,22 @@
+{
+  "$schema": "https://shadcn-vue.com/schema/registry-item.json",
+  "name": "all",
+  "type": "registry:component",
+  "title": "All Components Bundle",
+  "description": "Bundle containing all registered components.",
+  "files": [
+    {
+      "path": "default/hello-world/index.ts",
+      "type": "registry:component",
+      "content": "export { default as HelloWorld } from './HelloWorld.vue'\n"
+    },
+    {
+      "path": "default/hello-world/HelloWorld.vue",
+      "type": "registry:component",
+      "content": "<script setup lang=\"ts\">\nimport { Button } from '@/components/ui/button'\n</script>\n\n<template>\n  <div>Hello</div>\n  <Button>World from sulaf</Button>\n</template>\n"
+    }
+  ],
+  "dependencies": [],
+  "devDependencies": [],
+  "registryDependencies": []
+}

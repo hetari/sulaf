@@ -1,16 +1,21 @@
 {
-  "$schema": "https://shadcn-vue.com/schema/registry.json",
-  "name": "sulaf",
-  "homepage": "https://sulaf.netlify.app/",
+  "name": "sulaf-ui",
+  "homepage": "https://github.com/hetari/sulaf-ui",
   "items": [
     {
       "name": "hello-world",
       "type": "registry:component",
       "title": "Hello World",
-      "description": "A simple hello world component.",
-      "dependencies": [],
-      "registryDependencies": ["button"],
-      "files": [{ "path": "default/hello-world/HelloWorld.vue", "type": "registry:component" }]
+      "files": [
+        {
+          "path": "default/hello-world/index.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "default/hello-world/HelloWorld.vue",
+          "type": "registry:component"
+        }
+      ]
     }
   ]
 }

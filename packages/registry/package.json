@@ -7,10 +7,13 @@
     "./blocks/*": "./default/*/index.ts"
   },
   "scripts": {
-    "build": "rm -rf ../../apps/www/public/r && shadcn-vue build --output ../../apps/www/public/r"
+    "build": "bun ./scripts/registry-builder.ts"
   },
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "@vue/compiler-sfc": "^3.5.30",
+    "shadcn-vue": "^2.4.3",
+    "ts-morph": "^27.0.2"
   },
   "peerDependencies": {
     "typescript": "^5"
