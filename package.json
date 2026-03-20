@@ -20,6 +20,7 @@
     "docs:build": "bun --filter ./apps/www build",
     "docs:preview": "bun --filter ./apps/www preview",
     "docs:generate": "bun --filter ./apps/www generate",
+    "docs:postinstall": "bun --filter ./apps/www postinstall",
     "registry:build": "bun --filter ./packages/registry build"
   },
   "devDependencies": {

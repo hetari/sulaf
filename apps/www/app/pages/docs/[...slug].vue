@@ -11,6 +11,7 @@ type DocPage = ContentCollectionItem & {
   navigation?: {
     icon?: string
   }
+  // lastUpdated?: string;
 }
 const route = useRoute()
 
@@ -120,6 +121,21 @@ useSeoMeta({
           </div>
 
           <ContentRenderer :value="page" class="w-full flex-1 *:data-[slot=alert]:first:mt-0" />
+
+          <p
+            v-if="page.lastUpdated"
+            class="flex items-center gap-1.5 text-sm text-muted-foreground"
+          >
+            <Clock class="size-3.5" />
+            Last updated on
+            {{
+              new Date(page.lastUpdated).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+              })
+            }}
+          </p>
         </div>
         <div class="mx-auto flex h-16 w-full max-w-2xl items-center gap-2 px-4 md:px-0">
           <Button v-if="neighbours?.[0]" variant="secondary" size="sm" as-child class="shadow-none">

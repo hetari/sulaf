@@ -159,4 +159,16 @@ export default defineNuxtConfig({
       ],
     },
   },
+  hooks: {
+    'content:file:afterParse': function ({ file, content }) {
+      if (file.path && file.path.endsWith('.md')) {
+        try {
+          const stats = require('node:fs').statSync(file.path)
+          content.lastUpdated = stats.mtime.toISOString()
+        } catch {
+          // ignore
+        }
+      }
+    },
+  },
 })
