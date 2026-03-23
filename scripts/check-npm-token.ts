@@ -19,7 +19,12 @@ function run() {
     console.log(`Found ${tokens.length} token(s). Checking expiration dates:\n`)
 
     for (const t of tokens) {
-      if (!t.created) continue
+      if (!t.created) {
+        const tokenEnding = t.token ? t.token.slice(-4) : '...'
+        // eslint-disable-next-line no-console
+        console.warn(`- Token [..${tokenEnding}] | Skipped (no created date)`)
+        continue
+      }
 
       const createdDate = new Date(t.created)
 
