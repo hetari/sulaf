@@ -84,6 +84,16 @@ export async function generateRegistryAssets(ctx: RegistryContext) {
     const groupDevDeps = new Set<string>()
     const groupRegistryDeps = new Set<string>()
 
+    // 5.1 Load local registry.json if it exists
+    let localMetadata: any = {}
+    const localRegistryPath = join(srcDir, group, 'registry.json')
+    try {
+      const raw = await fs.readFile(localRegistryPath, 'utf-8')
+      localMetadata = JSON.parse(raw)
+    } catch {
+      // No local registry.json, use defaults
+    }
+
     for (const f of groupFiles) {
       const code = extractSourceCode(f)
       if (code) {
@@ -98,14 +108,34 @@ export async function generateRegistryAssets(ctx: RegistryContext) {
         analysis.devDependencies.forEach(dep => groupDevDeps.add(dep))
         analysis.registryDependencies.forEach(dep => groupRegistryDeps.add(dep))
       }
+
+      // Update file type if specified in local metadata
+      const relPath = relative(join(registryConfig.srcDir, group), f.path).split('\\').join('/')
+      const localFile = localMetadata.files?.find((lf: any) => lf.path === relPath)
+      if (localFile?.type) {
+        f.type = localFile.type
+      } else if (localMetadata.type) {
+        f.type = localMetadata.type
+      }
+    }
+
+    // Merge group dependencies from local metadata if present
+    if (localMetadata.dependencies) {
+      localMetadata.dependencies.forEach((dep: string) => groupDeps.add(dep))
+    }
+    if (localMetadata.devDependencies) {
+      localMetadata.devDependencies.forEach((dep: string) => groupDevDeps.add(dep))
+    }
+    if (localMetadata.registryDependencies) {
+      localMetadata.registryDependencies.forEach((dep: string) => groupRegistryDeps.add(dep))
     }
 
     const itemJson = {
       $schema: 'https://shadcn-vue.com/schema/registry-item.json',
       name: group,
-      type: 'registry:component' as const,
-      title: toTitle(group),
-      description: `${group.replace('-', ' ')} components.`,
+      type: (localMetadata.type || 'registry:component') as any,
+      title: localMetadata.title || toTitle(group),
+      description: localMetadata.description || `${group.replace('-', ' ')} components.`,
       files: groupFiles.map(f => {
         const file: any = {
           path: f.path,
@@ -130,7 +160,7 @@ export async function generateRegistryAssets(ctx: RegistryContext) {
       )
       componentItems.push({
         name: group,
-        type: 'registry:component',
+        type: itemJson.type,
         title: itemJson.title,
         files: itemJson.files,
       })
