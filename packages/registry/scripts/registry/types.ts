@@ -2,7 +2,14 @@
  * Represents a component asset file in the registry.
  */
 export interface ComponentAssetFile {
-  type: 'registry:component'
+  type:
+    | 'registry:block'
+    | 'registry:component'
+    | 'registry:lib'
+    | 'registry:hook'
+    | 'registry:ui'
+    | 'registry:page'
+    | 'registry:file'
   path: string
   content: string
   target?: string
