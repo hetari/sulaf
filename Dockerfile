@@ -22,7 +22,7 @@ RUN cd /temp/dev && bun install --frozen-lockfile
 # Copy node_modules from install stage
 # Then copy all source files and build
 FROM base AS prerelease
-COPY --from=install /temp/dev/node_modules node_modules
+COPY --from=install /temp/dev .
 COPY . .
 
 # Build the app
