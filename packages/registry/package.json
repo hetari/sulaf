@@ -23,7 +23,9 @@
   },
   "dependencies": {
     "@sulaf/ui": "workspace:*",
+    "@vueuse/core": "^14.2.1",
     "lucide-vue-next": "catalog:",
+    "reka-ui": "^2.9.2",
     "vue": "catalog:"
   }
 }

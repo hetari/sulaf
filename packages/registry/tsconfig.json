@@ -28,7 +28,7 @@
 
     "baseUrl": ".",
     "paths": {
-      "@vuzeno/ui/components/*": ["../ui/src/components/*"],
+      "@sulaf/ui/components/*": ["../ui/src/components/*"],
       "@/lib/*": ["../ui/src/lib/*"]
     }
   }
