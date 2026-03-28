@@ -5,14 +5,15 @@
   "type": "module",
   "scripts": {},
   "devDependencies": {
+    "tailwindcss": "^4.2.2",
     "typescript": "~5.9.3"
   },
   "exports": {
-    "./lib/*": {
-      "types": "./dist/src/lib/*.d.ts",
-      "default": "./src/lib/*.ts"
-    },
-    "./components/*": "./src/components/*/index.ts"
+    "./src/*": "./src/*",
+    "./style.css": "./src/style.css",
+    "./lib/*": "./src/lib/*.ts",
+    "./components/*": "./src/components/ui/*/index.ts",
+    "./components/ui/*": "./src/components/ui/*/index.ts"
   },
   "dependencies": {
     "@tanstack/vue-table": "^8.21.3",
