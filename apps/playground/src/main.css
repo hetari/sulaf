@@ -1,0 +1,5 @@
+@import 'tailwindcss';
+@import '@sulaf/ui/src/style.css';
+
+@source "../../../packages/ui";
+@source "../../../packages/registry";
