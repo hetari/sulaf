@@ -1,15 +1,19 @@
+export type RegistryFileType =
+  | 'registry:block'
+  | 'registry:component'
+  | 'registry:lib'
+  | 'registry:hook'
+  | 'registry:ui'
+  | 'registry:page'
+  | 'registry:file'
+
+export type RegistryItemType = 'registry:block' | 'registry:component' | 'registry:ui'
+
 /**
  * Represents a component asset file in the registry.
  */
 export interface ComponentAssetFile {
-  type:
-    | 'registry:block'
-    | 'registry:component'
-    | 'registry:lib'
-    | 'registry:hook'
-    | 'registry:ui'
-    | 'registry:page'
-    | 'registry:file'
+  type: RegistryFileType
   path: string
   content: string
   target?: string
@@ -62,4 +66,21 @@ export interface AnalyzeDependenciesOptions {
 export interface RegistryContext {
   /** The root directory of the project */
   rootDir: string
+}
+
+/**
+ * Local metadata loaded from directory's registry.json.
+ */
+export interface RegistryItemMetadata {
+  type?: RegistryItemType
+  title?: string
+  description?: string
+  dependencies?: string[]
+  devDependencies?: string[]
+  registryDependencies?: string[]
+  files?: {
+    path: string
+    type?: RegistryFileType
+    target?: string
+  }[]
 }
