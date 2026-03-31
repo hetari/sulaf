@@ -14,22 +14,23 @@
     "reka-ui": "catalog:",
     "@sulaf/ui": "workspace:*",
     "@sulaf/registry": "workspace:*",
-    "@tailwindcss/vite": "^4.2.2",
+    "@tailwindcss/vite": "catalog:",
     "@vueuse/core": "catalog:",
-    "tailwindcss": "^4.2.2",
+    "tailwindcss": "catalog:",
     "vue": "catalog:",
-    "vue-router": "5"
+    "vue-router": "catalog:",
+    "lucide-vue-next": "catalog:"
   },
   "devDependencies": {
-    "@tsconfig/node24": "^24.0.4",
-    "@types/node": "^24.12.0",
+    "@tsconfig/node24": "catalog:",
+    "@types/node": "catalog:",
     "@vitejs/plugin-vue": "^6.0.4",
-    "@vue/tsconfig": "^0.9.0",
-    "npm-run-all2": "^8.0.4",
-    "typescript": "~5.9.3",
+    "@vue/tsconfig": "catalog:",
+    "npm-run-all2": "catalog:",
+    "typescript": "catalog:",
     "vite": "^7.3.1",
     "vite-plugin-vue-devtools": "^8.0.7",
-    "vue-tsc": "^3.2.5"
+    "vue-tsc": "catalog:"
   },
   "engines": {
     "node": "^20.19.0 || >=22.12.0"

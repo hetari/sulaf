@@ -63,18 +63,15 @@ const navItems = [{ label: 'autocomplete', to: 'components/autocomplete' }]
       </SidebarFooter>
     </Sidebar>
     <SidebarInset>
-      <header class="flex h-16 shrink-0 items-center gap-2 border-b px-4">
+      <header class="flex h-16 shrink-0 items-center justify-between px-4">
         <SidebarTrigger />
-        <div class="flex-1">
-          <h1 class="text-lg font-semibold">Playground</h1>
-        </div>
         <Button variant="ghost" size="icon" @click="toggleDark()" aria-label="Toggle dark mode">
           <Sun v-if="isDark" class="size-4" />
           <Moon v-else class="size-4" />
         </Button>
       </header>
-      <main class="flex-1 overflow-auto p-6">
-        <div class="mx-auto max-w-4xl space-y-6">
+      <main class="flex flex-1 items-center justify-center p-6">
+        <div class="w-full max-w-sm">
           <RouterView />
         </div>
       </main>
