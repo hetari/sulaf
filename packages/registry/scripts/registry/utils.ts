@@ -1,6 +1,7 @@
 import { promises as fs, type Dirent } from 'node:fs'
-import { join } from 'node:path'
+import { join, relative } from 'node:path'
 import { registryItemSchema, type RegistryItem } from 'shadcn-vue/schema'
+import type { RegistryFileType, RegistryItemMetadata } from './types'
 
 /**
  * Converts a slug-case string to Title Case.
@@ -16,11 +17,49 @@ export function toTitle(slug: string): string {
 
 /**
  * Removes duplicate values from an array.
- * @param arr The array containing potential duplicates
- * @returns A new array with unique values
  */
 export function unique<T>(arr: T[]): T[] {
   return Array.from(new Set(arr))
+}
+
+/**
+ * Normalizes a package name to its base (e.g., '@scope/pkg/subpath' -> '@scope/pkg').
+ */
+export function getBasePackageName(specifier: string): string {
+  if (specifier.startsWith('@')) {
+    const parts = specifier.split('/')
+    return parts.slice(0, 2).join('/')
+  }
+  return specifier.split('/')[0] || ''
+}
+
+/**
+ * Extracts a registry slug from a module path if it belongs to a known registry directory.
+ */
+export function extractRegistrySlug(modulePath: string, basePath: string): string {
+  if (!modulePath.startsWith(basePath)) return ''
+
+  const rest = modulePath.slice(basePath.length).split('/').find(Boolean)
+
+  return rest || ''
+}
+
+/**
+ * Maps runtime packages to their corresponding @types devDependencies.
+ */
+export function buildTypesDevDepsMap(devDependencies: string[]): Map<string, string[]> {
+  const TYPES_PREFIX = '@types/'
+  const typesDevDepsMap = new Map<string, string[]>()
+  for (const devDep of devDependencies) {
+    if (devDep.startsWith(TYPES_PREFIX)) {
+      const name = devDep.slice(TYPES_PREFIX.length)
+      const runtime = name.includes('__') ? `@${name.replace('__', '/')}` : name
+      const list = typesDevDepsMap.get(runtime) ?? []
+      list.push(devDep)
+      typesDevDepsMap.set(runtime, list)
+    }
+  }
+  return typesDevDepsMap
 }
 
 /**
@@ -77,4 +116,80 @@ export async function walkComponentFiles(dir: string, rootDir: string): Promise<
     }
   }
   return out
+}
+
+/**
+ * Auto-detects the registry file type based on filename and extension.
+ */
+export function getRegistryTypeFromFile(filePath: string): RegistryFileType {
+  const fileName = filePath.split('/').pop() || ''
+
+  if (fileName.endsWith('.vue')) {
+    return filePath.includes('/ui/') ? 'registry:ui' : 'registry:component'
+  }
+
+  if (fileName.startsWith('use') && fileName.endsWith('.ts')) {
+    return 'registry:hook'
+  }
+
+  if (['context.ts', 'types.ts', 'index.ts'].includes(fileName)) {
+    return 'registry:file'
+  }
+
+  if (['utils.ts', 'lib.ts'].includes(fileName)) {
+    return 'registry:lib'
+  }
+
+  return 'registry:file'
+}
+
+/**
+ * Loads and parses local registry.json if it exists in the component directory.
+ */
+export async function loadLocalMetadata(
+  srcDir: string,
+  group: string,
+): Promise<RegistryItemMetadata> {
+  const localRegistryPath = join(srcDir, group, 'registry.json')
+  try {
+    const raw = await fs.readFile(localRegistryPath, 'utf-8')
+    return JSON.parse(raw) as RegistryItemMetadata
+  } catch {
+    return {}
+  }
+}
+
+/**
+ * Helper to get path relative to source directory with forward slashes.
+ */
+export function getRelativeSourcePath(filePath: string, srcDir: string): string {
+  return relative(srcDir, filePath).split('\\').join('/')
+}
+
+/**
+ * Normalizes a file object for registry JSON, applying target defaults.
+ */
+export function normalizeRegistryFile(
+  path: string,
+  type: RegistryFileType,
+  group: string,
+  srcDir: string,
+  explicitTarget?: string,
+) {
+  const relPath = relative(join(srcDir, group), path).split('\\').join('/')
+
+  const file: {
+    path: string
+    type: RegistryFileType
+    target?: string
+    content?: string
+  } = { path, type }
+
+  if (explicitTarget) {
+    file.target = explicitTarget
+  } else if (type === 'registry:file' || type === 'registry:page') {
+    file.target = relPath
+  }
+
+  return file
 }

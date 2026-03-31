@@ -7,84 +7,36 @@ import type {
   ComponentAssetFile,
   DependencyAnalysisResult,
 } from './types'
-import { unique } from './utils'
+import { unique, getBasePackageName, extractRegistrySlug } from './utils'
+
+// Global ts-morph project for performance (persistence across calls)
+const project = new Project({
+  useInMemoryFileSystem: true,
+  compilerOptions: {
+    allowJs: true,
+    esModuleInterop: true,
+    moduleResolution: 2,
+    target: 5,
+    module: 5,
+    strict: false,
+    skipLibCheck: true,
+  },
+})
 
 /**
  * Parses import statements from TypeScript or JavaScript code using ts-morph.
- * @param code The source code to parse
- * @returns An array of unique module specifiers (imports)
  */
 export function parseImportsFromCode(code: string): string[] {
   try {
-    const project = new Project({
-      useInMemoryFileSystem: true,
-      compilerOptions: {
-        allowJs: true,
-        allowSyntheticDefaultImports: true,
-        esModuleInterop: true,
-        moduleResolution: 2,
-        target: 5,
-        module: 5,
-        strict: false,
-        skipLibCheck: true,
-      },
-    })
-
-    const sourceFile = project.createSourceFile('temp.ts', code)
-    const imports: string[] = []
-    sourceFile.getImportDeclarations().forEach(declaration => {
-      const moduleSpecifier = declaration.getModuleSpecifierValue()
-      if (moduleSpecifier) {
-        imports.push(moduleSpecifier)
-      }
-    })
-
-    return unique(imports)
+    const sourceFile = project.createSourceFile('temp.ts', code, { overwrite: true })
+    const imports = sourceFile.getImportDeclarations().map(d => d.getModuleSpecifierValue())
+    sourceFile.forget() // Cleanup memory
+    return unique(imports.filter(Boolean))
   } catch (error) {
     // eslint-disable-next-line no-console
-    console.error('Failed to parse imports with ts-morph:', error)
+    console.error('Failed to parse imports:', error)
     return []
   }
-}
-
-/**
- * Extracts a registry slug from a module path if it belongs to a known registry directory.
- */
-export function extractRegistrySlug(modulePath: string, basePath: string): string {
-  if (!modulePath.startsWith(basePath)) return ''
-
-  const rest = modulePath.slice(basePath.length).split('/')?.find(Boolean)
-
-  return rest || ''
-}
-
-/**
- * Normalizes a package name to its base (e.g., '@scope/pkg/subpath' -> '@scope/pkg').
- */
-export function getBasePackageName(specifier: string): string {
-  if (specifier.startsWith('@')) {
-    const parts = specifier.split('/')
-    return parts.slice(0, 2).join('/')
-  }
-  return specifier.split('/')[0] as string
-}
-
-/**
- * Maps runtime packages to their corresponding @types devDependencies.
- */
-export function buildTypesDevDepsMap(devDependencies: string[]): Map<string, string[]> {
-  const TYPES_PREFIX = '@types/'
-  const typesDevDepsMap = new Map<string, string[]>()
-  for (const devDep of devDependencies) {
-    if (devDep.startsWith(TYPES_PREFIX)) {
-      const name = devDep.slice(TYPES_PREFIX.length)
-      const runtime = name.includes('__') ? `@${name.replace('__', '/')}` : name
-      const list = typesDevDepsMap.get(runtime) ?? []
-      list.push(devDep)
-      typesDevDepsMap.set(runtime, list)
-    }
-  }
-  return typesDevDepsMap
 }
 
 /**

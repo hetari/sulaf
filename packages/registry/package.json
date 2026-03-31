@@ -12,20 +12,20 @@
     "test": "bunx --bun vitest"
   },
   "devDependencies": {
-    "@types/bun": "latest",
-    "@vue/compiler-sfc": "^3.5.30",
+    "@types/bun": "catalog:",
+    "@vue/compiler-sfc": "catalog:",
     "shadcn-vue": "^2.4.3",
     "ts-morph": "^27.0.2",
     "vitest": "^4.1.0"
   },
   "peerDependencies": {
-    "typescript": "^5"
+    "typescript": "catalog:"
   },
   "dependencies": {
     "@sulaf/ui": "workspace:*",
-    "@vueuse/core": "^14.2.1",
+    "@vueuse/core": "catalog:",
     "lucide-vue-next": "catalog:",
-    "reka-ui": "^2.9.2",
+    "reka-ui": "catalog:",
     "vue": "catalog:"
   }
 }
