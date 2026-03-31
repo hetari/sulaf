@@ -1,0 +1,75 @@
+{
+  "$schema": "https://shadcn-vue.com/schema/registry-item.json",
+  "name": "autocomplete",
+  "type": "registry:component",
+  "title": "Autocomplete",
+  "description": "Autocomplete component set.",
+  "files": [
+    {
+      "path": "default/autocomplete/AutocompleteControl.vue",
+      "type": "registry:component"
+    },
+    {
+      "path": "default/autocomplete/AutocompleteClear.vue",
+      "type": "registry:component"
+    },
+    {
+      "path": "default/autocomplete/AutocompleteList.vue",
+      "type": "registry:component"
+    },
+    {
+      "path": "default/autocomplete/Autocomplete.vue",
+      "type": "registry:component"
+    },
+    {
+      "path": "default/autocomplete/AutocompleteEmpty.vue",
+      "type": "registry:component"
+    },
+    {
+      "path": "default/autocomplete/context.ts",
+      "type": "registry:file",
+      "target": "context.ts"
+    },
+    {
+      "path": "default/autocomplete/AutocompleteItem.vue",
+      "type": "registry:component"
+    },
+    {
+      "path": "default/autocomplete/AutocompleteInput.vue",
+      "type": "registry:component"
+    },
+    {
+      "path": "default/autocomplete/AutocompleteTrigger.vue",
+      "type": "registry:component"
+    },
+    {
+      "path": "default/autocomplete/AutocompleteContent.vue",
+      "type": "registry:component"
+    },
+    {
+      "path": "default/autocomplete/index.ts",
+      "type": "registry:file",
+      "target": "index.ts"
+    },
+    {
+      "path": "default/autocomplete/AutocompleteLoading.vue",
+      "type": "registry:component"
+    },
+    {
+      "path": "default/autocomplete/AutocompleteGroup.vue",
+      "type": "registry:component"
+    },
+    {
+      "path": "default/autocomplete/AutocompleteLabel.vue",
+      "type": "registry:component"
+    },
+    {
+      "path": "default/autocomplete/types.ts",
+      "type": "registry:file",
+      "target": "types.ts"
+    }
+  ],
+  "dependencies": ["reka-ui", "@vueuse/core", "lucide-vue-next"],
+  "devDependencies": [],
+  "registryDependencies": ["spinner"]
+}

@@ -1,19 +1,74 @@
 {
-  "name": "sulaf-ui",
-  "homepage": "https://github.com/hetari/sulaf-ui",
+  "name": "sulaf",
+  "homepage": "https://github.com/hetari/sulaf",
   "items": [
     {
-      "name": "hello-world",
+      "name": "autocomplete",
       "type": "registry:component",
-      "title": "Hello World",
+      "title": "Autocomplete",
       "files": [
         {
-          "path": "default/hello-world/index.ts",
+          "path": "default/autocomplete/AutocompleteControl.vue",
           "type": "registry:component"
         },
         {
-          "path": "default/hello-world/HelloWorld.vue",
+          "path": "default/autocomplete/AutocompleteClear.vue",
           "type": "registry:component"
+        },
+        {
+          "path": "default/autocomplete/AutocompleteList.vue",
+          "type": "registry:component"
+        },
+        {
+          "path": "default/autocomplete/Autocomplete.vue",
+          "type": "registry:component"
+        },
+        {
+          "path": "default/autocomplete/AutocompleteEmpty.vue",
+          "type": "registry:component"
+        },
+        {
+          "path": "default/autocomplete/context.ts",
+          "type": "registry:file",
+          "target": "context.ts"
+        },
+        {
+          "path": "default/autocomplete/AutocompleteItem.vue",
+          "type": "registry:component"
+        },
+        {
+          "path": "default/autocomplete/AutocompleteInput.vue",
+          "type": "registry:component"
+        },
+        {
+          "path": "default/autocomplete/AutocompleteTrigger.vue",
+          "type": "registry:component"
+        },
+        {
+          "path": "default/autocomplete/AutocompleteContent.vue",
+          "type": "registry:component"
+        },
+        {
+          "path": "default/autocomplete/index.ts",
+          "type": "registry:file",
+          "target": "index.ts"
+        },
+        {
+          "path": "default/autocomplete/AutocompleteLoading.vue",
+          "type": "registry:component"
+        },
+        {
+          "path": "default/autocomplete/AutocompleteGroup.vue",
+          "type": "registry:component"
+        },
+        {
+          "path": "default/autocomplete/AutocompleteLabel.vue",
+          "type": "registry:component"
+        },
+        {
+          "path": "default/autocomplete/types.ts",
+          "type": "registry:file",
+          "target": "types.ts"
         }
       ]
     }
