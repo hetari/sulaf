@@ -1,0 +1,64 @@
+# .coderabbit.yaml
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+language: 'en-US'
+early_access: false
+
+# Ignore patterns - files matching these will be excluded from reviews
+ignore:
+  - '**/*.json' # Ignore all JSON files in any directory
+
+reviews:
+  profile: 'assertive'
+  high_level_summary: true
+
+  # Global Context: Tell CodeRabbit about your monorepo structure
+  instructions: |
+    - This is a monorepo containing multiple apps and packages:
+      - `apps/www`: The main documentation application built with Nuxt 4.
+      - `apps/playground`: A Vite/Vue playground for testing UI components.
+      - `packages/cli`: A Node.js CLI tool for managing components.
+      - `packages/registry`: Source of truth for component definitions (shadcn-vue style).
+      - `packages/ui`: The shared UI library using Reka UI (formerly Radix Vue), Vue 3, and Tailwind.
+    - Do not flag missing imports for Nuxt/Vue/VueUse composables (auto-imports are enabled).
+    - Ensure compatibility with **Bun** runtime (as seen in root `bun.lock`).
+
+  path_instructions:
+    - path: 'apps/www/**'
+      instructions: |
+        - Follow Nuxt 4 conventions (Composition API, `<script setup>`).
+        - Use the `app/` directory for components, composables, and middleware.
+        - Validate use of Nuxt 4 features like `defineRouteRules` and updated `useFetch` patterns.
+        - Verify that `pages/` (or the Nuxt 4 equivalent) uses `useHead` for SEO.
+        - Ensure Nitro server routes in `server/` use H3 and are properly typed.
+
+    - path: 'apps/playground/**'
+      instructions: |
+        - This is a Vite/Vue 3 playground for component testing.
+        - Focus on component integration and edge-case testing for `@sulaf/ui` and `@sulaf/registry`.
+
+    - path: 'packages/cli/**'
+      instructions: |
+        - Node.js CLI tool for managing components.
+        - Ensure standard library usage (e.g., `fs`, `path`) follows Node.js best practices for tools.
+        - Validate component installation, initialization, and registry sync logic.
+
+    - path: 'packages/registry/**'
+      instructions: |
+        - Source of truth for component definitions (shadcn-vue style).
+        - Ensure `registry.json` is updated when new components are added.
+        - Components should follow the shadcn-vue structure: `default/[component-name]/[Component].vue`.
+
+    - path: 'packages/ui/**'
+      instructions: |
+        - Shared UI library using Reka UI, Vue 3, and Tailwind.
+        - Focus on accessibility (ARIA labels, keyboard navigation).
+        - Ensure Tailwind classes follow logical directions if applicable.
+        - Verify use of `class-variance-authority` and `tailwind-merge` for styling.
+
+  # Ignore build artifacts and lock files across the monorepo
+  path_filters:
+    - '!**/node_modules/**'
+    - '!**/.nuxt/**'
+    - '!**/.output/**'
+    - '!**/dist/**'
+    - '!bun.lock'
