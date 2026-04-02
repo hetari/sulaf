@@ -28,7 +28,7 @@
     "nuxt-og-image": "6.0.1",
     "nuxt-shiki": "0.3.2",
     "reka-ui": "catalog:",
-    "shadcn-nuxt": "2.4.3",
+    "shadcn-nuxt": "catalog:",
     "tailwind-merge": "catalog:",
     "tailwindcss": "catalog:",
     "vaul-vue": "catalog:",
