@@ -38,6 +38,7 @@ Sulaf is a **shadcn-vue registry** designed to bring premium aesthetics and worl
 1. Visit the [Documentation](https://sulaf.netlify.app/docs/getting-started/introduction).
 <!-- 2. Follow the [Installation Guide](https://sulaf.netlify.app/docs/getting-started/installation). -->
 2. Start copying components!
+3. Run tests: `bun run test` (See [CONTRIBUTING.md](./CONTRIBUTING.md) for details)
 
 ## Contributing
 

@@ -28,7 +28,8 @@
 
     "baseUrl": ".",
     "paths": {
-      "@sulaf/ui/components/*": ["../ui/src/components/*"],
+      "@sulaf/ui/components/*": ["../ui/src/components/ui/*"],
+      "@sulaf/ui/lib/*": ["../ui/src/lib/*"],
       "@/lib/*": ["../ui/src/lib/*"]
     }
   }

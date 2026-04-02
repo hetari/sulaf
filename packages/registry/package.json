@@ -9,14 +9,12 @@
   },
   "scripts": {
     "build": "bun ./scripts/registry-builder.ts",
-    "test": "bunx --bun vitest"
+    "test": "vitest"
   },
   "devDependencies": {
     "@types/bun": "catalog:",
-    "@vue/compiler-sfc": "catalog:",
-    "shadcn-vue": "^2.4.3",
-    "ts-morph": "^27.0.2",
-    "vitest": "^4.1.0"
+    "shadcn-vue": "catalog:",
+    "ts-morph": "^27.0.2"
   },
   "peerDependencies": {
     "typescript": "catalog:"

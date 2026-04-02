@@ -13,6 +13,7 @@ import {
   AutocompleteLoading,
   AutocompleteTrigger,
 } from '@sulaf/registry/ui/autocomplete'
+import { ChevronDownIcon, SearchIcon } from 'lucide-vue-next'
 import { useFilter } from 'reka-ui'
 
 import { computed, ref, watch } from 'vue'
@@ -53,15 +54,14 @@ watch(searchTerm, newVal => {
   <section class="flex flex-col gap-4">
     <Autocomplete v-model="value" v-model:search-term="searchTerm">
       <AutocompleteControl>
-        <SearchIcon />
-
+        <SearchIcon class="size-4 ms-2" />
         <AutocompleteInput placeholder="Search fruits..." />
 
         <AutocompleteClear />
 
         <AutocompleteTrigger as-child>
           <div class="flex items-center pl-2">
-            <ChevronDownIcon />
+            <ChevronDownIcon class="size-4 me-2" />
           </div>
         </AutocompleteTrigger>
       </AutocompleteControl>

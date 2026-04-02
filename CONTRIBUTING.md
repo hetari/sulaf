@@ -53,6 +53,11 @@ We use [oxlint](https://oxlint.dev/) and [oxfmt](https://github.com/oxc-project/
 
 - **Check**: `bun check`
 - **Fix**: `bun fix`
+- **Test**: `bun run test`
+
+> [!IMPORTANT]
+> **Use `bun run test` instead of `bun test`.**
+> `bun test` triggers Bun's native test runner (which fails on Vue transformation). `bun run test` correctly uses Vitest as configured in the project.
 
 Please ensure your code passes these checks before submitting a pull request.
 
