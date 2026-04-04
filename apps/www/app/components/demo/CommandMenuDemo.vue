@@ -5,17 +5,17 @@ const tree = {
   children: [
     {
       title: 'Getting Started',
-      path: '/docs/getting-started',
+      path: '/docs',
       type: 'group' as const,
       children: [
         {
           title: 'Introduction',
-          path: '/docs/getting-started/introduction',
+          path: '/docs/introduction',
           type: 'page' as const,
         },
         {
           title: 'Installation',
-          path: '/docs/getting-started/installation',
+          path: '/docs/installation',
           type: 'page' as const,
         },
       ],

@@ -152,7 +152,7 @@
   }
 
   [data-slot='layout'] {
-    @apply 3xl:p-2 3xl:fixed:p-0 overscroll-none;
+    @apply 3xl:px-2 3xl:fixed:p-0 overscroll-none;
   }
 }
 
