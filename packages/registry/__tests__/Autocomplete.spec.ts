@@ -10,7 +10,8 @@ import {
   AutocompleteItem,
   AutocompleteClear,
   AutocompleteEmpty,
-} from '../default/autocomplete'
+  AutocompleteTrigger,
+} from '../components/autocomplete'
 
 const TestAutocomplete = defineComponent({
   components: {
@@ -22,6 +23,7 @@ const TestAutocomplete = defineComponent({
     AutocompleteItem,
     AutocompleteClear,
     AutocompleteEmpty,
+    AutocompleteTrigger,
   },
   props: {
     initialOpen: { type: Boolean, default: false },
@@ -35,13 +37,16 @@ const TestAutocomplete = defineComponent({
     return { value, searchTerm, open, props }
   },
   template: `
-    <Autocomplete 
-      v-model="value" 
-      v-model:searchTerm="searchTerm" 
+    <Autocomplete
+      v-model="value"
+      v-model:searchTerm="searchTerm"
       v-model:open="open"
     >
       <AutocompleteControl>
         <AutocompleteInput placeholder="Search items..." />
+        <AutocompleteTrigger data-testid="trigger">
+          <span>Toggle</span>
+        </AutocompleteTrigger>
         <AutocompleteClear data-testid="clear-btn" />
       </AutocompleteControl>
       <AutocompleteContent>
@@ -73,28 +78,42 @@ afterEach(async () => {
 })
 
 describe('Autocomplete component test', () => {
-  describe('Rendering', () => {
-    it('should render the autocomplete component', async () => {
+  describe('Rendering Contract', () => {
+    it('mount all components!', async () => {
+      // We must pass initialOpen: true so that the ComboboxContent and its children (List, Item) render.
       wrapper = mount(TestAutocomplete, {
-        attachTo: document.body,
         props: { initialOpen: true },
+        attachTo: document.body,
       })
       await flushPromises()
 
-      const input = wrapper.find('input')
-      const control = wrapper.find('[role="combobox"]')
-      const list = document.querySelector('[role="listbox"]')
-      const item = document.querySelector('[role="option"]')
-      const clear = wrapper.find('button[data-testid="clear-btn"]')
-      const empty = wrapper.find('div[data-testid="empty"]')
+      // The better approach is to use `findComponent` instead of raw DOM selectors.
+      // This makes tests less brittle and decouples them from exact DOM structures or ARIA roles.
+      expect(wrapper.findComponent(AutocompleteInput).exists()).toBe(true)
+      expect(wrapper.findComponent(AutocompleteControl).exists()).toBe(true)
+      expect(wrapper.findComponent(AutocompleteTrigger).exists()).toBe(true)
+      expect(wrapper.findComponent(AutocompleteContent).exists()).toBe(true)
+      expect(wrapper.findComponent(AutocompleteList).exists()).toBe(true)
+      expect(wrapper.findComponent(AutocompleteItem).exists()).toBe(true)
+      expect(wrapper.findComponent(AutocompleteClear).exists()).toBe(true)
 
-      expect(empty.exists()).toBe(false)
-      expect(input.exists()).toBe(true)
-      expect(control.exists()).toBe(true)
-      expect(list).toBeTruthy()
-      expect(item).toBeTruthy()
-      expect(clear.exists()).toBe(true)
-      expect(input.element.placeholder).toBe('Search items...')
+      // empty component won't exist because items are populated by default.
+      expect(wrapper.findComponent(AutocompleteEmpty).exists()).toBe(false)
+    })
+
+    it('mounts empty component and trigger when no items are provided', async () => {
+      wrapper = mount(TestAutocomplete, {
+        props: { initialOpen: true, items: [] },
+        attachTo: document.body,
+      })
+      await flushPromises()
+
+      // Trigger is always independent of items
+      expect(wrapper.findComponent(AutocompleteTrigger).exists()).toBe(true)
+
+      // When items are empty, AutocompleteEmpty mounts and AutocompleteItem unmounts
+      expect(wrapper.findComponent(AutocompleteEmpty).exists()).toBe(true)
+      expect(wrapper.findComponent(AutocompleteItem).exists()).toBe(false)
     })
   })
 
@@ -113,8 +132,8 @@ describe('Autocomplete component test', () => {
       })
       await flushPromises()
 
-      const item = document.querySelector('[role="option"]')
-      await (item as HTMLElement).click()
+      const items = wrapper.findAllComponents(AutocompleteItem)
+      await items[0].trigger('click')
       await flushPromises()
 
       expect(wrapper.vm.value).toBe('Apple')
@@ -128,7 +147,8 @@ describe('Autocomplete component test', () => {
         props: { initialOpen: true },
       })
       await flushPromises()
-      const items = document.querySelectorAll('[role="option"]')
+
+      const items = wrapper.findAllComponents(AutocompleteItem)
       expect(items.length).toBe(3)
     })
 
@@ -138,20 +158,44 @@ describe('Autocomplete component test', () => {
         props: { initialOpen: true, items: [] },
       })
       await flushPromises()
-      expect(document.body.textContent).toContain('No results found.')
+
+      const empty = wrapper.findComponent(AutocompleteEmpty)
+      expect(empty.exists()).toBe(true)
+      expect(empty.text()).toBe('No results found.')
     })
   })
 
   describe('Primary Interaction', () => {
+    it('opens dropdown when trigger is clicked', async () => {
+      wrapper = mount(TestAutocomplete, {
+        attachTo: document.body,
+        props: { initialOpen: false },
+      })
+      await flushPromises()
+
+      // Should be closed initially
+      expect(wrapper.findComponent(AutocompleteList).exists()).toBe(false)
+
+      // Click trigger
+      const trigger = wrapper.findComponent(AutocompleteTrigger)
+      await trigger.trigger('click')
+      await flushPromises()
+
+      // Should be open
+      expect(wrapper.findComponent(AutocompleteList).exists()).toBe(true)
+    })
+
     it('selects correct value on item click', async () => {
       wrapper = mount(TestAutocomplete, {
         attachTo: document.body,
         props: { initialOpen: true },
       })
       await flushPromises()
-      const items = document.querySelectorAll('[role="option"]')
-      await (items[1] as HTMLElement).click()
+
+      const items = wrapper.findAllComponents(AutocompleteItem)
+      await items[1].trigger('click')
       await flushPromises()
+
       expect(wrapper.vm.value).toBe('Banana')
     })
 

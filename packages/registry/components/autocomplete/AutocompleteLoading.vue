@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { HTMLAttributes } from 'vue'
-import { Spinner } from '@sulaf/ui/components/ui/spinner'
+import { Spinner } from '@sulaf/ui/components/spinner'
 import { cn } from '@sulaf/ui/lib/utils'
 
 const props = defineProps<{

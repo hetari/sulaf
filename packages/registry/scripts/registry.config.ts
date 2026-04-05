@@ -6,9 +6,15 @@ export const registryConfig = {
   baseUrl: 'https://sulaf.netlify.app',
 
   /**
+   * Directory where components should be installed in the consuming project.
+   * e.g., 'ui' would install to 'components/ui/...'
+   */
+  componentDir: 'ui',
+
+  /**
    * Directory containing the source components to be registered.
    */
-  srcDir: 'default',
+  srcDirs: ['components', 'blocks', 'pages'],
 
   /**
    * Directory where the registry JSON files will be generated.
@@ -34,12 +40,17 @@ export const registryConfig = {
    * For example, replacing repository aliases with project aliases.
    */
   replacements: [
-    { from: /@sulaf\/ui\/components\/ui\//g, to: '@/components/ui/' },
-    { from: /@sulaf\/ui\/components\/sulaf\//g, to: '@/components/sulaf/' },
+    { from: /@sulaf\/ui\/components\//g, to: '@/components/ui/' },
+    { from: /@sulaf\/ui\/lib\/utils/g, to: '@/lib/utils' },
   ],
 
   /**
    * Dependencies to exclude from auto-discovery.
    */
-  excludedDeps: ['vue', '@sulaf/ui', 'typescript'],
+  excludedDeps: [
+    'vue',
+    '@sulaf/ui',
+    'typescript',
+    // 'reka-ui'
+  ],
 }
