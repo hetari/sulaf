@@ -145,10 +145,6 @@ export default defineNuxtConfig({
         highlight: false,
       },
     },
-    database: {
-      type: 'd1',
-      bindingName: 'DB',
-    },
     // required to prevent error related to better-sqlite3 during build and deploy
     experimental: {
       sqliteConnector: 'better-sqlite3',

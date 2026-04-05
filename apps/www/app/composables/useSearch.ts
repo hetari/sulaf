@@ -61,11 +61,16 @@ export function useSearch() {
         return []
       }
 
-      const results = await $fetch<SearchResult[]>('/api/search', {
-        query: { q: query },
-      })
-
-      return results || []
+      try {
+        const results = await $fetch<SearchResult[]>('/api/search', {
+          query: { q: query },
+        })
+        return results || []
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error(`[useSearch] Fetch error: ${e}`)
+        return []
+      }
     },
     {
       cache: new TtlCache<string, Promise<SearchResult[]>>(TWENTY_FOUR_HOURS),
@@ -92,7 +97,6 @@ export function useSearch() {
         console.error(`[ERROR]: ${e}`)
       }
 
-      // This will use cache for the same query string
       const results = await memoizedSearch(query)
       return results
     } catch {
