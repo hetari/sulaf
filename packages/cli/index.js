@@ -45,9 +45,6 @@ const targetUrls = components
 
 const fullCommand = `${commandPrefix} shadcn-vue@latest add ${targetUrls}`
 
-// eslint-disable-next-line no-console
-console.log(`Executing: ${fullCommand}`)
-
 const result = spawnSync(fullCommand, {
   stdio: 'inherit',
   shell: true,
