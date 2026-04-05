@@ -1,6 +1,6 @@
 {
   "name": "sulaf",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "private": false,
   "description": "Sulaf is a custom registry built on top of shadcn-vue to help you build applications faster.",
   "license": "MIT",
