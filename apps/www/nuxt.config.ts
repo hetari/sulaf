@@ -1,4 +1,38 @@
+import { createHash } from 'node:crypto'
+import { readdirSync, statSync } from 'node:fs'
+import { join } from 'node:path'
 import tailwindcss from '@tailwindcss/vite'
+
+// Compute the docs version at BUILD TIME by hashing all .md files.
+// This avoids reading the filesystem at request time, which fails in serverless.
+function computeDocsVersion(): string {
+  try {
+    const contentDir = join(__dirname, 'content')
+    const files = getAllMdFiles(contentDir)
+    const hash = createHash('md5')
+    for (const file of files.sort()) {
+      const stats = statSync(file)
+      hash.update(`${file}:${stats.mtimeMs}`)
+    }
+    return hash.digest('hex').slice(0, 8)
+  } catch {
+    return 'unknown'
+  }
+}
+
+function getAllMdFiles(dirPath: string, files: string[] = []): string[] {
+  for (const entry of readdirSync(dirPath)) {
+    const full = join(dirPath, entry)
+    if (statSync(full).isDirectory()) {
+      getAllMdFiles(full, files)
+    } else if (entry.endsWith('.md')) {
+      files.push(full)
+    }
+  }
+  return files
+}
+
+const DOCS_VERSION = computeDocsVersion()
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -16,22 +50,15 @@ export default defineNuxtConfig({
     '@nuxt/fonts',
   ],
 
+  runtimeConfig: {
+    docsVersion: DOCS_VERSION,
+  },
+
   routeRules: {
     // Docs layout - uses navigation data, all docs pages
     // ISR: Generate at build/first request, cache for 1 hour, regenerate in background
     '/docs/**': {
-      prerender: true,
-    },
-    // API routes - additional caching (search already has its own cache)
-    '/api/search': {
-      headers: {
-        'Cache-Control': 'public, max-age=3600, s-maxage=3600',
-      },
-    },
-    '/api/docs-version': {
-      headers: {
-        'Cache-Control': 'public, max-age=300, s-maxage=300',
-      },
+      isr: 3600,
     },
     // Raw markdown content endpoint
     '/raw/**': {

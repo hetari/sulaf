@@ -87,7 +87,10 @@ export function useSearch() {
           memoizedSearch.clear()
         }
         currentDocsVersion.value = version
-      } catch {}
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error(`[ERROR]: ${e}`)
+      }
 
       // This will use cache for the same query string
       const results = await memoizedSearch(query)
