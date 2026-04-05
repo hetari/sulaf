@@ -3,7 +3,7 @@
 ### Enjoying my project? Please show your appreciation by starring it on GitHub! ⭐
 
 <div align="center">
-  <a href="https://sulaf.netlify.app">
+  <a href="https://sulaf-socd8d.cranl.net">
     <img src="./apps/www/public/logo.svg" alt="Sulaf Logo" width="120" height="120" />
   </a>
   <h1 align="center">Sulaf</h1>
@@ -13,11 +13,11 @@
     Copy, paste, and make them yours.
   </p>
   <p align="center">
-    <a href="https://sulaf.netlify.app/docs/introduction">Documentation</a>
+    <a href="https://sulaf-socd8d.cranl.net/docs/introduction">Documentation</a>
     •
     <a href="https://github.com/hetari/sulaf">GitHub</a>
     <!-- • -->
-    <!-- <a href="https://sulaf.netlify.app/docs/components">Components</a> -->
+    <!-- <a href="https://sulaf-socd8d.cranl.net/docs/components">Components</a> -->
   </p>
 </div>
 
@@ -35,8 +35,8 @@ Sulaf is a **shadcn-vue registry** designed to bring premium aesthetics and worl
 
 ## Getting Started
 
-1. Visit the [Documentation](https://sulaf.netlify.app/docs/introduction).
-<!-- 2. Follow the [Installation Guide](https://sulaf.netlify.app/docs/installation). -->
+1. Visit the [Documentation](https://sulaf-socd8d.cranl.net/docs/introduction).
+<!-- 2. Follow the [Installation Guide](https://sulaf-socd8d.cranl.net/docs/installation). -->
 2. Start copying components!
 3. Run tests: `bun run test` (See [CONTRIBUTING.md](./CONTRIBUTING.md) for details)
 

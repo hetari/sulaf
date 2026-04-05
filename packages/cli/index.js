@@ -5,7 +5,7 @@
 const { spawnSync } = require('node:child_process')
 const process = require('node:process')
 
-const ELEMENTS_REGISTRY_URL = 'https://sulaf.netlify.app/r/'
+const ELEMENTS_REGISTRY_URL = 'https://sulaf-socd8d.cranl.net/r/'
 
 // Function to detect the command used to invoke this script
 function getCommandPrefix() {

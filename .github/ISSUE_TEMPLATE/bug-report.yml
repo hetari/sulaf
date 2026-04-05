@@ -10,7 +10,7 @@ body:
         This form is only for submitting bug reports. If you have a usage question
         or are unsure if this is really a bug, make sure to:
 
-        - Read the [docs](https://sulaf.netlify.app/docs/introduction)
+        - Read the [docs](https://sulaf-socd8d.cranl.net/docs/introduction)
         - Ask on [GitHub Discussions](https://github.com/hetari/sulaf/discussions)
   - type: input
     id: reproduction

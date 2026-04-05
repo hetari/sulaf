@@ -3,7 +3,7 @@ export const registryConfig = {
    * The base URL for the registry.
    * This is used for generating full URLs in registry JSON files.
    */
-  baseUrl: 'https://sulaf.netlify.app',
+  baseUrl: 'https://sulaf-socd8d.cranl.net',
 
   /**
    * Directory where components should be installed in the consuming project.
