@@ -5,7 +5,9 @@ export type NavItem = {
 
 /** Top-level section pills shown in the sidebar and mobile menu. */
 export const NAV_SECTIONS: NavItem[] = [
-  { name: 'Get Started', href: '/docs/getting-started/introduction' },
+  { name: 'Get Started', href: '/docs/introduction' },
+  { name: 'Components', href: '/docs/components' },
+  { name: 'Installation', href: '/docs/installation' },
 ]
 
 /** Sidebar group titles (lowercased) that should never be rendered. */
@@ -20,7 +22,11 @@ export const SIDEBAR_EXCLUDED_PAGES: string[] = []
  */
 export const MAIN_NAVIGATION: NavItem[] = [
   {
-    href: '/docs/getting-started/introduction',
+    href: '/docs/introduction',
     name: 'Docs',
+  },
+  {
+    href: '/docs/components',
+    name: 'Components',
   },
 ]

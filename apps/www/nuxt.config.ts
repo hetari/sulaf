@@ -19,11 +19,8 @@ export default defineNuxtConfig({
   routeRules: {
     // Docs layout - uses navigation data, all docs pages
     // ISR: Generate at build/first request, cache for 1 hour, regenerate in background
-    '/docs/getting-started': {
-      redirect: { to: '/docs/getting-started/introduction', statusCode: 301 },
-    },
     '/docs/**': {
-      isr: 3600,
+      prerender: true,
     },
     // API routes - additional caching (search already has its own cache)
     '/api/search': {
@@ -55,6 +52,9 @@ export default defineNuxtConfig({
   css: ['~/assets/css/main.css'],
 
   vite: {
+    optimizeDeps: {
+      include: ['reka-ui', 'class-variance-authority', 'clsx', 'tailwind-merge', 'lucide-vue-next'],
+    },
     plugins: [
       // https://github.com/tailwindlabs/tailwindcss/discussions/19655
       tailwindcss(),
@@ -83,6 +83,7 @@ export default defineNuxtConfig({
     },
     { path: '~/components/demo', pathPrefix: false },
     { path: '~/components/content', global: true, pathPrefix: false },
+    { path: '~/components/sulaf', pathPrefix: false, ignore: ['**/*.ts'] },
   ],
 
   shiki: {
@@ -132,6 +133,11 @@ export default defineNuxtConfig({
   },
 
   nitro: {
+    devStorage: {
+      cache: {
+        driver: 'memory',
+      },
+    },
     prerender: {
       crawlLinks: true,
       routes: ['/'],

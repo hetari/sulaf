@@ -57,16 +57,12 @@ const version = 'v0.0.1'
 
         <div class="flex md:justify-center justify-start gap-2 mt-4">
           <Button class="group font-bold">
-            <NuxtLink prefetch-on="interaction" to="/docs/getting-started/introduction">
-              Get Started
-            </NuxtLink>
+            <NuxtLink prefetch-on="interaction" to="/docs/introduction"> Get Started </NuxtLink>
             <ArrowRightIcon class="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
           </Button>
 
           <Button variant="outline">
-            <NuxtLink prefetch-on="interaction" to="/docs/getting-started/introduction">
-              Browse Components
-            </NuxtLink>
+            <NuxtLink prefetch-on="interaction" to="/docs/components"> Browse Components </NuxtLink>
           </Button>
         </div>
       </div>
