@@ -8,12 +8,13 @@ type SidebarNavigationItem = {
   stem?: string
   children?: SidebarNavigationItem[]
   new?: boolean
+  beta?: boolean
   navigation?: {
     icon?: string
   }
 }
 
-defineProps<{
+const props = defineProps<{
   tree: SidebarNavigationItem
 }>()
 
@@ -22,6 +23,19 @@ const { path } = toRefs(useRoute())
 const filteredSections = computed(() =>
   NAV_SECTIONS.filter(section => showMcpDocs || !section.href.includes('/mcp')),
 )
+
+const rootPages = computed(() => {
+  return (props.tree.children || []).filter(
+    (item: SidebarNavigationItem) => !SIDEBAR_EXCLUDED_PAGES.includes(item.path),
+  )
+})
+
+const folderGroups = computed(() => {
+  return (props.tree.children || []).filter(
+    (item: SidebarNavigationItem) =>
+      item.children && !SIDEBAR_EXCLUDED_SECTIONS.includes(item.title.toLocaleLowerCase()),
+  )
+})
 
 function isActive(href: string) {
   return href === '/docs' ? path.value === href : path.value.startsWith(href)
@@ -37,39 +51,51 @@ function isActive(href: string) {
       <div
         class="sticky -top-1 z-10 h-8 shrink-0 bg-linear-to-b from-background via-background/80 to-background/50 blur-xs"
       />
-      <SidebarGroup>
+
+      <!-- Sections (Root Pages natively ordered by Nuxt Content) -->
+      <SidebarGroup v-if="rootPages.length > 0">
         <SidebarGroupLabel class="font-medium text-muted-foreground"> Sections </SidebarGroupLabel>
         <SidebarGroupContent>
           <SidebarMenu>
-            <SidebarMenuItem v-for="{ name, href } in filteredSections" :key="name">
+            <SidebarMenuItem v-for="item in rootPages" :key="item.path">
               <SidebarMenuButton
                 as-child
-                :is-active="isActive(href)"
+                :is-active="item.path === path"
                 class="relative h-7.5 w-fit overflow-visible border border-transparent text-[0.8rem] font-medium after:absolute after:inset-x-0 after:-inset-y-1 after:z-0 after:rounded-md data-[active=true]:border-accent data-[active=true]:bg-accent 3xl:fixed:w-full 3xl:fixed:max-w-48"
               >
-                <NuxtLink :to="href" prefetch-on="interaction">
+                <NuxtLink :to="item.path" prefetch-on="interaction">
                   <span class="absolute inset-0 flex w-(--sidebar-width) bg-transparent" />
-                  {{ name }}
+                  <LucideIcon
+                    v-if="item.navigation?.icon"
+                    :name="item.navigation.icon"
+                    class="mr-2 size-4 shrink-0"
+                  />
+                  {{ item.title }}
+                  <span
+                    v-if="item.new"
+                    class="size-2 items-center gap-1 rounded-md border-0 bg-green-600 dark:bg-green-500"
+                  />
+                  <span
+                    v-else-if="item.beta"
+                    class="size-2 items-center gap-1 rounded-md border-0 bg-orange-600 dark:bg-orange-500"
+                  />
                 </NuxtLink>
               </SidebarMenuButton>
             </SidebarMenuItem>
           </SidebarMenu>
         </SidebarGroupContent>
       </SidebarGroup>
-      <SidebarGroup
-        v-for="item in (tree.children || []).filter(
-          section => !SIDEBAR_EXCLUDED_SECTIONS.includes(section.title.toLocaleLowerCase()),
-        )"
-        :key="item.title"
-      >
+
+      <!-- Folder Groups -->
+      <SidebarGroup v-for="group in folderGroups" :key="group.title">
         <SidebarGroupLabel class="font-medium text-muted-foreground">
-          {{ item.title }}
+          {{ group.title }}
         </SidebarGroupLabel>
         <SidebarGroupContent>
           <SidebarMenu class="gap-0.5">
             <template
-              v-for="childItem in (item?.children || []).filter(
-                child => !SIDEBAR_EXCLUDED_PAGES.includes(child.path),
+              v-for="childItem in (group.children || []).filter(
+                (child: SidebarNavigationItem) => !SIDEBAR_EXCLUDED_PAGES.includes(child.path),
               )"
               :key="childItem.path"
             >
@@ -87,14 +113,14 @@ function isActive(href: string) {
                       class="mr-2 size-4 shrink-0"
                     />
                     {{ childItem.title }}
-                    <Badge
+                    <span
                       v-if="childItem.new"
-                      variant="secondary"
-                      class="inline-flex h-5 items-center gap-1 rounded-md border-0 bg-green-500/10 px-2 text-[0.65rem] font-semibold tracking-wide text-green-600 uppercase"
-                    >
-                      <span class="size-1.5 rounded-full bg-green-500" />
-                      New
-                    </Badge>
+                      class="size-2 items-center gap-1 rounded-md border-0 bg-green-600 dark:bg-green-500"
+                    />
+                    <span
+                      v-else-if="childItem.beta"
+                      class="size-2 items-center gap-1 rounded-md border-0 bg-orange-600 dark:bg-orange-500"
+                    />
                   </NuxtLink>
                 </SidebarMenuButton>
               </SidebarMenuItem>

@@ -1,10 +1,21 @@
 <script setup lang="ts">
 import type { HTMLAttributes } from 'vue'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
-import { NAV_SECTIONS } from '@/lib/navigation'
+import { SIDEBAR_EXCLUDED_PAGES, SIDEBAR_EXCLUDED_SECTIONS } from '@/lib/navigation'
 import { cn } from '@/lib/utils'
-import { showMcpDocs } from '~/lib/flag'
+
+type SidebarNavigationItem = {
+  title: string
+  path: string
+  stem?: string
+  children?: SidebarNavigationItem[]
+  new?: boolean
+  beta?: boolean
+  navigation?: {
+    icon?: string
+  }
+}
 
 /**
  * Relaxed typing for `tree` to avoid template type errors related to
@@ -20,6 +31,21 @@ const props = defineProps<{
 
 const router = useRouter()
 const open = ref(false)
+
+const rootPages = computed(() => {
+  const root = props.tree?.[0]
+  if (!root) return []
+  return (root.children || []).filter((item: any) => !SIDEBAR_EXCLUDED_PAGES.includes(item.path))
+})
+
+const folderGroups = computed(() => {
+  const root = props.tree?.[0]
+  if (!root) return []
+  return (root.children || []).filter(
+    (item: any) =>
+      item.children && !SIDEBAR_EXCLUDED_SECTIONS.includes(item.title.toLocaleLowerCase()),
+  )
+})
 
 function handleNavigate(path: string) {
   router.push(path)
@@ -98,45 +124,69 @@ function handleNavigate(path: string) {
             </NuxtLink>
           </div>
         </div>
-        <div v-if="NAV_SECTIONS.length" class="flex flex-col gap-4">
+
+        <!-- Sections (Root Pages) -->
+        <div v-if="rootPages.length" class="flex flex-col gap-4">
           <div class="text-sm font-medium text-muted-foreground">Sections</div>
           <div class="flex flex-col gap-3">
             <NuxtLink
-              v-for="{ name, href } in NAV_SECTIONS"
-              v-show="!(!showMcpDocs && href.includes('/mcp'))"
-              :key="name"
+              v-for="item in rootPages"
+              :key="item.path"
               prefetch-on="interaction"
-              :to="href"
-              class="text-2xl font-medium"
-              @click="handleNavigate(href)"
+              :to="item.path"
+              class="flex items-center gap-2 text-2xl font-medium"
+              @click="handleNavigate(item.path)"
             >
-              {{ name }}
+              <LucideIcon
+                v-if="item.navigation?.icon"
+                :name="item.navigation.icon"
+                class="size-6 shrink-0"
+              />
+              {{ item.title }}
+              <span
+                v-if="item.new"
+                class="size-2 rounded-full border-0 bg-green-600 dark:bg-green-500"
+              />
+              <span
+                v-else-if="item.beta"
+                class="size-2 rounded-full border-0 bg-orange-600 dark:bg-orange-500"
+              />
             </NuxtLink>
           </div>
         </div>
+
+        <!-- Folder Groups -->
         <div class="flex flex-col gap-8">
-          <template v-for="(group, index) in tree[0]?.children" :key="index">
+          <template v-for="group in folderGroups" :key="group.title">
             <div class="flex flex-col gap-4">
               <div class="text-sm font-medium text-muted-foreground">
                 {{ group.title }}
               </div>
               <div class="flex flex-col gap-3">
                 <NuxtLink
-                  v-for="item in group.children"
+                  v-for="item in (group.children || []).filter(
+                    (child: any) => !SIDEBAR_EXCLUDED_PAGES.includes(child.path),
+                  )"
                   :key="item.path"
                   prefetch-on="interaction"
                   class="flex items-center gap-2 text-2xl font-medium"
                   :to="item.path"
                   @click="handleNavigate(item.path)"
                 >
-                  <!-- `item.navigation` may be missing; relaxed typing on `tree` avoids TS template errors -->
                   <LucideIcon
                     v-if="item.navigation?.icon"
                     :name="item.navigation.icon"
                     class="size-6 shrink-0"
                   />
                   {{ item.title }}
-                  <span v-if="item.new" class="flex size-2 rounded-full bg-green-500" />
+                  <span
+                    v-if="item.new"
+                    class="size-2 rounded-full border-0 bg-green-600 dark:bg-green-500"
+                  />
+                  <span
+                    v-else-if="item.beta"
+                    class="size-2 rounded-full border-0 bg-orange-600 dark:bg-orange-500"
+                  />
                 </NuxtLink>
               </div>
             </div>
