@@ -17,7 +17,7 @@ RUN mkdir -p /temp/dev
 COPY package.json bun.lock /temp/dev/
 COPY apps/www/package.json /temp/dev/apps/www/
 COPY packages /temp/dev/packages/
-RUN cd /temp/dev && bun install --frozen-lockfile
+RUN cd /temp/dev && bun install
 
 # Copy node_modules from install stage
 # Then copy all source files and build
