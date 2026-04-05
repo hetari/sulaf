@@ -15,7 +15,9 @@ function run() {
 
     // eslint-disable-next-line no-console
     console.log('\n📝 Generating Release Notes (RELEASE_NOTES.md)...')
-    execSync('bunx git-cliff --latest --strip header -o RELEASE_NOTES.md', { stdio: 'inherit' })
+    execSync('bunx git-cliff --latest --strip header -o RELEASE_NOTES.md', {
+      stdio: 'inherit',
+    })
 
     // eslint-disable-next-line no-console
     console.log('\n✅ Changelog generation completed successfully!')
