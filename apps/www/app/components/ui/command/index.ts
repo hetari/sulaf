@@ -12,7 +12,7 @@ export { default as CommandSeparator } from './CommandSeparator.vue'
 export { default as CommandShortcut } from './CommandShortcut.vue'
 
 export const [useCommand, provideCommandContext] = createContext<{
-  allItems: Ref<Map<string, string>>
+  allItems: Ref<Map<string, { value: string; keywords: string[] }>>
   allGroups: Ref<Map<string, Set<string>>>
   filterState: {
     search: string

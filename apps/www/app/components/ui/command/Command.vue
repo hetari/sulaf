@@ -7,17 +7,31 @@ import { reactive, ref, watch } from 'vue'
 import { cn } from '@/lib/utils'
 import { provideCommandContext } from '.'
 
-const props = withDefaults(defineProps<ListboxRootProps & { class?: HTMLAttributes['class'] }>(), {
-  modelValue: '',
-})
+const props = withDefaults(
+  defineProps<
+    ListboxRootProps & {
+      class?: HTMLAttributes['class']
+      /**
+       * Custom filter function for items.
+       * @param value The item value (concatenated text, prop value, and keywords).
+       * @param search The current search query.
+       * @param keywords The actual keywords provided to the CommandItem (if any).
+       */
+      filter?: (value: string, search: string, keywords?: string[]) => number
+    }
+  >(),
+  {
+    modelValue: '',
+  },
+)
 
 const emits = defineEmits<ListboxRootEmits>()
 
-const delegatedProps = reactiveOmit(props, 'class')
+const delegatedProps = reactiveOmit(props, 'class', 'filter')
 
 const forwarded = useForwardPropsEmits(delegatedProps, emits)
 
-const allItems = ref<Map<string, string>>(new Map())
+const allItems = ref<Map<string, { value: string; keywords: string[] }>>(new Map())
 const allGroups = ref<Map<string, Set<string>>>(new Map())
 
 const { contains } = useFilter({ sensitivity: 'base' })
@@ -36,7 +50,8 @@ const filterState = reactive({
 function filterItems() {
   if (!filterState.search) {
     filterState.filtered.count = allItems.value.size
-    // Do nothing, each item will know to show itself because search is empty
+    filterState.filtered.items.clear()
+    filterState.filtered.groups.clear()
     return
   }
 
@@ -45,16 +60,23 @@ function filterItems() {
   let itemCount = 0
 
   // Check which items should be included
-  for (const [id, value] of allItems.value) {
-    const score = contains(value, filterState.search)
-    filterState.filtered.items.set(id, score ? 1 : 0)
-    if (score) itemCount++
+  for (const [id, item] of allItems.value) {
+    let score = 0
+    if (props.filter) {
+      // Pass the actual keywords if available, or an empty array.
+      score = props.filter(item.value, filterState.search, item.keywords)
+    } else {
+      score = contains(item.value, filterState.search) ? 1 : 0
+    }
+
+    filterState.filtered.items.set(id, score)
+    if (score > 0) itemCount++
   }
 
   // Check which groups have at least 1 item shown
   for (const [groupId, group] of allGroups.value) {
     for (const itemId of group) {
-      if (filterState.filtered.items.get(itemId)! > 0) {
+      if ((filterState.filtered.items.get(itemId) ?? 0) > 0) {
         filterState.filtered.groups.add(groupId)
         break
       }
@@ -65,10 +87,11 @@ function filterItems() {
 }
 
 watch(
-  () => filterState.search,
+  [() => filterState.search, () => allItems.value],
   () => {
     filterItems()
   },
+  { deep: true },
 )
 
 provideCommandContext({

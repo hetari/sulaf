@@ -98,7 +98,6 @@ onMounted(() => {
             'relative h-8 w-full justify-start bg-surface pl-3 font-medium text-foreground shadow-none sm:pr-12 md:w-48 lg:w-56 xl:w-64 dark:bg-card',
           )
         "
-        @click="open = true"
       >
         <span class="hidden lg:inline-flex">Search documentation...</span>
         <span class="inline-flex lg:hidden">Search...</span>
@@ -147,7 +146,7 @@ onMounted(() => {
             <CommandItem
               v-for="result in searchResults"
               :key="result.path"
-              :value="`${result.title} ${result.description || ''} ${result.path}`"
+              :value="`${result.title} ${result.description || ''} ${result.path} ${result.excerpt || ''}`"
               @select="() => runCommand(() => router.push(result.path))"
               @highlight="
                 () => {
