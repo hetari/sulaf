@@ -33,15 +33,14 @@ After pushing your changes and tagging a new version:
     ```bash
     bun scripts/release.ts
     ```
-2.  Commit the updated `CHANGELOG.md`:
+2.  Push your tags and create the GitHub release:
     ```bash
-    git add CHANGELOG.md
-    git commit -m "chore: update changelog"
-    git push
-    ```
-3.  Create a GitHub release using the generated notes:
-    ```bash
+    git push --tags
     gh release create <tag> --notes-file RELEASE_NOTES.md
+    ```
+3.  Clean up:
+    ```bash
+    rm RELEASE_NOTES.md
     ```
 
 ---

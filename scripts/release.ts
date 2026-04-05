@@ -35,8 +35,12 @@ function run() {
     // eslint-disable-next-line no-console
     console.log('✨ You can now use the GH CLI to create your release:')
     // eslint-disable-next-line no-console
+    console.log(`   git push --tags`)
+    // eslint-disable-next-line no-console
     console.log(`   gh release create ${nextTag} --notes-file RELEASE_NOTES.md`)
-  } catch (err: unknown) {
+    // eslint-disable-next-line no-console
+    console.log(`   rm RELEASE_NOTES.md`)
+  } catch (err: any) {
     // eslint-disable-next-line no-console
     console.error(`\n❌ Failed to generate changelogs: ${err.message}`)
     process.exit(1)
