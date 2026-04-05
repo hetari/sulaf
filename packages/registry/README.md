@@ -1,98 +1,69 @@
 # Sulaf Registry System
 
-This package manages the component registry for Sulaf. It scans the source components, analyzes their dependencies, and generates the necessary JSON files for the `shadcn-vue` CLI.
+This package dynamically manages the component registry for Sulaf. It programmatically scans your source components, analyzes their dependencies using AST, and generates standardized JSON files for use with the `shadcn-vue` CLI.
 
 ## How it Works
 
-The registry is built using a custom script located in `scripts/registry-builder.ts`.
+The registry is built using a custom generator script located in `scripts/registry-builder.ts`.
 
-1. **Scanning**: The script walks through the `default/` directory. Each top-level directory under `default/` is treated as a component "group" (e.g., `default/autocomplete`).
-2. **Analysis**: For each group, it reads all `.vue` and `.ts` files and uses `ts-morph` and `@vue/compiler-sfc` to extract and analyze import statements.
+1. **Scanning**: The script crawls source directories defined in `registry.config.ts` (`components`, `blocks`, and `pages` by default) looking for `.vue` files and non-root `.ts` files. It also scans the `examples` directory.
+2. **Analysis**: For each discovered file group, `ts-morph` and `@vue/compiler-sfc` are invoked to extract script contexts and analyze import specifiers.
 3. **Dependency Discovery**:
-   - **NPM Dependencies**: Automatically detected from imports and cross-referenced with `package.json`.
-   - **Registry Dependencies**: Automatically detected when one component imports another using project aliases (e.g., `@/components/ui/...`).
-4. **Transformation**: Path aliases are replaced according to the rules in `scripts/registry.config.ts` to ensure the registry files are portable.
-5. **Generation**: Individual component JSON files are generated in `apps/www/public/r/components/`, along with a global `registry.json` and a bundled `all.json`.
+   - **NPM Dependencies**: Discovered automatically by scanning standard module imports and cross-referencing your project's `package.json`. Includes automatic discovery of matching `@types/` packages for `devDependencies`.
+   - **Registry Dependencies**: Detected transparently when internal path aliases map to other component groups (e.g., `@/components/ui/button` internally becomes a registry dependency).
+4. **Transformation**: Path aliases pointing to the repository workspace (`@sulaf/ui/...`) are replaced according to the `replacements` config in `registry.config.ts`.
+5. **Generation**: Individual component JSON payload definitions are bundled and placed inside output directories (e.g. `apps/www/public/r/components/`). Two primary indices are also baked out: `registry.json` and a massive bundled `all.json` for one-shot CLI commands.
 
-## Registry Types
+## Auto-detection rules
 
-You can specify the type of a registry item to help the CLI understand how to install it. The following types are supported:
+The registry generation scripts operate without any manual configuration or `registry.json` overrides. It dynamically resolves the registry types using simple folder and filename heuristics:
 
-| Type                 | Description                                                                       |
-| :------------------- | :-------------------------------------------------------------------------------- |
-| `registry:ui`        | **Recommended for primitives.** Use for UI components and single-file primitives. |
-| `registry:component` | Use for simple, reusable components. (Default)                                    |
-| `registry:block`     | Use for complex components with multiple files or example blocks.                 |
-| `registry:lib`       | Use for library files and utility functions.                                      |
-| `registry:hook`      | Use for Vue composables (hooks).                                                  |
-| `registry:page`      | Use for page components or file-based routes.                                     |
-| `registry:file`      | Use for miscellaneous files.                                                      |
+| Type                 | Heuristic / Rule                                                                                 |
+| :------------------- | :----------------------------------------------------------------------------------------------- |
+| `registry:ui`        | Any `.vue` or `.ts` files located anywhere inside the `components/` directory.                   |
+| `registry:hook`      | Any TypeScript file (`.ts`) where the file basename begins with `use` (e.g., `use-debounce.ts`). |
+| `registry:block`     | Any files located inside the `examples/` directory. They are exposed as standalone blocks.       |
+| `registry:component` | Any remaining components in other source directories not matched by the criteria above.          |
 
-## Customizing a Component
+The registry item title is derived automatically by capitalizing and splitting the folder/group name strings (e.g., `alert-dialog` becomes "Alert Dialog").
 
-By default, every folder in `default/` is treated as a `registry:component` and its title is derived from the folder name. You can customize this by adding a `registry.json` file inside the component folder.
-
-### Example: `default/my-component/registry.json`
-
-```json
-{
-  "title": "My Premium Component",
-  "description": "A high-quality component with custom metadata.",
-  "type": "registry:ui",
-  "dependencies": ["gsap"],
-  "registryDependencies": ["button", "badge"]
-}
-```
-
-### Folder Structure
+## Folder Structure
 
 ```text
 packages/registry/
-├── default/
-│   ├── autocomplete/
-│   │   ├── Autocomplete.vue
-│   │   ├── ...
-│   │   └── registry.json   <-- Optional customization
+├── components/          <-- Auto-mapped to 'registry:ui' and 'registry:hook'
+│   └── autocomplete/
+│       ├── Autocomplete.vue
+│       └── use-autocomplete.ts
+├── blocks/              <-- Auto-mapped to 'registry:component'
+├── pages/               <-- Auto-mapped to 'registry:component'
+├── examples/            <-- Rendered out purely as 'registry:block'
 ├── scripts/
-│   ├── registry/           <-- Builder logic
-│   └── registry.config.ts  <-- Global config
-└── README.md               <-- You are here
+│   ├── registry-builder.ts  <-- Generation logic
+│   └── registry.config.ts   <-- Configuration boundaries and replacements
+└── README.md
 ```
 
-### Advanced Usage: Mixing Multiple Types
+## Global Configuration (`registry.config.ts`)
 
-If you have a component folder containing different types of files (e.g., UI components, hooks, and utils), you can specify the `type` for each file individually in the `files` array.
+You can edit `"scripts/registry.config.ts"` to tweak:
 
-#### Example: `default/autocomplete/registry.json`
-
-```json
-{
-  "title": "Autocomplete",
-  "type": "registry:ui",
-  "files": [
-    {
-      "path": "use-autocomplete.ts",
-      "type": "registry:hook"
-    },
-    {
-      "path": "Autocomplete.vue",
-      "type": "registry:ui"
-    }
-  ]
-}
-```
-
-Files not explicitly listed in the `files` array will inherit the top-level `type` (or default to `registry:component`).
+- **`srcDirs`**: Which directories should be actively walked.
+- **`excludeDeps`**: Which dependencies stringently found in imports should not be bundled in outputs (e.g., `vue`).
+- **`outputDir`**: Where to emit files (which is `apps/www/public/r` to expose them publicly via Nitro).
+- **`replacements`**: Regex path mappings for transpiling repository paths to standard developer path configurations.
 
 ## Building the Registry
 
-To regenerate the registry JSON files, run the following command from the project root:
+To trigger the builder and regenerate the `apps/www/public/r` contents:
+
+From the repository root workspace:
 
 ```bash
 bun registry:build
 ```
 
-Or from within the `packages/registry` directory:
+Or while inside the `packages/registry` directory:
 
 ```bash
 bun build

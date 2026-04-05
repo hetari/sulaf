@@ -28,7 +28,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
 </script>
 
 <template>
-  <ComboboxList v-bind="forwarded" :class="cn('w-(--reka-popper-anchor-width)', props.class)">
+  <ComboboxList v-bind="forwarded" :class="cn('w-(--reka-combobox-trigger-width)', props.class)">
     <slot />
   </ComboboxList>
 </template>
