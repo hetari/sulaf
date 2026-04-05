@@ -4,71 +4,69 @@
   "items": [
     {
       "name": "autocomplete",
-      "type": "registry:component",
+      "type": "registry:ui",
       "title": "Autocomplete",
+      "description": "sulaf autocomplete components.",
       "files": [
         {
-          "path": "default/autocomplete/AutocompleteControl.vue",
-          "type": "registry:component"
+          "path": "autocomplete/AutocompleteControl.vue",
+          "type": "registry:ui"
         },
         {
-          "path": "default/autocomplete/AutocompleteClear.vue",
-          "type": "registry:component"
+          "path": "autocomplete/AutocompleteClear.vue",
+          "type": "registry:ui"
         },
         {
-          "path": "default/autocomplete/AutocompleteList.vue",
-          "type": "registry:component"
+          "path": "autocomplete/AutocompleteList.vue",
+          "type": "registry:ui"
         },
         {
-          "path": "default/autocomplete/Autocomplete.vue",
-          "type": "registry:component"
+          "path": "autocomplete/Autocomplete.vue",
+          "type": "registry:ui"
         },
         {
-          "path": "default/autocomplete/AutocompleteEmpty.vue",
-          "type": "registry:component"
+          "path": "autocomplete/AutocompleteEmpty.vue",
+          "type": "registry:ui"
         },
         {
-          "path": "default/autocomplete/context.ts",
-          "type": "registry:file",
-          "target": "context.ts"
+          "path": "autocomplete/context.ts",
+          "type": "registry:ui"
         },
         {
-          "path": "default/autocomplete/AutocompleteItem.vue",
-          "type": "registry:component"
+          "path": "autocomplete/AutocompleteItem.vue",
+          "type": "registry:ui"
         },
         {
-          "path": "default/autocomplete/AutocompleteInput.vue",
-          "type": "registry:component"
+          "path": "autocomplete/AutocompleteInput.vue",
+          "type": "registry:ui"
         },
         {
-          "path": "default/autocomplete/AutocompleteTrigger.vue",
-          "type": "registry:component"
+          "path": "autocomplete/AutocompleteTrigger.vue",
+          "type": "registry:ui"
         },
         {
-          "path": "default/autocomplete/AutocompleteContent.vue",
-          "type": "registry:component"
+          "path": "autocomplete/AutocompleteContent.vue",
+          "type": "registry:ui"
         },
         {
-          "path": "default/autocomplete/index.ts",
-          "type": "registry:file",
-          "target": "index.ts"
+          "path": "autocomplete/index.ts",
+          "type": "registry:ui"
         },
         {
-          "path": "default/autocomplete/AutocompleteLoading.vue",
-          "type": "registry:component"
+          "path": "autocomplete/AutocompleteLoading.vue",
+          "type": "registry:ui"
         },
         {
-          "path": "default/autocomplete/AutocompleteGroup.vue",
-          "type": "registry:component"
+          "path": "autocomplete/AutocompleteGroup.vue",
+          "type": "registry:ui"
         },
         {
-          "path": "default/autocomplete/AutocompleteLabel.vue",
-          "type": "registry:component"
+          "path": "autocomplete/AutocompleteLabel.vue",
+          "type": "registry:ui"
         },
         {
-          "path": "default/autocomplete/types.ts",
-          "type": "registry:file",
-          "target": "types.ts"
+          "path": "autocomplete/types.ts",
+          "type": "registry:ui"
         }
       ]
     }
