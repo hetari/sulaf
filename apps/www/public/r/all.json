@@ -1,90 +1,87 @@
 {
   "$schema": "https://shadcn-vue.com/schema/registry-item.json",
   "name": "all",
-  "type": "registry:component",
-  "title": "All Components Bundle",
-  "description": "Bundle containing all registered components.",
+  "type": "registry:ui",
+  "title": "All sulaf Elements",
+  "description": "Bundle containing all sulaf components.",
   "files": [
     {
-      "path": "default/autocomplete/AutocompleteControl.vue",
-      "type": "registry:component",
-      "content": "<script setup lang=\"ts\">\nimport type { ComboboxAnchorProps } from 'reka-ui'\nimport type { HTMLAttributes } from 'vue'\nimport { reactiveOmit } from '@vueuse/core'\nimport { ComboboxAnchor, useForwardProps } from 'reka-ui'\nimport { InputGroup } from '@sulaf/ui/components/input-group'\nimport { cn } from '@sulaf/ui/lib/utils'\n\nconst props = defineProps<\n  ComboboxAnchorProps & {\n    class?: HTMLAttributes['class']\n  }\n>()\n\nconst delegatedProps = reactiveOmit(props, 'class')\nconst forwarded = useForwardProps(delegatedProps)\n</script>\n\n<template>\n  <ComboboxAnchor v-bind=\"forwarded\">\n    <InputGroup :class=\"cn(props.class)\">\n      <slot />\n    </InputGroup>\n  </ComboboxAnchor>\n</template>\n"
+      "path": "autocomplete/AutocompleteControl.vue",
+      "type": "registry:ui",
+      "content": "<script setup lang=\"ts\">\nimport type { ComboboxAnchorProps } from 'reka-ui'\nimport type { HTMLAttributes } from 'vue'\nimport { reactiveOmit } from '@vueuse/core'\nimport { ComboboxAnchor, useForwardProps } from 'reka-ui'\nimport { InputGroup } from '@/components/ui/input-group'\nimport { cn } from '@/lib/utils'\n\nconst props = defineProps<\n  ComboboxAnchorProps & {\n    class?: HTMLAttributes['class']\n  }\n>()\n\nconst delegatedProps = reactiveOmit(props, 'class')\nconst forwarded = useForwardProps(delegatedProps)\n</script>\n\n<template>\n  <ComboboxAnchor v-bind=\"forwarded\">\n    <InputGroup :class=\"cn(props.class)\">\n      <slot />\n    </InputGroup>\n  </ComboboxAnchor>\n</template>\n"
     },
     {
-      "path": "default/autocomplete/AutocompleteClear.vue",
-      "type": "registry:component",
-      "content": "<script setup lang=\"ts\">\nimport type { ComboboxCancelProps } from 'reka-ui'\nimport type { HTMLAttributes } from 'vue'\nimport { reactiveOmit } from '@vueuse/core'\nimport { ComboboxCancel, useForwardProps } from 'reka-ui'\nimport { cn } from '@sulaf/ui/lib/utils'\nimport { X } from 'lucide-vue-next'\nimport { useAutocompleteContext } from './context'\n\nconst props = defineProps<\n  ComboboxCancelProps & {\n    class?: HTMLAttributes['class']\n  }\n>()\n\nconst delegatedProps = reactiveOmit(props, 'class')\nconst forwarded = useForwardProps(delegatedProps)\n\nconst { searchTerm } = useAutocompleteContext()\n\nfunction handleClear() {\n  searchTerm.value = ''\n}\n</script>\n\n<template>\n  <ComboboxCancel\n    v-bind=\"forwarded\"\n    :class=\"\n      cn(\n        'inline-flex items-center justify-center rounded-sm',\n        'text-muted-foreground hover:text-foreground',\n        'outline-none cursor-pointer transition-colors',\n        'focus-visible:ring-2 focus-visible:ring-ring',\n        props.class,\n      )\n    \"\n    @click=\"handleClear\"\n  >\n    <slot>\n      <X class=\"size-4\" />\n    </slot>\n  </ComboboxCancel>\n</template>\n"
+      "path": "autocomplete/AutocompleteClear.vue",
+      "type": "registry:ui",
+      "content": "<script setup lang=\"ts\">\nimport type { ComboboxCancelProps } from 'reka-ui'\nimport type { HTMLAttributes } from 'vue'\nimport { reactiveOmit } from '@vueuse/core'\nimport { ComboboxCancel, useForwardProps } from 'reka-ui'\nimport { cn } from '@/lib/utils'\nimport { X } from 'lucide-vue-next'\nimport { useAutocompleteContext } from './context'\n\nconst props = defineProps<\n  ComboboxCancelProps & {\n    class?: HTMLAttributes['class']\n  }\n>()\n\nconst delegatedProps = reactiveOmit(props, 'class')\nconst forwarded = useForwardProps(delegatedProps)\n\nconst { searchTerm } = useAutocompleteContext()\n\nfunction handleClear() {\n  searchTerm.value = ''\n}\n</script>\n\n<template>\n  <ComboboxCancel\n    v-bind=\"forwarded\"\n    :class=\"\n      cn(\n        'inline-flex items-center justify-center rounded-sm',\n        'text-muted-foreground hover:text-foreground',\n        'outline-none cursor-pointer transition-colors',\n        'focus-visible:ring-2 focus-visible:ring-ring',\n        props.class,\n      )\n    \"\n    @click=\"handleClear\"\n  >\n    <slot>\n      <X class=\"size-4\" />\n    </slot>\n  </ComboboxCancel>\n</template>\n"
     },
     {
-      "path": "default/autocomplete/AutocompleteList.vue",
-      "type": "registry:component",
-      "content": "<script setup lang=\"ts\">\nimport type { ComboboxViewportProps } from 'reka-ui'\nimport type { HTMLAttributes } from 'vue'\nimport { reactiveOmit } from '@vueuse/core'\nimport { useForwardProps } from 'reka-ui'\nimport { ComboboxViewport } from '@sulaf/ui/components/combobox'\nimport { cn } from '@sulaf/ui/lib/utils'\n\nconst props = defineProps<\n  ComboboxViewportProps & {\n    class?: HTMLAttributes['class']\n  }\n>()\n\nconst delegatedProps = reactiveOmit(props, 'class')\nconst forwarded = useForwardProps(delegatedProps)\n</script>\n\n<template>\n  <ComboboxViewport v-bind=\"forwarded\" :class=\"cn(props.class)\">\n    <slot />\n  </ComboboxViewport>\n</template>\n"
+      "path": "autocomplete/AutocompleteList.vue",
+      "type": "registry:ui",
+      "content": "<script setup lang=\"ts\">\nimport type { ComboboxViewportProps } from 'reka-ui'\nimport type { HTMLAttributes } from 'vue'\nimport { reactiveOmit } from '@vueuse/core'\nimport { useForwardProps } from 'reka-ui'\nimport { ComboboxViewport } from '@/components/ui/combobox'\nimport { cn } from '@/lib/utils'\n\nconst props = defineProps<\n  ComboboxViewportProps & {\n    class?: HTMLAttributes['class']\n  }\n>()\n\nconst delegatedProps = reactiveOmit(props, 'class')\nconst forwarded = useForwardProps(delegatedProps)\n</script>\n\n<template>\n  <ComboboxViewport v-bind=\"forwarded\" :class=\"cn(props.class)\">\n    <slot />\n  </ComboboxViewport>\n</template>\n"
     },
     {
-      "path": "default/autocomplete/Autocomplete.vue",
-      "type": "registry:component",
+      "path": "autocomplete/Autocomplete.vue",
+      "type": "registry:ui",
       "content": "<script setup lang=\"ts\">\nimport { ComboboxRoot, useForwardPropsEmits } from 'reka-ui'\nimport { provideAutocompleteContext } from './context'\nimport type { AutocompleteEmits, AutocompleteProps } from './types'\n\nconst props = withDefaults(defineProps<AutocompleteProps>(), {\n  highlightOnHover: true,\n})\nconst emits = defineEmits<AutocompleteEmits>()\n\nconst searchTerm = defineModel<string>('searchTerm', { default: '' })\nprovideAutocompleteContext({ searchTerm })\n\nconst forwarded = useForwardPropsEmits(props, emits)\n</script>\n\n<template>\n  <ComboboxRoot v-bind=\"forwarded\" v-model:search-term=\"searchTerm\" class=\"relative\">\n    <slot />\n  </ComboboxRoot>\n</template>\n"
     },
     {
-      "path": "default/autocomplete/AutocompleteEmpty.vue",
-      "type": "registry:component",
-      "content": "<script setup lang=\"ts\">\nimport type { ComboboxEmptyProps } from 'reka-ui'\nimport type { HTMLAttributes } from 'vue'\nimport { reactiveOmit } from '@vueuse/core'\nimport { useForwardProps } from 'reka-ui'\nimport { ComboboxEmpty } from '@sulaf/ui/components/combobox'\nimport { cn } from '@sulaf/ui/lib/utils'\n\nconst props = defineProps<\n  ComboboxEmptyProps & {\n    class?: HTMLAttributes['class']\n  }\n>()\n\nconst delegatedProps = reactiveOmit(props, 'class')\nconst forwarded = useForwardProps(delegatedProps)\n</script>\n\n<template>\n  <ComboboxEmpty\n    v-bind=\"forwarded\"\n    :class=\"cn('py-6 text-center text-sm text-muted-foreground', props.class)\"\n  >\n    <slot />\n  </ComboboxEmpty>\n</template>\n"
+      "path": "autocomplete/AutocompleteEmpty.vue",
+      "type": "registry:ui",
+      "content": "<script setup lang=\"ts\">\nimport type { ComboboxEmptyProps } from 'reka-ui'\nimport type { HTMLAttributes } from 'vue'\nimport { reactiveOmit } from '@vueuse/core'\nimport { useForwardProps } from 'reka-ui'\nimport { ComboboxEmpty } from '@/components/ui/combobox'\nimport { cn } from '@/lib/utils'\n\nconst props = defineProps<\n  ComboboxEmptyProps & {\n    class?: HTMLAttributes['class']\n  }\n>()\n\nconst delegatedProps = reactiveOmit(props, 'class')\nconst forwarded = useForwardProps(delegatedProps)\n</script>\n\n<template>\n  <ComboboxEmpty\n    v-bind=\"forwarded\"\n    :class=\"cn('py-6 text-center text-sm text-muted-foreground', props.class)\"\n  >\n    <slot />\n  </ComboboxEmpty>\n</template>\n"
     },
     {
-      "path": "default/autocomplete/context.ts",
-      "type": "registry:file",
-      "target": "context.ts",
+      "path": "autocomplete/context.ts",
+      "type": "registry:ui",
       "content": "import type { Ref } from 'vue'\nimport { createContext } from 'reka-ui'\n\nexport interface AutocompleteContext {\n  searchTerm: Ref<string>\n}\n\nconst [injectAutocompleteContext, provideAutocompleteContext] =\n  createContext<AutocompleteContext>('AutocompleteContext')\n\nexport { provideAutocompleteContext }\n\n/**\n * Hook to access the Autocomplete context within sub-components.\n *\n * @returns The shared Autocomplete context.\n * @throws Error if called outside of an `<Autocomplete>` component tree.\n */\nexport function useAutocompleteContext(): AutocompleteContext {\n  const ctx = injectAutocompleteContext()\n\n  if (!ctx) {\n    throw new Error(\n      '[Autocomplete] useAutocompleteContext() was called outside of an <Autocomplete> component.\\n' +\n        'Make sure your component is rendered inside an <Autocomplete> root.',\n    )\n  }\n  return ctx\n}\n"
     },
     {
-      "path": "default/autocomplete/AutocompleteItem.vue",
-      "type": "registry:component",
-      "content": "<script setup lang=\"ts\">\nimport type { ComboboxItemEmits, ComboboxItemProps } from 'reka-ui'\nimport type { HTMLAttributes } from 'vue'\nimport { reactiveOmit } from '@vueuse/core'\nimport { CheckIcon } from 'lucide-vue-next'\nimport { ComboboxItemIndicator, useForwardPropsEmits } from 'reka-ui'\nimport { ComboboxItem } from '@sulaf/ui/components/combobox'\nimport { cn } from '@sulaf/ui/lib/utils'\n\nconst props = defineProps<\n  ComboboxItemProps & {\n    class?: HTMLAttributes['class']\n  }\n>()\n\nconst emits = defineEmits<ComboboxItemEmits>()\n\nconst delegatedProps = reactiveOmit(props, 'class')\nconst forwarded = useForwardPropsEmits(delegatedProps, emits)\n</script>\n\n<template>\n  <ComboboxItem v-bind=\"forwarded\" :class=\"cn(props.class)\">\n    <slot />\n\n    <ComboboxItemIndicator class=\"ms-auto\">\n      <CheckIcon class=\"size-4\" />\n    </ComboboxItemIndicator>\n  </ComboboxItem>\n</template>\n"
+      "path": "autocomplete/AutocompleteItem.vue",
+      "type": "registry:ui",
+      "content": "<script setup lang=\"ts\">\nimport type { ComboboxItemEmits, ComboboxItemProps } from 'reka-ui'\nimport type { HTMLAttributes } from 'vue'\nimport { reactiveOmit } from '@vueuse/core'\nimport { CheckIcon } from 'lucide-vue-next'\nimport { ComboboxItemIndicator, useForwardPropsEmits } from 'reka-ui'\nimport { ComboboxItem } from '@/components/ui/combobox'\nimport { cn } from '@/lib/utils'\n\nconst props = defineProps<\n  ComboboxItemProps & {\n    class?: HTMLAttributes['class']\n  }\n>()\n\nconst emits = defineEmits<ComboboxItemEmits>()\n\nconst delegatedProps = reactiveOmit(props, 'class')\nconst forwarded = useForwardPropsEmits(delegatedProps, emits)\n</script>\n\n<template>\n  <ComboboxItem v-bind=\"forwarded\" :class=\"cn(props.class)\">\n    <slot />\n\n    <ComboboxItemIndicator class=\"ms-auto\">\n      <CheckIcon class=\"size-4\" />\n    </ComboboxItemIndicator>\n  </ComboboxItem>\n</template>\n"
     },
     {
-      "path": "default/autocomplete/AutocompleteInput.vue",
-      "type": "registry:component",
-      "content": "<script setup lang=\"ts\">\nimport type { ComboboxInputEmits, ComboboxInputProps } from 'reka-ui'\nimport type { HTMLAttributes } from 'vue'\nimport { reactiveOmit } from '@vueuse/core'\nimport { ComboboxInput, useForwardPropsEmits } from 'reka-ui'\nimport { cn } from '@sulaf/ui/lib/utils'\nimport { useAutocompleteContext } from './context'\n\nconst props = defineProps<\n  ComboboxInputProps & {\n    class?: HTMLAttributes['class']\n  }\n>()\n\nconst delegatedProps = reactiveOmit(props, 'class')\nconst emits = defineEmits<ComboboxInputEmits>()\nconst forwarded = useForwardPropsEmits(delegatedProps, emits)\n\nconst { searchTerm } = useAutocompleteContext()\n</script>\n\n<template>\n  <ComboboxInput\n    v-bind=\"forwarded\"\n    v-model=\"searchTerm\"\n    data-slot=\"input-group-control\"\n    :class=\"\n      cn(\n        'flex h-9 w-full rounded-md bg-transparent px-3 py-1 text-sm',\n        'placeholder:text-muted-foreground outline-none',\n        'disabled:cursor-not-allowed disabled:opacity-50',\n        // When used inside AutocompleteControl or InputGroup, remove duplicate borders\n        'flex-1 rounded-none border-0 shadow-none',\n        'focus-visible:ring-0 focus-visible:ring-transparent',\n        props.class,\n      )\n    \"\n  />\n</template>\n"
+      "path": "autocomplete/AutocompleteInput.vue",
+      "type": "registry:ui",
+      "content": "<script setup lang=\"ts\">\nimport type { ComboboxInputEmits, ComboboxInputProps } from 'reka-ui'\nimport type { HTMLAttributes } from 'vue'\nimport { reactiveOmit } from '@vueuse/core'\nimport { ComboboxInput, useForwardPropsEmits } from 'reka-ui'\nimport { cn } from '@/lib/utils'\nimport { useAutocompleteContext } from './context'\n\nconst props = defineProps<\n  ComboboxInputProps & {\n    class?: HTMLAttributes['class']\n  }\n>()\n\nconst delegatedProps = reactiveOmit(props, 'class')\nconst emits = defineEmits<ComboboxInputEmits>()\nconst forwarded = useForwardPropsEmits(delegatedProps, emits)\n\nconst { searchTerm } = useAutocompleteContext()\n</script>\n\n<template>\n  <ComboboxInput\n    v-bind=\"forwarded\"\n    v-model=\"searchTerm\"\n    data-slot=\"input-group-control\"\n    :class=\"\n      cn(\n        'flex h-9 w-full rounded-md bg-transparent px-3 py-1 text-sm',\n        'placeholder:text-muted-foreground outline-none',\n        'disabled:cursor-not-allowed disabled:opacity-50',\n        // When used inside AutocompleteControl or InputGroup, remove duplicate borders\n        'flex-1 rounded-none border-0 shadow-none',\n        'focus-visible:ring-0 focus-visible:ring-transparent',\n        props.class,\n      )\n    \"\n  />\n</template>\n"
     },
     {
-      "path": "default/autocomplete/AutocompleteTrigger.vue",
-      "type": "registry:component",
-      "content": "<script setup lang=\"ts\">\nimport { cn } from '@sulaf/ui/lib/utils'\nimport { ComboboxTrigger } from '@sulaf/ui/components/combobox'\nimport type { ComboboxTriggerProps } from 'reka-ui'\nimport { useForwardProps } from 'reka-ui'\nimport type { HTMLAttributes } from 'vue'\n\nconst props = defineProps<ComboboxTriggerProps & { class?: HTMLAttributes['class'] }>()\n\nconst forwarded = useForwardProps(props)\n</script>\n\n<template>\n  <ComboboxTrigger v-bind=\"forwarded\" :class=\"cn('outline-none cursor-pointer', props.class)\">\n    <slot />\n  </ComboboxTrigger>\n</template>\n"
+      "path": "autocomplete/AutocompleteTrigger.vue",
+      "type": "registry:ui",
+      "content": "<script setup lang=\"ts\">\nimport { cn } from '@/lib/utils'\nimport { ComboboxTrigger } from '@/components/ui/combobox'\nimport type { ComboboxTriggerProps } from 'reka-ui'\nimport { useForwardProps } from 'reka-ui'\nimport type { HTMLAttributes } from 'vue'\n\nconst props = defineProps<ComboboxTriggerProps & { class?: HTMLAttributes['class'] }>()\n\nconst forwarded = useForwardProps(props)\n</script>\n\n<template>\n  <ComboboxTrigger v-bind=\"forwarded\" :class=\"cn('outline-none cursor-pointer', props.class)\">\n    <slot />\n  </ComboboxTrigger>\n</template>\n"
     },
     {
-      "path": "default/autocomplete/AutocompleteContent.vue",
-      "type": "registry:component",
-      "content": "<script setup lang=\"ts\">\nimport type { ComboboxContentEmits, ComboboxContentProps } from 'reka-ui'\nimport type { HTMLAttributes } from 'vue'\nimport { reactiveOmit } from '@vueuse/core'\nimport { useForwardPropsEmits } from 'reka-ui'\nimport { ComboboxList } from '@sulaf/ui/components/combobox'\nimport { cn } from '@sulaf/ui/lib/utils'\n\nconst props = withDefaults(\n  defineProps<\n    ComboboxContentProps & {\n      class?: HTMLAttributes['class']\n    }\n  >(),\n  {\n    /** The preferred position for the content panel. */\n    position: 'popper',\n    /** The alignment of the content panel relative to the trigger. */\n    align: 'start',\n    /** The offset (in pixels) between the trigger and the content panel. */\n    sideOffset: 8,\n  },\n)\n\nconst emits = defineEmits<ComboboxContentEmits>()\nconst delegatedProps = reactiveOmit(props, 'class')\nconst forwarded = useForwardPropsEmits(delegatedProps, emits)\n</script>\n\n<template>\n  <ComboboxList v-bind=\"forwarded\" :class=\"cn('w-(--reka-popper-anchor-width)', props.class)\">\n    <slot />\n  </ComboboxList>\n</template>\n"
+      "path": "autocomplete/AutocompleteContent.vue",
+      "type": "registry:ui",
+      "content": "<script setup lang=\"ts\">\nimport type { ComboboxContentEmits, ComboboxContentProps } from 'reka-ui'\nimport type { HTMLAttributes } from 'vue'\nimport { reactiveOmit } from '@vueuse/core'\nimport { useForwardPropsEmits } from 'reka-ui'\nimport { ComboboxList } from '@/components/ui/combobox'\nimport { cn } from '@/lib/utils'\n\nconst props = withDefaults(\n  defineProps<\n    ComboboxContentProps & {\n      class?: HTMLAttributes['class']\n    }\n  >(),\n  {\n    /** The preferred position for the content panel. */\n    position: 'popper',\n    /** The alignment of the content panel relative to the trigger. */\n    align: 'start',\n    /** The offset (in pixels) between the trigger and the content panel. */\n    sideOffset: 8,\n  },\n)\n\nconst emits = defineEmits<ComboboxContentEmits>()\nconst delegatedProps = reactiveOmit(props, 'class')\nconst forwarded = useForwardPropsEmits(delegatedProps, emits)\n</script>\n\n<template>\n  <ComboboxList v-bind=\"forwarded\" :class=\"cn('w-(--reka-combobox-trigger-width)', props.class)\">\n    <slot />\n  </ComboboxList>\n</template>\n"
     },
     {
-      "path": "default/autocomplete/index.ts",
-      "type": "registry:file",
-      "target": "index.ts",
+      "path": "autocomplete/index.ts",
+      "type": "registry:ui",
       "content": "export type { AutocompleteContext } from './context'\nexport type { AutocompleteEmits, AutocompleteProps } from './types'\nexport { provideAutocompleteContext, useAutocompleteContext } from './context'\n\nexport { default as Autocomplete } from './Autocomplete.vue'\nexport { default as AutocompleteClear } from './AutocompleteClear.vue'\nexport { default as AutocompleteContent } from './AutocompleteContent.vue'\nexport { default as AutocompleteControl } from './AutocompleteControl.vue'\nexport { default as AutocompleteEmpty } from './AutocompleteEmpty.vue'\nexport { default as AutocompleteGroup } from './AutocompleteGroup.vue'\nexport { default as AutocompleteInput } from './AutocompleteInput.vue'\nexport { default as AutocompleteItem } from './AutocompleteItem.vue'\nexport { default as AutocompleteLabel } from './AutocompleteLabel.vue'\nexport { default as AutocompleteList } from './AutocompleteList.vue'\nexport { default as AutocompleteLoading } from './AutocompleteLoading.vue'\nexport { default as AutocompleteTrigger } from './AutocompleteTrigger.vue'\n"
     },
     {
-      "path": "default/autocomplete/AutocompleteLoading.vue",
-      "type": "registry:component",
-      "content": "<script setup lang=\"ts\">\nimport type { HTMLAttributes } from 'vue'\nimport { Spinner } from '@/components/ui/spinner'\nimport { cn } from '@sulaf/ui/lib/utils'\n\nconst props = defineProps<{\n  class?: HTMLAttributes['class']\n}>()\n</script>\n\n<template>\n  <div\n    :class=\"cn('flex items-center gap-2 px-3 py-2 text-xs text-muted-foreground', props.class)\"\n    aria-live=\"polite\"\n    aria-label=\"Loading options\"\n  >\n    <slot>\n      <Spinner class=\"size-3.5\" />\n      <span>Loading...</span>\n    </slot>\n  </div>\n</template>\n"
+      "path": "autocomplete/AutocompleteLoading.vue",
+      "type": "registry:ui",
+      "content": "<script setup lang=\"ts\">\nimport type { HTMLAttributes } from 'vue'\nimport { Spinner } from '@/components/ui/spinner'\nimport { cn } from '@/lib/utils'\n\nconst props = defineProps<{\n  class?: HTMLAttributes['class']\n}>()\n</script>\n\n<template>\n  <div\n    :class=\"cn('flex items-center gap-2 px-3 py-2 text-xs text-muted-foreground', props.class)\"\n    aria-live=\"polite\"\n    aria-label=\"Loading options\"\n  >\n    <slot>\n      <Spinner class=\"size-3.5\" />\n      <span>Loading...</span>\n    </slot>\n  </div>\n</template>\n"
     },
     {
-      "path": "default/autocomplete/AutocompleteGroup.vue",
-      "type": "registry:component",
-      "content": "<script setup lang=\"ts\">\nimport type { ComboboxGroupProps } from 'reka-ui'\nimport type { HTMLAttributes } from 'vue'\nimport { reactiveOmit } from '@vueuse/core'\nimport { ComboboxGroup, useForwardProps } from 'reka-ui'\nimport { cn } from '@sulaf/ui/lib/utils'\n\nconst props = defineProps<\n  ComboboxGroupProps & {\n    class?: HTMLAttributes['class']\n  }\n>()\n\nconst delegatedProps = reactiveOmit(props, 'class')\nconst forwarded = useForwardProps(delegatedProps)\n</script>\n\n<template>\n  <ComboboxGroup v-bind=\"forwarded\" :class=\"cn('overflow-hidden p-1 text-foreground', props.class)\">\n    <slot />\n  </ComboboxGroup>\n</template>\n"
+      "path": "autocomplete/AutocompleteGroup.vue",
+      "type": "registry:ui",
+      "content": "<script setup lang=\"ts\">\nimport type { ComboboxGroupProps } from 'reka-ui'\nimport type { HTMLAttributes } from 'vue'\nimport { reactiveOmit } from '@vueuse/core'\nimport { ComboboxGroup, useForwardProps } from 'reka-ui'\nimport { cn } from '@/lib/utils'\n\nconst props = defineProps<\n  ComboboxGroupProps & {\n    class?: HTMLAttributes['class']\n  }\n>()\n\nconst delegatedProps = reactiveOmit(props, 'class')\nconst forwarded = useForwardProps(delegatedProps)\n</script>\n\n<template>\n  <ComboboxGroup v-bind=\"forwarded\" :class=\"cn('overflow-hidden p-1 text-foreground', props.class)\">\n    <slot />\n  </ComboboxGroup>\n</template>\n"
     },
     {
-      "path": "default/autocomplete/AutocompleteLabel.vue",
-      "type": "registry:component",
-      "content": "<script setup lang=\"ts\">\nimport type { ComboboxLabelProps } from 'reka-ui'\nimport type { HTMLAttributes } from 'vue'\nimport { reactiveOmit } from '@vueuse/core'\nimport { ComboboxLabel, useForwardProps } from 'reka-ui'\nimport { cn } from '@sulaf/ui/lib/utils'\n\nconst props = defineProps<\n  ComboboxLabelProps & {\n    /** Additional CSS classes for the label. */\n    class?: HTMLAttributes['class']\n  }\n>()\n\nconst delegatedProps = reactiveOmit(props, 'class')\nconst forwarded = useForwardProps(delegatedProps)\n</script>\n\n<template>\n  <ComboboxLabel\n    v-bind=\"forwarded\"\n    :class=\"cn('px-2 py-1.5 text-xs font-medium text-muted-foreground', props.class)\"\n  >\n    <slot />\n  </ComboboxLabel>\n</template>\n"
+      "path": "autocomplete/AutocompleteLabel.vue",
+      "type": "registry:ui",
+      "content": "<script setup lang=\"ts\">\nimport type { ComboboxLabelProps } from 'reka-ui'\nimport type { HTMLAttributes } from 'vue'\nimport { reactiveOmit } from '@vueuse/core'\nimport { ComboboxLabel, useForwardProps } from 'reka-ui'\nimport { cn } from '@/lib/utils'\n\nconst props = defineProps<\n  ComboboxLabelProps & {\n    /** Additional CSS classes for the label. */\n    class?: HTMLAttributes['class']\n  }\n>()\n\nconst delegatedProps = reactiveOmit(props, 'class')\nconst forwarded = useForwardProps(delegatedProps)\n</script>\n\n<template>\n  <ComboboxLabel\n    v-bind=\"forwarded\"\n    :class=\"cn('px-2 py-1.5 text-xs font-medium text-muted-foreground', props.class)\"\n  >\n    <slot />\n  </ComboboxLabel>\n</template>\n"
     },
     {
-      "path": "default/autocomplete/types.ts",
-      "type": "registry:file",
-      "target": "types.ts",
+      "path": "autocomplete/types.ts",
+      "type": "registry:ui",
       "content": "import type { ComboboxRootEmits, ComboboxRootProps } from 'reka-ui'\n\nexport type AutocompleteProps = ComboboxRootProps & {\n  searchTerm?: string\n}\n\nexport type AutocompleteEmits = ComboboxRootEmits & {\n  'update:searchTerm': [searchTerm: string]\n}\n"
     }
   ],
   "dependencies": ["reka-ui", "@vueuse/core", "lucide-vue-next"],
   "devDependencies": [],
-  "registryDependencies": ["spinner"]
+  "registryDependencies": ["input-group", "combobox", "spinner"]
 }
