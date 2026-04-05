@@ -110,7 +110,6 @@ export default defineNuxtConfig({
     },
     { path: '~/components/demo', pathPrefix: false },
     { path: '~/components/content', global: true, pathPrefix: false },
-    { path: '~/components/sulaf', pathPrefix: false, ignore: ['**/*.ts'] },
   ],
 
   shiki: {

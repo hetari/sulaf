@@ -12,34 +12,52 @@ links:
 
 ## Installation
 
-::::doc-tabs{default-value="cli"}
-:::doc-tabs-list
-::doc-tabs-trigger{value="cli"}
-Sulaf CLI
-::
+::code-tabs
 
-    ::doc-tabs-trigger{value="shadcn-vue-cli"}
-    Shadcn-Vue CLI
+  ::doc-tabs-list
+
+    ::doc-tabs-trigger{value="cli"}
+    CLI
     ::
 
-:::
+    ::doc-tabs-trigger{value="manual"}
+    Manual
+    ::
 
-:::doc-tabs-content{value="cli"}
+  ::
 
-```bash
-npx sulaf@latest add autocomplete
-```
+  ::doc-tabs-content{value="cli"}
+  ```bash
+  npx sulaf@latest add autocomplete
+  ```
+  ::
 
-:::
+  ::doc-tabs-content{value="manual"}
 
-:::doc-tabs-content{value="shadcn-vue-cli"}
+    ::steps
 
-```bash
-npx shadcn-vue@latest add http://localhost:3000/r/components/autocomplete.json
-```
+      ::step
+      Install the following dependencies:
+      ::
 
-:::
-::::
+      ```bash
+      npm install reka-ui @vueuse/core lucide-vue-next
+      ```
+
+      ::step
+        ::manual-install{folder="autocomplete"}
+        ::
+      ::
+
+      ::step
+      Update the import paths to match your project setup.
+      ::
+
+    ::
+
+  ::
+
+::
 
 ## API Reference
 
@@ -52,18 +70,3 @@ The root component extends all `ComboboxRoot` properties and adds semantic handl
 | Prop                  | Type     | Default | Description                                                                                                                                    |
 | :-------------------- | :------- | :------ | :--------------------------------------------------------------------------------------------------------------------------------------------- |
 | `v-model:search-term` | `string` | `''`    | Exposes the direct value of the `AutocompleteInput`. By binding to this, you can filter your own item lists dynamically outside the component. |
-
-### AutocompleteControl
-
-This is a custom sub-component designed to wrap the `AutocompleteInput`, icons, and `AutocompleteTrigger` inside a unified border container. It simulates standard text-input focus modes, hiding the raw input's outlines.
-
-Instead of wrapping your inputs manually with HTML divs, place them directly inside an `<AutocompleteControl>`.
-
-### AutocompleteClear
-
-A convenience trigger component that, when clicked, immediately erases the value in `v-model:search-term` without needing custom component logic.
-
-### AutocompleteContent
-
-A popover container that renders the `AutocompleteList`.
-**Automatic Sizing**: Our implementation automatically overrides default widths. `AutocompleteContent` will automatically map to the width of the `Autocomplete` (the trigger layout) dynamically. No `w-*` classes are required on the content itself!

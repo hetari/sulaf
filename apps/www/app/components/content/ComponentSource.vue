@@ -2,10 +2,12 @@
 import type { HTMLAttributes } from 'vue'
 import { fixImport } from '~/lib/fix-import'
 import { cn } from '~/lib/utils'
+import { getIconForLanguageExtension } from '../Icons'
 
 const props = withDefaults(
   defineProps<{
     name?: string
+    // src?: string
     title?: string
     language?: string
     collapsible?: boolean
@@ -33,10 +35,12 @@ async function getCode() {
 
   const nameL = props.name.toLowerCase()
 
+  // Try to find in UI folder first (for manual install) or Demo folder
   const loader =
-    rawDemos[`../demo/${props.name}.${props.language}`] ||
+    rawUi[`../ui/${props.name}.${props.language}`] ||
     rawUi[`../ui/${nameL}/${props.name}.${props.language}`] ||
-    rawUi[`../ui/${props.name}.${props.language}`]
+    rawDemos[`../demo/${props.name}.${props.language}`] ||
+    rawDemos[`../demo/${props.name}Demo.${props.language}`]
 
   if (loader) {
     const rawCode = await loader()
@@ -57,11 +61,11 @@ const code = await getCode()
       <figcaption
         v-if="title"
         data-pretty-code-title=""
-        class="flex items-center gap-2 text-code-foreground [&_svg]:size-4 [&_svg]:text-code-foreground [&_svg]:opacity-70"
+        class="text-code-foreground [&_svg]:text-code-foreground flex items-center gap-2 [&_svg]:size-4 [&_svg]:opacity-70"
         :data-language="language"
       >
-        <!-- <component :is="getIconForLanguageExtension(language)" /> -->
-        <!-- {{ title }} -->
+        <component :is="getIconForLanguageExtension(language)" />
+        {{ title }}
       </figcaption>
       <CopyButton :value="code" />
       <div>

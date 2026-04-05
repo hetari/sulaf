@@ -3,9 +3,7 @@ import type { HTMLAttributes } from 'vue'
 import { TabsList } from '@/components/ui/tabs'
 import { cn } from '~/lib/utils'
 
-const props = defineProps<{
-  class?: HTMLAttributes['class']
-}>()
+const props = defineProps<{ class?: HTMLAttributes['class'] }>()
 </script>
 
 <template>
