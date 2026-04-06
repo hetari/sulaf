@@ -34,7 +34,7 @@ const docData = computed(() => data.value!.find(i => i.stem === 'docs')!)
         </Button>
 
         <MainNav :items="MAIN_NAVIGATION" class="hidden lg:flex" />
-        <div class="ml-auto flex items-center gap-2 md:flex-1 md:justify-end">
+        <div class="ms-auto flex items-center gap-2 md:flex-1 md:justify-end">
           <div class="hidden w-full flex-1 md:flex md:w-auto md:flex-none">
             <CommandMenu :tree="docData" :nav-items="MAIN_NAVIGATION" />
           </div>

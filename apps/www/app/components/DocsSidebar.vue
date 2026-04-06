@@ -9,6 +9,8 @@ type SidebarNavigationItem = {
   children?: SidebarNavigationItem[]
   new?: boolean
   beta?: boolean
+  soon?: boolean
+  hide?: boolean
   navigation?: {
     icon?: string
   }
@@ -26,14 +28,15 @@ const filteredSections = computed(() =>
 
 const rootPages = computed(() => {
   return (props.tree.children || []).filter(
-    (item: SidebarNavigationItem) => !SIDEBAR_EXCLUDED_PAGES.includes(item.path),
+    (item: SidebarNavigationItem) => !item.hide && !SIDEBAR_EXCLUDED_PAGES.includes(item.path),
   )
 })
 
 const folderGroups = computed(() => {
   return (props.tree.children || []).filter(
     (item: SidebarNavigationItem) =>
-      item.children && !SIDEBAR_EXCLUDED_SECTIONS.includes(item.title.toLocaleLowerCase()),
+      (item.children || item.soon) &&
+      !SIDEBAR_EXCLUDED_SECTIONS.includes(item.title.toLocaleLowerCase()),
   )
 })
 
@@ -79,6 +82,12 @@ function isActive(href: string) {
                     v-else-if="item.beta"
                     class="size-2 items-center gap-1 rounded-md border-0 bg-orange-600 dark:bg-orange-500"
                   />
+                  <Badge
+                    v-if="item.soon"
+                    variant="secondary"
+                    class="ms-auto h-4 px-1.5 text-[0.65rem] leading-none"
+                    >Soon</Badge
+                  >
                 </NuxtLink>
               </SidebarMenuButton>
             </SidebarMenuItem>
@@ -88,14 +97,21 @@ function isActive(href: string) {
 
       <!-- Folder Groups -->
       <SidebarGroup v-for="group in folderGroups" :key="group.title">
-        <SidebarGroupLabel class="font-medium text-muted-foreground">
+        <SidebarGroupLabel class="flex items-center gap-2 font-medium text-muted-foreground">
           {{ group.title }}
+          <Badge
+            v-if="group.soon"
+            variant="secondary"
+            class="h-4 px-1.5 text-[0.65rem] leading-none"
+            >Soon</Badge
+          >
         </SidebarGroupLabel>
         <SidebarGroupContent>
           <SidebarMenu class="gap-0.5">
             <template
               v-for="childItem in (group.children || []).filter(
-                (child: SidebarNavigationItem) => !SIDEBAR_EXCLUDED_PAGES.includes(child.path),
+                (child: SidebarNavigationItem) =>
+                  !child.hide && !SIDEBAR_EXCLUDED_PAGES.includes(child.path),
               )"
               :key="childItem.path"
             >
@@ -121,6 +137,12 @@ function isActive(href: string) {
                       v-else-if="childItem.beta"
                       class="size-2 items-center gap-1 rounded-md border-0 bg-orange-600 dark:bg-orange-500"
                     />
+                    <Badge
+                      v-if="childItem.soon"
+                      variant="secondary"
+                      class="ms-auto h-4 px-1.5 text-[0.65rem] leading-none"
+                      >Soon</Badge
+                    >
                   </NuxtLink>
                 </SidebarMenuButton>
               </SidebarMenuItem>

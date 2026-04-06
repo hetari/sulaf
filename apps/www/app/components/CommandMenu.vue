@@ -257,7 +257,7 @@ onMounted(() => {
               <Square />
               {{ block.description }}
               <span
-                class="ml-auto font-mono text-xs font-normal text-muted-foreground tabular-nums"
+                class="ms-auto font-mono text-xs font-normal text-muted-foreground tabular-nums"
               >
                 {{ block.name }}
               </span>

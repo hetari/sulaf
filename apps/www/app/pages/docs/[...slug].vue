@@ -78,7 +78,7 @@ defineOgImage('Custom.takumi', {
                     v-if="neighbours?.[0]"
                     variant="secondary"
                     size="icon"
-                    class="extend-touch-target ml-auto size-8 shadow-none md:size-7"
+                    class="extend-touch-target ms-auto size-8 shadow-none md:size-7"
                     as-child
                   >
                     <NuxtLink :to="neighbours[0].path" prefetch-on="interaction">
@@ -158,7 +158,7 @@ defineOgImage('Custom.takumi', {
             v-if="neighbours?.[1]"
             variant="secondary"
             size="sm"
-            class="ml-auto shadow-none"
+            class="ms-auto shadow-none"
             as-child
           >
             <NuxtLink :to="neighbours[1].path" prefetch-on="interaction">
@@ -168,7 +168,7 @@ defineOgImage('Custom.takumi', {
         </div>
       </div>
       <div
-        class="sticky top-[calc(var(--header-height)+1px)] z-30 ml-auto hidden h-[calc(100svh-var(--header-height)-var(--footer-height))] w-72 flex-col gap-4 overflow-hidden overscroll-none pb-8 xl:flex"
+        class="sticky top-[calc(var(--header-height)+1px)] z-30 ms-auto hidden h-[calc(100svh-var(--header-height)-var(--footer-height))] w-72 flex-col gap-4 overflow-hidden overscroll-none pb-8 xl:flex"
       >
         <div class="h-(--top-spacing) shrink-0" />
         <div v-if="page.body.toc?.links.length" class="no-scrollbar overflow-y-auto px-8">

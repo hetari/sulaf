@@ -5,24 +5,6 @@ import { useRouter } from 'vue-router'
 import { SIDEBAR_EXCLUDED_PAGES, SIDEBAR_EXCLUDED_SECTIONS } from '@/lib/navigation'
 import { cn } from '@/lib/utils'
 
-type SidebarNavigationItem = {
-  title: string
-  path: string
-  stem?: string
-  children?: SidebarNavigationItem[]
-  new?: boolean
-  beta?: boolean
-  navigation?: {
-    icon?: string
-  }
-}
-
-/**
- * Relaxed typing for `tree` to avoid template type errors related to
- * optional navigation fields (e.g. `navigation?.icon`). Using `any[]`
- * here keeps the template-friendly access while preserving some structure
- * for `items`.
- */
 const props = defineProps<{
   class?: HTMLAttributes['class']
   tree: any[] // relaxed typing to avoid missing property errors in template
@@ -35,7 +17,9 @@ const open = ref(false)
 const rootPages = computed(() => {
   const root = props.tree?.[0]
   if (!root) return []
-  return (root.children || []).filter((item: any) => !SIDEBAR_EXCLUDED_PAGES.includes(item.path))
+  return (root.children || []).filter(
+    (item: any) => !item.hide && !SIDEBAR_EXCLUDED_PAGES.includes(item.path),
+  )
 })
 
 const folderGroups = computed(() => {
@@ -43,7 +27,8 @@ const folderGroups = computed(() => {
   if (!root) return []
   return (root.children || []).filter(
     (item: any) =>
-      item.children && !SIDEBAR_EXCLUDED_SECTIONS.includes(item.title.toLocaleLowerCase()),
+      (item.children || item.soon) &&
+      !SIDEBAR_EXCLUDED_SECTIONS.includes(item.title.toLocaleLowerCase()),
   )
 })
 
@@ -151,6 +136,13 @@ function handleNavigate(path: string) {
                 v-else-if="item.beta"
                 class="size-2 rounded-full border-0 bg-orange-600 dark:bg-orange-500"
               />
+              <Badge
+                v-if="item.soon"
+                variant="secondary"
+                class="ms-auto flex h-5 items-center justify-center rounded-md border bg-secondary/50 px-2 text-[0.7rem] font-semibold tracking-widest uppercase text-muted-foreground"
+              >
+                Soon
+              </Badge>
             </NuxtLink>
           </div>
         </div>
@@ -159,13 +151,20 @@ function handleNavigate(path: string) {
         <div class="flex flex-col gap-8">
           <template v-for="group in folderGroups" :key="group.title">
             <div class="flex flex-col gap-4">
-              <div class="text-sm font-medium text-muted-foreground">
+              <div class="flex items-center gap-2 text-sm font-medium text-muted-foreground">
                 {{ group.title }}
+                <Badge
+                  v-if="group.soon"
+                  variant="secondary"
+                  class="flex h-4 items-center justify-center rounded bg-secondary/50 px-1.5 text-[0.6rem] font-semibold tracking-wider uppercase"
+                >
+                  Soon
+                </Badge>
               </div>
               <div class="flex flex-col gap-3">
                 <NuxtLink
                   v-for="item in (group.children || []).filter(
-                    (child: any) => !SIDEBAR_EXCLUDED_PAGES.includes(child.path),
+                    (child: any) => !child.hide && !SIDEBAR_EXCLUDED_PAGES.includes(child.path),
                   )"
                   :key="item.path"
                   prefetch-on="interaction"
@@ -187,6 +186,13 @@ function handleNavigate(path: string) {
                     v-else-if="item.beta"
                     class="size-2 rounded-full border-0 bg-orange-600 dark:bg-orange-500"
                   />
+                  <Badge
+                    v-if="item.soon"
+                    variant="secondary"
+                    class="ms-auto flex h-5 items-center justify-center rounded-md border bg-secondary/50 px-2 text-[0.7rem] font-semibold tracking-widest uppercase text-muted-foreground"
+                  >
+                    Soon
+                  </Badge>
                 </NuxtLink>
               </div>
             </div>
