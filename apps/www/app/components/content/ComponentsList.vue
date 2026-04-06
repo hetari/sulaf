@@ -19,6 +19,18 @@ const list = computed(
       {{ component.title }}
 
       <span v-if="component.new" class="flex size-2 rounded-full bg-green-500" title="New" />
+      <span
+        v-else-if="component.beta"
+        class="flex size-2 rounded-full bg-orange-500"
+        title="Beta"
+      />
+      <Badge
+        v-else-if="component.soon"
+        variant="secondary"
+        class="flex h-4 items-center justify-center rounded bg-secondary/50 px-1.5 text-[0.6rem] font-semibold tracking-wider uppercase"
+      >
+        Soon
+      </Badge>
     </NuxtLink>
   </div>
 </template>
