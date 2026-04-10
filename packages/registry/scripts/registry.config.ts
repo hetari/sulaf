@@ -47,10 +47,5 @@ export const registryConfig = {
   /**
    * Dependencies to exclude from auto-discovery.
    */
-  excludedDeps: [
-    'vue',
-    '@sulaf/ui',
-    'typescript',
-    // 'reka-ui'
-  ],
+  excludedDeps: ['vue', '@sulaf/ui', 'typescript', 'reka-ui'],
 }
