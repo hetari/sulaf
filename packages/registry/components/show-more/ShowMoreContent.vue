@@ -52,7 +52,10 @@ watchEffect(() => {
     <motion.div
       :initial="{ height: collapsedHeight }"
       :animate="animateTarget"
-      :transition="{ duration: 0.35, ease: 'easeInOut' }"
+      :transition="{
+        duration: rootContext.animation?.duration ?? 0.35,
+        ease: rootContext.animation?.ease ?? 'easeInOut',
+      }"
       :class="cn('overflow-hidden relative min-h-0 will-change-transform', props.class)"
     >
       <!-- Measurement element for reactive line height detection -->

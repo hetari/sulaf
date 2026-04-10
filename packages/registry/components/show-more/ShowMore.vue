@@ -13,6 +13,10 @@ const props = withDefaults(defineProps<ShowMoreProps & { class?: HTMLAttributes[
   showToggle: true,
   open: false,
   lineHeight: '1.5rem',
+  animation: () => ({
+    duration: 0.35,
+    ease: 'easeInOut',
+  }),
 })
 const emits = defineEmits<ShowMoreEmits>()
 const forwarded = useForwardPropsEmits(props, emits)
