@@ -48,6 +48,10 @@
     "typescript": "~6.0.0"
   },
   "nano-staged": {
+    "packages/registry/**/*": [
+      "bun run registry:build",
+      "git add apps/www/public/r"
+    ],
     "*": "bun check"
   },
   "packageManager": "bun@latest",
