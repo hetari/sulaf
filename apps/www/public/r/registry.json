@@ -69,6 +69,42 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "show-more",
+      "type": "registry:ui",
+      "title": "Show More",
+      "description": "sulaf show more components.",
+      "files": [
+        {
+          "path": "show-more/context.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "show-more/ShowMoreButton.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "show-more/ShowMoreContent.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "show-more/ShowMore.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "show-more/index.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "show-more/types.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "show-more/ShowMoreItem.vue",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }

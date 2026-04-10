@@ -23,7 +23,7 @@
     {
       "type": "registry:ui",
       "path": "autocomplete/Autocomplete.vue",
-      "content": "<script setup lang=\"ts\">\nimport { ComboboxRoot, useForwardPropsEmits } from 'reka-ui'\nimport { provideAutocompleteContext } from './context'\nimport type { AutocompleteEmits, AutocompleteProps } from './types'\n\nconst props = withDefaults(defineProps<AutocompleteProps>(), {\n  highlightOnHover: true,\n})\nconst emits = defineEmits<AutocompleteEmits>()\n\nconst searchTerm = defineModel<string>('searchTerm', { default: '' })\nprovideAutocompleteContext({ searchTerm })\n\nconst forwarded = useForwardPropsEmits(props, emits)\n</script>\n\n<template>\n  <ComboboxRoot v-bind=\"forwarded\" v-model:search-term=\"searchTerm\" class=\"relative\">\n    <slot />\n  </ComboboxRoot>\n</template>\n"
+      "content": "<script setup lang=\"ts\">\nimport { ComboboxRoot, useForwardPropsEmits } from 'reka-ui'\nimport { provideAutocompleteContext } from './context'\nimport type { AutocompleteEmits, AutocompleteProps } from './types'\nimport { type HTMLAttributes } from 'vue'\nimport { reactiveOmit } from '@vueuse/core'\nimport { cn } from '@/lib/utils'\n\nconst props = withDefaults(\n  defineProps<\n    AutocompleteProps & {\n      class?: HTMLAttributes['class']\n    }\n  >(),\n  {\n    highlightOnHover: true,\n  },\n)\nconst emits = defineEmits<AutocompleteEmits>()\n\nconst searchTerm = defineModel<string>('searchTerm', { default: '' })\nprovideAutocompleteContext({ searchTerm })\n\nconst delegatedProps = reactiveOmit(props, 'class')\nconst forwarded = useForwardPropsEmits(delegatedProps, emits)\n</script>\n\n<template>\n  <ComboboxRoot\n    v-bind=\"forwarded\"\n    v-model:search-term=\"searchTerm\"\n    :class=\"cn('relative', props.class)\"\n  >\n    <slot />\n  </ComboboxRoot>\n</template>\n"
     },
     {
       "type": "registry:ui",
@@ -33,7 +33,7 @@
     {
       "type": "registry:ui",
       "path": "autocomplete/context.ts",
-      "content": "import type { Ref } from 'vue'\nimport { createContext } from 'reka-ui'\n\nexport interface AutocompleteContext {\n  searchTerm: Ref<string>\n}\n\nconst [injectAutocompleteContext, provideAutocompleteContext] =\n  createContext<AutocompleteContext>('AutocompleteContext')\n\nexport { provideAutocompleteContext }\n\n/**\n * Hook to access the Autocomplete context within sub-components.\n *\n * @returns The shared Autocomplete context.\n * @throws Error if called outside of an `<Autocomplete>` component tree.\n */\nexport function useAutocompleteContext(): AutocompleteContext {\n  const ctx = injectAutocompleteContext()\n\n  if (!ctx) {\n    throw new Error(\n      '[Autocomplete] useAutocompleteContext() was called outside of an <Autocomplete> component.\\n' +\n        'Make sure your component is rendered inside an <Autocomplete> root.',\n    )\n  }\n  return ctx\n}\n"
+      "content": "import type { Ref } from 'vue'\nimport { createContext } from 'reka-ui'\n\nexport interface AutocompleteContext {\n  searchTerm: Ref<string>\n}\n\nconst [injectAutocompleteContext, provideAutocompleteContext] =\n  createContext<AutocompleteContext>('AutocompleteContext')\n\nexport { provideAutocompleteContext }\n\nconst requiredKeys: (keyof AutocompleteContext)[] = ['searchTerm']\n/**\n * Hook to access the Autocomplete context within sub-components.\n *\n * @returns The shared Autocomplete context.\n * @throws Error if called outside of an `<Autocomplete>` component tree.\n */\nexport function useAutocompleteContext(): AutocompleteContext {\n  const ctx = injectAutocompleteContext()\n\n  if (!ctx) {\n    throw new Error(\n      '[Autocomplete] useAutocompleteContext() was called outside of an <Autocomplete> component.\\n' +\n        'Make sure your component is rendered inside an <Autocomplete> root.',\n    )\n  }\n  const missingKeys = requiredKeys.filter(key => ctx[key] === undefined)\n  if (missingKeys.length > 0) {\n    throw new Error(\n      `[Autocomplete] Missing required context property: \"${missingKeys.join(', ')}\".`,\n    )\n  }\n  return ctx\n}\n"
     },
     {
       "type": "registry:ui",
@@ -73,7 +73,7 @@
     {
       "type": "registry:ui",
       "path": "autocomplete/AutocompleteLabel.vue",
-      "content": "<script setup lang=\"ts\">\nimport type { ComboboxLabelProps } from 'reka-ui'\nimport type { HTMLAttributes } from 'vue'\nimport { reactiveOmit } from '@vueuse/core'\nimport { ComboboxLabel, useForwardProps } from 'reka-ui'\nimport { cn } from '@/lib/utils'\n\nconst props = defineProps<\n  ComboboxLabelProps & {\n    /** Additional CSS classes for the label. */\n    class?: HTMLAttributes['class']\n  }\n>()\n\nconst delegatedProps = reactiveOmit(props, 'class')\nconst forwarded = useForwardProps(delegatedProps)\n</script>\n\n<template>\n  <ComboboxLabel\n    v-bind=\"forwarded\"\n    :class=\"cn('px-2 py-1.5 text-xs font-medium text-muted-foreground', props.class)\"\n  >\n    <slot />\n  </ComboboxLabel>\n</template>\n"
+      "content": "<script setup lang=\"ts\">\nimport type { ComboboxLabelProps } from 'reka-ui'\nimport type { HTMLAttributes } from 'vue'\nimport { reactiveOmit } from '@vueuse/core'\nimport { ComboboxLabel, useForwardProps } from 'reka-ui'\nimport { cn } from '@/lib/utils'\n\nconst props = defineProps<\n  ComboboxLabelProps & {\n    class?: HTMLAttributes['class']\n  }\n>()\n\nconst delegatedProps = reactiveOmit(props, 'class')\nconst forwarded = useForwardProps(delegatedProps)\n</script>\n\n<template>\n  <ComboboxLabel\n    v-bind=\"forwarded\"\n    :class=\"cn('px-2 py-1.5 text-xs font-medium text-muted-foreground', props.class)\"\n  >\n    <slot />\n  </ComboboxLabel>\n</template>\n"
     },
     {
       "type": "registry:ui",
@@ -81,7 +81,7 @@
       "content": "import type { ComboboxRootEmits, ComboboxRootProps } from 'reka-ui'\n\nexport type AutocompleteProps = ComboboxRootProps & {\n  searchTerm?: string\n}\n\nexport type AutocompleteEmits = ComboboxRootEmits & {\n  'update:searchTerm': [searchTerm: string]\n}\n"
     }
   ],
-  "dependencies": ["reka-ui", "@vueuse/core", "lucide-vue-next"],
+  "dependencies": ["@vueuse/core", "lucide-vue-next"],
   "devDependencies": [],
   "registryDependencies": ["input-group", "combobox", "spinner"]
 }
