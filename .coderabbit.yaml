@@ -3,26 +3,25 @@
 language: 'en-US'
 early_access: false
 
-# Ignore patterns - files matching these will be excluded from reviews
-ignore:
-  - '**/*.json' # Ignore all JSON files in any directory
-
 reviews:
   profile: 'assertive'
   high_level_summary: true
-
-  # Global Context: Tell CodeRabbit about your monorepo structure
-  instructions: |
-    - This is a monorepo containing multiple apps and packages:
-      - `apps/www`: The main documentation application built with Nuxt 4.
-      - `apps/playground`: A Vite/Vue playground for testing UI components.
-      - `packages/cli`: A Node.js CLI tool for managing components.
-      - `packages/registry`: Source of truth for component definitions (shadcn-vue style).
-      - `packages/ui`: The shared UI library using Reka UI (formerly Radix Vue), Vue 3, and Tailwind.
-    - Do not flag missing imports for Nuxt/Vue/VueUse composables (auto-imports are enabled).
-    - Ensure compatibility with **Bun** runtime (as seen in root `bun.lock`).
+  auto_review:
+    enabled: true
+    drafts: true
 
   path_instructions:
+    - path: '**/*'
+      instructions: |
+        - This is a monorepo containing multiple apps and packages:
+          - `apps/www`: The main documentation application built with Nuxt 4.
+          - `apps/playground`: A Vite/Vue playground for component testing.
+          - `packages/cli`: A Node.js CLI tool for managing components.
+          - `packages/registry`: Source of truth for component definitions (shadcn-vue style).
+          - `packages/ui`: The shared UI library using Reka UI (formerly Radix Vue), Vue 3, and Tailwind.
+        - Do not flag missing imports for Nuxt/Vue/VueUse composables (auto-imports are enabled).
+        - Ensure compatibility with **Bun** runtime (as seen in root `bun.lock`).
+
     - path: 'apps/www/**'
       instructions: |
         - Follow Nuxt 4 conventions (Composition API, `<script setup>`).
@@ -57,6 +56,7 @@ reviews:
 
   # Ignore build artifacts and lock files across the monorepo
   path_filters:
+    - '!**/*.json'
     - '!**/node_modules/**'
     - '!**/.nuxt/**'
     - '!**/.output/**'
