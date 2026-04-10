@@ -2,20 +2,35 @@
 import { ComboboxRoot, useForwardPropsEmits } from 'reka-ui'
 import { provideAutocompleteContext } from './context'
 import type { AutocompleteEmits, AutocompleteProps } from './types'
+import { type HTMLAttributes } from 'vue'
+import { reactiveOmit } from '@vueuse/core'
+import { cn } from '@sulaf/ui/lib/utils'
 
-const props = withDefaults(defineProps<AutocompleteProps>(), {
-  highlightOnHover: true,
-})
+const props = withDefaults(
+  defineProps<
+    AutocompleteProps & {
+      class?: HTMLAttributes['class']
+    }
+  >(),
+  {
+    highlightOnHover: true,
+  },
+)
 const emits = defineEmits<AutocompleteEmits>()
 
 const searchTerm = defineModel<string>('searchTerm', { default: '' })
 provideAutocompleteContext({ searchTerm })
 
-const forwarded = useForwardPropsEmits(props, emits)
+const delegatedProps = reactiveOmit(props, 'class')
+const forwarded = useForwardPropsEmits(delegatedProps, emits)
 </script>
 
 <template>
-  <ComboboxRoot v-bind="forwarded" v-model:search-term="searchTerm" class="relative">
+  <ComboboxRoot
+    v-bind="forwarded"
+    v-model:search-term="searchTerm"
+    :class="cn('relative', props.class)"
+  >
     <slot />
   </ComboboxRoot>
 </template>
