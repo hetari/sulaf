@@ -40,5 +40,16 @@ export function useShowMoreItemContext() {
   if (!ctx) {
     throw new Error('[ShowMore] useShowMoreItemContext() was called outside of <ShowMoreItem>.')
   }
+
+  if (!ctx.value) {
+    throw new Error('[ShowMore] Missing required context property: "value" from <ShowMoreItem>.')
+  }
+
+  if (ctx.isTruncated === undefined) {
+    throw new Error(
+      '[ShowMore] Missing required context property: "isTruncated" from <ShowMoreItem>.',
+    )
+  }
+
   return ctx
 }

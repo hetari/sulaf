@@ -4,7 +4,7 @@ language: 'en-US'
 early_access: false
 
 reviews:
-  profile: 'assertive'
+  profile: 'chill'
   high_level_summary: true
   auto_review:
     enabled: true
