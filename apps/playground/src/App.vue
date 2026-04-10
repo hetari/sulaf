@@ -22,7 +22,10 @@ import { RouterLink } from 'vue-router'
 
 const { isDark, toggleDark } = useTheme()
 
-const navItems = [{ label: 'autocomplete', to: 'components/autocomplete' }]
+const navItems = [
+  { label: 'autocomplete', to: '/components/autocomplete' },
+  { label: 'show-more', to: '/components/show-more' },
+]
 </script>
 
 <template>
@@ -71,9 +74,7 @@ const navItems = [{ label: 'autocomplete', to: 'components/autocomplete' }]
         </Button>
       </header>
       <main class="flex flex-1 items-center justify-center p-6">
-        <div class="w-full max-w-sm">
-          <RouterView />
-        </div>
+        <RouterView />
       </main>
     </SidebarInset>
     <Toaster class="pointer-events-auto" position="top-center" />
