@@ -53,8 +53,7 @@ watchEffect(() => {
       :initial="{ height: collapsedHeight }"
       :animate="animateTarget"
       :transition="{ duration: 0.35, ease: 'easeInOut' }"
-      :class="cn('overflow-hidden relative', props.class)"
-      style="will-change: height"
+      :class="cn('overflow-hidden relative min-h-0 will-change-transform', props.class)"
     >
       <!-- Measurement element for reactive line height detection -->
       <div
@@ -74,7 +73,7 @@ watchEffect(() => {
         v-if="rootContext.fade && rootContext.showToggle"
         :initial="{ opacity: 1 }"
         :animate="{ opacity: isOpen || !itemContext.isTruncated.value ? 0 : 1 }"
-        class="absolute bottom-0 inset-x-0 h-14 bg-gradient-to-t from-background to-transparent pointer-events-none"
+        class="absolute bottom-0 inset-x-0 h-14 bg-linear-to-t from-background to-transparent pointer-events-none"
       />
     </motion.div>
   </AccordionContent>
