@@ -2,12 +2,17 @@
 import type { HTMLAttributes } from 'vue'
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
-import { SIDEBAR_EXCLUDED_PAGES, SIDEBAR_EXCLUDED_SECTIONS } from '@/lib/navigation'
+import {
+  NAV_SECTIONS,
+  SIDEBAR_EXCLUDED_PAGES,
+  SIDEBAR_EXCLUDED_SECTIONS,
+  type SidebarNavigationItem,
+} from '@/lib/navigation'
 import { cn } from '@/lib/utils'
 
 const props = defineProps<{
   class?: HTMLAttributes['class']
-  tree: any[] // relaxed typing to avoid missing property errors in template
+  tree: SidebarNavigationItem[] // relaxed typing to avoid missing property errors in template
   items: { name: string; href: string }[]
 }>()
 
@@ -17,16 +22,21 @@ const open = ref(false)
 const rootPages = computed(() => {
   const root = props.tree?.[0]
   if (!root) return []
-  return (root.children || []).filter(
-    (item: any) => !item.hide && !SIDEBAR_EXCLUDED_PAGES.includes(item.path),
-  )
+  return NAV_SECTIONS.map(section => {
+    const treeItem = (root.children || []).find(item => item.path === section.href)
+    return {
+      path: section.href,
+      ...treeItem,
+      title: section.name,
+    } as SidebarNavigationItem
+  })
 })
 
 const folderGroups = computed(() => {
   const root = props.tree?.[0]
   if (!root) return []
   return (root.children || []).filter(
-    (item: any) =>
+    (item: SidebarNavigationItem) =>
       (item.children || item.soon) &&
       !SIDEBAR_EXCLUDED_SECTIONS.includes(item.title.toLocaleLowerCase()),
   )
@@ -164,7 +174,7 @@ function handleNavigate(path: string) {
               <div class="flex flex-col gap-3">
                 <NuxtLink
                   v-for="item in (group.children || []).filter(
-                    (child: any) => !child.hide && !SIDEBAR_EXCLUDED_PAGES.includes(child.path),
+                    child => !child.hide && !SIDEBAR_EXCLUDED_PAGES.includes(child.path),
                   )"
                   :key="item.path"
                   prefetch-on="interaction"

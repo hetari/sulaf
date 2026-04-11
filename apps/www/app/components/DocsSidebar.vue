@@ -1,20 +1,11 @@
 <script setup lang="ts">
 import { showMcpDocs } from '~/lib/flag'
-import { NAV_SECTIONS, SIDEBAR_EXCLUDED_PAGES, SIDEBAR_EXCLUDED_SECTIONS } from '~/lib/navigation'
-
-type SidebarNavigationItem = {
-  title: string
-  path: string
-  stem?: string
-  children?: SidebarNavigationItem[]
-  new?: boolean
-  beta?: boolean
-  soon?: boolean
-  hide?: boolean
-  navigation?: {
-    icon?: string
-  }
-}
+import {
+  NAV_SECTIONS,
+  SIDEBAR_EXCLUDED_PAGES,
+  SIDEBAR_EXCLUDED_SECTIONS,
+  type SidebarNavigationItem,
+} from '~/lib/navigation'
 
 const props = defineProps<{
   tree: SidebarNavigationItem
@@ -27,9 +18,14 @@ const filteredSections = computed(() =>
 )
 
 const rootPages = computed(() => {
-  return (props.tree.children || []).filter(
-    (item: SidebarNavigationItem) => !item.hide && !SIDEBAR_EXCLUDED_PAGES.includes(item.path),
-  )
+  return filteredSections.value.map(section => {
+    const treeItem = (props.tree.children || []).find(item => item.path === section.href)
+    return {
+      path: section.href,
+      ...treeItem,
+      title: section.name,
+    } as SidebarNavigationItem
+  })
 })
 
 const folderGroups = computed(() => {

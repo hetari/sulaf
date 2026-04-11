@@ -55,6 +55,11 @@ export default defineNuxtConfig({
   },
 
   routeRules: {
+    // redurct from /docs/animation to /docs/components/animation
+    '/docs/animation': {
+      redirect: '/docs/components',
+    },
+
     // Docs layout - uses navigation data, all docs pages
     // ISR: Generate at build/first request, cache for 1 hour, regenerate in background
     '/docs/**': {

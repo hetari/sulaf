@@ -1,3 +1,17 @@
+export type SidebarNavigationItem = {
+  title: string
+  path: string
+  stem?: string
+  children?: SidebarNavigationItem[]
+  new?: boolean
+  beta?: boolean
+  soon?: boolean
+  hide?: boolean
+  navigation?: {
+    icon?: string
+  }
+}
+
 export type NavItem = {
   name: string
   href: string
@@ -6,8 +20,9 @@ export type NavItem = {
 /** Top-level section pills shown in the sidebar and mobile menu. */
 export const NAV_SECTIONS: NavItem[] = [
   { name: 'Get Started', href: '/docs/introduction' },
-  { name: 'Components', href: '/docs/components' },
   { name: 'Installation', href: '/docs/installation' },
+  { name: 'Components', href: '/docs/components' },
+  { name: 'Animations', href: '/docs/animation' },
 ]
 
 /** Sidebar group titles (lowercased) that should never be rendered. */
