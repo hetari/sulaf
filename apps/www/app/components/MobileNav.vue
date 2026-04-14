@@ -48,7 +48,7 @@ function handleNavigate(path: string) {
 </script>
 
 <template>
-  <Popover v-model:open="open">
+  <Popover v-model:open="open" class="bg-red-400">
     <PopoverTrigger as-child>
       <Button
         variant="ghost"
@@ -92,7 +92,7 @@ function handleNavigate(path: string) {
       align="start"
       side="bottom"
       :align-offset="-16"
-      :side-offset="14"
+      :side-offset="12"
     >
       <div class="flex flex-col gap-12 overflow-auto p-6">
         <div class="flex flex-col gap-4">

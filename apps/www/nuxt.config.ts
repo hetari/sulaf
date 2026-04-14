@@ -1,5 +1,6 @@
 import { createHash } from 'node:crypto'
 import { readdirSync, statSync } from 'node:fs'
+import { execSync } from 'node:child_process'
 import { join } from 'node:path'
 import tailwindcss from '@tailwindcss/vite'
 
@@ -55,15 +56,9 @@ export default defineNuxtConfig({
   },
 
   routeRules: {
-    // redurct from /docs/animation to /docs/components/animation
+    // redirect from /docs/animation to /docs/components/animation
     '/docs/animation': {
       redirect: '/docs/components',
-    },
-
-    // Docs layout - uses navigation data, all docs pages
-    // ISR: Generate at build/first request, cache for 1 hour, regenerate in background
-    '/docs/**': {
-      isr: 3600,
     },
     // Raw markdown content endpoint
     '/raw/**': {
@@ -191,10 +186,20 @@ export default defineNuxtConfig({
     'content:file:afterParse': function ({ file, content }) {
       if (file.path && file.path.endsWith('.md')) {
         try {
-          const stats = require('node:fs').statSync(file.path)
-          content.lastUpdated = stats.mtime.toISOString()
+          // Use git log to get the real last-commit date for this file.
+          // This survives CI/CD clones where fs.mtime resets to deploy time.
+          const date = execSync(`git log -1 --format=%cI -- "${file.path}"`, {
+            encoding: 'utf8',
+            stdio: ['pipe', 'pipe', 'ignore'],
+          }).trim()
+          if (date) {
+            content.lastUpdated = date
+          } else {
+            // Fallback: file exists but has never been committed (new/untracked)
+            content.lastUpdated = new Date().toISOString()
+          }
         } catch {
-          // ignore
+          // Not a git repo or git not available — skip gracefully
         }
       }
     },
