@@ -14,7 +14,7 @@ const demos = import.meta.glob('../demo/**/*.vue')
 const ui = import.meta.glob('../ui/**/*.vue')
 
 function getLoader() {
-  const nameL = props.name.toLowerCase()
+  const nameL = props.name?.toLowerCase()
   return (
     demos[`../demo/${props.name}.vue`] ||
     demos[`../demo/${props.name}/index.vue`] ||

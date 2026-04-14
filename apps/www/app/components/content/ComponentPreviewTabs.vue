@@ -6,6 +6,7 @@ const props = withDefaults(
   defineProps<{
     component: string | Component
     class?: HTMLAttributes['class']
+    previewClass?: HTMLAttributes['class']
     hideCode?: boolean
     chromeLessOnMobile?: boolean
     align?: 'center' | 'start' | 'end'
@@ -14,31 +15,64 @@ const props = withDefaults(
     align: 'center',
   },
 )
-// const tab = ref<"preview" | "code">("preview");
+const tab = ref<'preview' | 'code'>('preview')
+
+const isMobileCodeVisible = ref(false)
 </script>
 
 <template>
-  <div :class="cn('group relative mt-4 mb-12 flex flex-col gap-2 rounded-lg border', props.class)">
+  <div
+    data-slot="component-preview"
+    :class="
+      cn('group relative mt-4 mb-12 flex flex-col overflow-hidden rounded-xl border', props.class)
+    "
+  >
     <div data-slot="preview">
-      <!-- preview -->
-      <div
-        :data-align="align"
-        :class="
-          cn(
-            'flex w-full items-center justify-center data-[align=center]:items-center data-[align=end]:items-end data-[align=start]:items-start',
-            chromeLessOnMobile ? 'sm:p-10' : 'h-112.5 p-10',
-          )
-        "
-      >
-        <component :is="component" />
+      <div data-slot="preview" dir="ltr">
+        <div
+          :data-align="align"
+          :data-chromeless="chromeLessOnMobile"
+          :class="
+            cn(
+              'preview relative flex min-h-72 w-full justify-center p-10 data-[align=center]:items-center data-[align=end]:items-end data-[align=start]:items-start data-[chromeless=true]:h-auto data-[chromeless=true]:p-0',
+              props.previewClass,
+            )
+          "
+        >
+          <component :is="component" />
+        </div>
       </div>
+
       <div
         v-if="!hideCode"
         data-slot="code"
-        class="overflow-hidden **:data-pretty-code-figure:m-0! **:data-pretty-code-figure:rounded-t-none **:data-pretty-code-figure:border-t [&_pre]:max-h-100"
+        :data-mobile-code-visible="isMobileCodeVisible"
+        class="relative overflow-hidden **:data-[slot=copy-button]:right-4 **:data-[slot=copy-button]:hidden data-[mobile-code-visible=true]:**:data-[slot=copy-button]:flex **:data-pretty-code-figure:m-0! **:data-pretty-code-figure:rounded-t-none **:data-pretty-code-figure:border-t [&_pre]:max-h-72"
       >
-        <slot />
-        <!-- {{source}} -->
+        <div class="relative" :class="!isMobileCodeVisible && 'h-25.75'">
+          <slot />
+          <div
+            v-if="!isMobileCodeVisible"
+            class="absolute inset-0 flex items-center justify-center pb-4"
+          >
+            <div
+              class="absolute inset-0"
+              :style="{
+                background:
+                  'linear-gradient(to top, var(--color-code), color-mix(in oklab, var(--color-code) 60%, transparent), transparent)',
+              }"
+            />
+            <Button
+              type="button"
+              size="sm"
+              variant="outline"
+              class="relative z-10 rounded-lg bg-background text-foreground shadow-none hover:bg-muted dark:bg-background dark:text-foreground dark:hover:bg-muted"
+              @click="isMobileCodeVisible = true"
+            >
+              View Code
+            </Button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
