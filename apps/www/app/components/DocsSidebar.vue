@@ -18,14 +18,16 @@ const filteredSections = computed(() =>
 )
 
 const rootPages = computed(() => {
-  return filteredSections.value.map(section => {
+  const res: SidebarNavigationItem[] = []
+  filteredSections.value.forEach(section => {
     const treeItem = (props.tree.children || []).find(item => item.path === section.href)
-    return {
+    res.push({
       path: section.href,
       ...treeItem,
       title: section.name,
-    } as SidebarNavigationItem
+    })
   })
+  return res
 })
 
 const folderGroups = computed(() => {
