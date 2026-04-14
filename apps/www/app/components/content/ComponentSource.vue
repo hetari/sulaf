@@ -33,7 +33,7 @@ const rawUi = import.meta.glob('../ui/**/*.{vue,ts}', {
 async function getCode() {
   if (!props.name) return ''
 
-  const nameL = props.name.toLowerCase()
+  const nameL = props.name?.toLowerCase()
 
   // Try to find in UI folder first (for manual install) or Demo folder
   const loader =

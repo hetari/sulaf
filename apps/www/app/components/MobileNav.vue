@@ -24,11 +24,10 @@ const rootPages = computed(() => {
   if (!root) return []
   return NAV_SECTIONS.map(section => {
     const treeItem = (root.children || []).find(item => item.path === section.href)
-    return {
+    return Object.assign({}, treeItem, {
       path: section.href,
-      ...treeItem,
       title: section.name,
-    } as SidebarNavigationItem
+    }) as SidebarNavigationItem
   })
 })
 
