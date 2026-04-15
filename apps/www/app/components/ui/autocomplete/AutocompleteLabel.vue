@@ -7,7 +7,6 @@ import { cn } from '@/lib/utils'
 
 const props = defineProps<
   ComboboxLabelProps & {
-    /** Additional CSS classes for the label. */
     class?: HTMLAttributes['class']
   }
 >()

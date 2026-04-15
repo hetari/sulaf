@@ -10,6 +10,7 @@ const [injectAutocompleteContext, provideAutocompleteContext] =
 
 export { provideAutocompleteContext }
 
+const requiredKeys: (keyof AutocompleteContext)[] = ['searchTerm']
 /**
  * Hook to access the Autocomplete context within sub-components.
  *
@@ -23,6 +24,12 @@ export function useAutocompleteContext(): AutocompleteContext {
     throw new Error(
       '[Autocomplete] useAutocompleteContext() was called outside of an <Autocomplete> component.\n' +
         'Make sure your component is rendered inside an <Autocomplete> root.',
+    )
+  }
+  const missingKeys = requiredKeys.filter(key => ctx[key] === undefined)
+  if (missingKeys.length > 0) {
+    throw new Error(
+      `[Autocomplete] Missing required context property: "${missingKeys.join(', ')}".`,
     )
   }
   return ctx

@@ -20,7 +20,6 @@ const props = withDefaults(defineProps<ShowMoreProps & { class?: HTMLAttributes[
 })
 const emits = defineEmits<ShowMoreEmits>()
 const forwarded = useForwardPropsEmits(props, emits)
-
 provideShowMoreRootContext(props)
 </script>
 
