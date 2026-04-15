@@ -1,0 +1,57 @@
+{
+  "$schema": "https://shadcn-vue.com/schema/registry-item.json",
+  "name": "meter",
+  "type": "registry:ui",
+  "title": "Meter",
+  "description": "sulaf meter components.",
+  "files": [
+    {
+      "type": "registry:ui",
+      "path": "meter/context.ts",
+      "content": "import { createContext } from 'reka-ui'\nimport type { MeterRootContext } from './types'\n\nexport const [injectMeterRootContext, provideMeterRootContext] =\n  createContext<MeterRootContext>('MeterRootContext')\n\nexport const useMeterRootContext = () => {\n  const requiredKeys: (keyof MeterRootContext)[] = [\n    'variant',\n    'size',\n    'value',\n    'max',\n    'min',\n    'label',\n    'percentage',\n    'orientation',\n    'meterId',\n  ]\n\n  const ctx = injectMeterRootContext()\n  if (!ctx) {\n    throw new Error('[Meter] useMeterRootContext must be used within a MeterRoot')\n  }\n\n  const missingKeys = requiredKeys.filter(key => !ctx[key])\n  if (missingKeys.length > 0) {\n    throw new Error(`[Meter] Missing required context property: \"${missingKeys.join(', ')}\".`)\n  }\n\n  return ctx\n}\n"
+    },
+    {
+      "type": "registry:ui",
+      "path": "meter/MeterHeader.vue",
+      "content": "<script setup lang=\"ts\">\nimport type { HTMLAttributes } from 'vue'\nimport { cn } from '@/lib/utils'\nimport { useMeterRootContext } from './context'\nimport { meterHeaderVariants } from '.'\nimport { computed } from 'vue'\n\nconst props = defineProps<{\n  class?: HTMLAttributes['class']\n}>()\n\nconst meterCtx = useMeterRootContext()\nconst headerClass = computed(() => meterHeaderVariants({ orientation: meterCtx.orientation.value }))\n</script>\n\n<template>\n  <div :class=\"cn(headerClass, props.class)\" data-slot=\"meter-header\">\n    <slot />\n  </div>\n</template>\n"
+    },
+    {
+      "type": "registry:ui",
+      "path": "meter/Meter.vue",
+      "content": "<script setup lang=\"ts\">\nimport type { MeterProps } from './types'\nimport type { HTMLAttributes } from 'vue'\nimport { provideMeterRootContext } from './context'\nimport { Primitive } from 'reka-ui'\nimport { meterVariants } from '.'\nimport { cn } from '@/lib/utils'\nimport { computed, toRefs } from 'vue'\n\nconst props = withDefaults(\n  defineProps<\n    MeterProps & {\n      class?: HTMLAttributes['class']\n    }\n  >(),\n  {\n    variant: 'default',\n    size: 'default',\n    min: 0,\n    max: 100,\n    value: 0,\n    orientation: 'horizontal',\n  },\n)\n\nconst meterId = computed(() => `meter-${Math.random().toString(36).slice(2, 9)}`)\n\nconst percentage = computed<`${number}%`>(() => {\n  const min = props.min\n  const max = props.max\n  const value = props.value\n\n  if (value == null) return '0%'\n  const range = max - min\n  if (range <= 0) return '0%'\n\n  const clampedValue = Math.min(Math.max(value, min), max)\n  const result = Math.round(((clampedValue - min) / range) * 100)\n  return `${result}%`\n})\n\nprovideMeterRootContext({\n  ...toRefs(props),\n  percentage,\n  meterId,\n})\n</script>\n\n<template>\n  <Primitive\n    v-bind=\"$attrs\"\n    :id=\"meterId\"\n    data-slot=\"meter\"\n    :class=\"cn(meterVariants(props), props.class)\"\n    role=\"progressbar\"\n    :aria-valuenow=\"props.value\"\n    :aria-valuemin=\"props.min\"\n    :aria-valuemax=\"props.max\"\n    :aria-valuetext=\"percentage\"\n    :aria-label=\"props.label\"\n    :data-variant=\"props.variant\"\n    :data-size=\"props.size\"\n    :data-value=\"props.value\"\n    :data-max=\"props.max\"\n    :data-min=\"props.min\"\n    :data-percentage=\"percentage\"\n    :data-orientation=\"props.orientation\"\n  >\n    <slot />\n  </Primitive>\n</template>\n"
+    },
+    {
+      "type": "registry:ui",
+      "path": "meter/MeterIndicator.vue",
+      "content": "<script setup lang=\"ts\">\nimport type { HTMLAttributes } from 'vue'\nimport { cn } from '@/lib/utils'\nimport { useMeterRootContext } from './context'\nimport { meterIndicatorVariants } from '.'\nimport { computed } from 'vue'\n\nconst props = defineProps<{\n  class?: HTMLAttributes['class']\n}>()\n\nconst meterCtx = useMeterRootContext()\nconst indicatorClass = computed(() =>\n  meterIndicatorVariants({\n    variant: meterCtx.variant.value ?? 'default',\n    orientation: meterCtx.orientation.value,\n  }),\n)\n</script>\n\n<template>\n  <div\n    :class=\"cn(indicatorClass, props.class)\"\n    :style=\"{\n      [meterCtx.orientation.value === 'vertical' ? 'height' : 'width']: meterCtx.percentage.value,\n    }\"\n    data-slot=\"meter-indicator\"\n  >\n    <slot />\n  </div>\n</template>\n"
+    },
+    {
+      "type": "registry:ui",
+      "path": "meter/MeterLabel.vue",
+      "content": "<script setup lang=\"ts\">\nimport { Label } from '@/components/ui/label'\nimport type { LabelProps } from 'reka-ui'\nimport type { HTMLAttributes } from 'vue'\nimport { computed } from 'vue'\nimport { cn } from '@/lib/utils'\nimport { useMeterRootContext } from './context'\n\nconst props = defineProps<\n  LabelProps & {\n    class?: HTMLAttributes['class']\n  }\n>()\n\nconst delegatedProps = computed(() => {\n  const { class: _, ...delegated } = props\n  return delegated\n})\n\nconst { label, meterId } = useMeterRootContext()\n</script>\n\n<template>\n  <Label\n    v-bind=\"delegatedProps\"\n    :for=\"meterId\"\n    data-slot=\"meter-label\"\n    :class=\"cn('text-sm font-medium text-foreground tracking-tight', props.class)\"\n  >\n    <slot>{{ label }}</slot>\n  </Label>\n</template>\n"
+    },
+    {
+      "type": "registry:ui",
+      "path": "meter/MeterTrack.vue",
+      "content": "<script setup lang=\"ts\">\nimport type { HTMLAttributes } from 'vue'\nimport { cn } from '@/lib/utils'\nimport { useMeterRootContext } from './context'\nimport { meterTrackVariants } from '.'\nimport { computed } from 'vue'\n\nconst props = defineProps<{\n  class?: HTMLAttributes['class']\n}>()\n\nconst meterCtx = useMeterRootContext()\nconst trackClass = computed(() =>\n  meterTrackVariants({\n    size: meterCtx.size.value ?? 'default',\n    orientation: meterCtx.orientation.value,\n  }),\n)\n</script>\n\n<template>\n  <div :class=\"cn(trackClass, props.class)\" data-slot=\"meter-track\">\n    <slot />\n  </div>\n</template>\n"
+    },
+    {
+      "type": "registry:ui",
+      "path": "meter/index.ts",
+      "content": "import { cva } from 'class-variance-authority'\n\nexport const meterVariants = cva('relative flex gap-2', {\n  variants: {\n    orientation: {\n      horizontal: 'flex-col w-full',\n      vertical: 'flex-col items-center min-h-[200px] h-full',\n    },\n  },\n  defaultVariants: {\n    orientation: 'horizontal',\n  },\n})\n\nexport const meterTrackVariants = cva(\n  'relative overflow-hidden bg-secondary will-change-transform transition-all duration-300 ease-in-out',\n  {\n    variants: {\n      orientation: {\n        horizontal: 'w-full',\n        vertical: 'flex-1 w-full flex flex-col-reverse',\n      },\n      size: {\n        sm: '',\n        default: '',\n        lg: '',\n      },\n    },\n    compoundVariants: [\n      { orientation: 'horizontal', size: 'sm', class: 'h-1.5' },\n      { orientation: 'horizontal', size: 'default', class: 'h-2' },\n      { orientation: 'horizontal', size: 'lg', class: 'h-3' },\n      { orientation: 'vertical', size: 'sm', class: 'w-1.5' },\n      { orientation: 'vertical', size: 'default', class: 'w-2' },\n      { orientation: 'vertical', size: 'lg', class: 'w-3' },\n    ],\n    defaultVariants: {\n      size: 'default',\n      orientation: 'horizontal',\n    },\n  },\n)\nexport const meterIndicatorVariants = cva(\n  'absolute will-change-[color] transition-all duration-300 ease-in-out',\n  {\n    variants: {\n      orientation: {\n        horizontal: 'h-full',\n        vertical: 'w-full bottom-0',\n      },\n      variant: {\n        default: 'bg-primary',\n        success: 'bg-green-500',\n        warning: 'bg-yellow-500',\n        danger: 'bg-red-500',\n      },\n    },\n    defaultVariants: {\n      variant: 'default',\n      orientation: 'horizontal',\n    },\n  },\n)\n\nexport const meterHeaderVariants = cva('flex w-full', {\n  variants: {\n    orientation: {\n      horizontal: 'items-center justify-between',\n      vertical: 'flex-col items-center gap-1',\n    },\n  },\n  defaultVariants: {\n    orientation: 'horizontal',\n  },\n})\n\nexport { default as Meter } from './Meter.vue'\nexport { default as MeterHeader } from './MeterHeader.vue'\nexport { default as MeterIndicator } from './MeterIndicator.vue'\nexport { default as MeterLabel } from './MeterLabel.vue'\nexport { default as MeterTrack } from './MeterTrack.vue'\nexport { default as MeterValue } from './MeterValue.vue'\n\nexport type { MeterProps, MeterRootContext } from './types'\nexport { useMeterRootContext } from './context'\n"
+    },
+    {
+      "type": "registry:ui",
+      "path": "meter/MeterValue.vue",
+      "content": "<script setup lang=\"ts\">\nimport type { HTMLAttributes } from 'vue'\nimport { cn } from '@/lib/utils'\nimport { useMeterRootContext } from './context'\n\nconst props = defineProps<{\n  class?: HTMLAttributes['class']\n}>()\n\nconst { percentage } = useMeterRootContext()\n</script>\n\n<template>\n  <span\n    :class=\"cn('text-sm text-muted-foreground', props.class)\"\n    data-slot=\"meter-value\"\n    :data-value=\"percentage\"\n  >\n    <slot>{{ percentage }}</slot>\n  </span>\n</template>\n"
+    },
+    {
+      "type": "registry:ui",
+      "path": "meter/types.ts",
+      "content": "import type { meterIndicatorVariants, meterTrackVariants, meterVariants } from './index'\nimport type { VariantProps } from 'class-variance-authority'\n\nexport type MeterVariantProps = VariantProps<typeof meterIndicatorVariants>\nexport type MeterSizeProps = VariantProps<typeof meterTrackVariants>\nexport type MeterOrientationProps = VariantProps<typeof meterVariants>\n\nimport type { Ref, ComputedRef } from 'vue'\n\nexport type MeterProps = {\n  /**\n   * The variant of the meter.\n   * @default default\n   */\n  variant?: MeterVariantProps['variant']\n\n  /**\n   * The size of the meter.\n   * @default default\n   */\n  size?: MeterSizeProps['size']\n\n  /**\n   * The value of the meter.\n   * @default 0\n   */\n  value?: number\n\n  /**\n   * The maximum value of the meter.\n   * @default 100\n   */\n  max?: number\n\n  /**\n   * The minimum value of the meter.\n   * @default 0\n   */\n  min?: number\n\n  /**\n   * The label of the meter.\n   * @default undefined\n   */\n  label?: string\n\n  /**\n   * The orientation of the meter.\n   * @default horizontal\n   */\n  orientation?: 'horizontal' | 'vertical'\n}\n\nexport type MeterRootContext = {\n  variant: Ref<MeterVariantProps['variant']>\n  size: Ref<MeterSizeProps['size']>\n  value: Ref<number>\n  max: Ref<number>\n  min: Ref<number>\n  label: Ref<string | undefined>\n  percentage: ComputedRef<`${number}%`>\n  orientation: Ref<'horizontal' | 'vertical'>\n  meterId: ComputedRef<string>\n}\n"
+    }
+  ],
+  "dependencies": ["class-variance-authority"],
+  "devDependencies": [],
+  "registryDependencies": ["label"]
+}

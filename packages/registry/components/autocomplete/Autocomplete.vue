@@ -30,6 +30,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
     v-bind="forwarded"
     v-model:search-term="searchTerm"
     :class="cn('relative', props.class)"
+    data-slot="autocomplete"
   >
     <slot />
   </ComboboxRoot>

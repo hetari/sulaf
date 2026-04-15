@@ -71,6 +71,50 @@
       ]
     },
     {
+      "name": "meter",
+      "type": "registry:ui",
+      "title": "Meter",
+      "description": "sulaf meter components.",
+      "files": [
+        {
+          "path": "meter/context.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "meter/MeterHeader.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "meter/Meter.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "meter/MeterIndicator.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "meter/MeterLabel.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "meter/MeterTrack.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "meter/index.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "meter/MeterValue.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "meter/types.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "show-more",
       "type": "registry:ui",
       "title": "Show More",
