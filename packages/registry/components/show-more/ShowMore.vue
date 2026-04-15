@@ -24,7 +24,7 @@ provideShowMoreRootContext(props)
 </script>
 
 <template>
-  <AccordionRoot v-bind="forwarded" :class="cn(props.class)">
+  <AccordionRoot v-bind="forwarded" :class="cn(props.class)" data-slot="show-more">
     <slot />
   </AccordionRoot>
 </template>

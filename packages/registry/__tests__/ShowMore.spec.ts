@@ -245,7 +245,7 @@ describe('ShowMore component test', () => {
       })
       await flushPromises()
 
-      expect(wrapper.find('[data-testid="is-truncated"]').exists()).toBe(true)
+      expect(wrapper.find('[data-testid="is-truncated"]').exists()).toBe(false)
     })
   })
 

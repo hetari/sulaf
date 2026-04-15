@@ -1,4 +1,3 @@
-import type { Ref } from 'vue'
 import type { ShowMoreRootContext } from './types'
 import { createContext } from 'reka-ui'
 
@@ -7,7 +6,7 @@ export const [injectShowMoreRootContext, provideShowMoreRootContext] =
 
 export const [injectShowMoreItemContext, provideShowMoreItemContext] = createContext<{
   value: string
-  isTruncated: Ref<boolean>
+  isTruncated: boolean
 }>('ShowMoreItemContext')
 
 const requiredKeys: (keyof ShowMoreRootContext)[] = [

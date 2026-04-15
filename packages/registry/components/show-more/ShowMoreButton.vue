@@ -21,9 +21,10 @@ const rootContext = useShowMoreRootContext()
 
 <template>
   <AccordionTrigger
-    v-if="itemContext.isTruncated.value && rootContext.showToggle"
+    v-if="itemContext.isTruncated && rootContext.showToggle"
     v-bind="forwarded"
     as-child
+    data-slot="show-more-button"
   >
     <Button :variant="props.variant" :size="props.size" :class="cn(props.class)">
       <slot />

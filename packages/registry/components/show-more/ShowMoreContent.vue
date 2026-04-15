@@ -41,14 +41,13 @@ const { height: contentHeight } = useElementSize(contentRef)
 // Robust truncation detection using integer comparison to handle sub-pixel issues
 watchEffect(() => {
   if (contentHeight.value > 0 && thresholdHeightPx.value > 0) {
-    itemContext.isTruncated.value =
-      Math.trunc(contentHeight.value) > Math.trunc(thresholdHeightPx.value)
+    itemContext.isTruncated = Math.trunc(contentHeight.value) > Math.trunc(thresholdHeightPx.value)
   }
 })
 </script>
 
 <template>
-  <AccordionContent :force-mount="rootContext.forceMount" as-child>
+  <AccordionContent :force-mount="rootContext.forceMount" as-child data-slot="show-more-content">
     <motion.div
       :initial="{ height: collapsedHeight }"
       :animate="animateTarget"
@@ -75,7 +74,7 @@ watchEffect(() => {
       <motion.div
         v-if="rootContext.fade && rootContext.showToggle"
         :initial="{ opacity: 1 }"
-        :animate="{ opacity: isOpen || !itemContext.isTruncated.value ? 0 : 1 }"
+        :animate="{ opacity: isOpen || !itemContext.isTruncated ? 0 : 1 }"
         class="absolute bottom-0 inset-x-0 h-14 bg-linear-to-t from-background to-transparent pointer-events-none"
       />
     </motion.div>

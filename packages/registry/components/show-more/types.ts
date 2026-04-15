@@ -1,20 +1,6 @@
 import type { Easing } from 'motion-v'
 import type { AccordionRootProps, AccordionRootEmits, AccordionItemProps } from 'reka-ui'
 
-export type ShowMoreAnimation = {
-  /**
-   * Motion duration in seconds
-   * @default 0.35
-   */
-  duration?: number
-
-  /**
-   * Easing function
-   * @default 'easeInOut'
-   */
-  ease?: Easing
-}
-
 export type ShowMoreRootContext = {
   threshold: number
   truncationType: 'lines' | 'chars'
@@ -24,7 +10,19 @@ export type ShowMoreRootContext = {
   modelValue?: any
   open: boolean
   lineHeight: string
-  animation?: ShowMoreAnimation
+  animation?: {
+    /**
+     * Motion duration in seconds
+     * @default 0.35
+     */
+    duration?: number
+
+    /**
+     * Easing function
+     * @default 'easeInOut'
+     */
+    ease?: Easing
+  }
 }
 
 export interface ShowMoreProps extends AccordionRootProps {
@@ -80,7 +78,19 @@ export interface ShowMoreProps extends AccordionRootProps {
    * animate: { height: 'auto' },
    * }
    */
-  animation?: ShowMoreAnimation
+  animation?: {
+    /**
+     * Motion duration in seconds
+     * @default 0.35
+     */
+    duration?: number
+
+    /**
+     * Easing function
+     * @default 'easeInOut'
+     */
+    ease?: Easing
+  }
 }
 
 export interface ShowMoreEmits extends AccordionRootEmits {}
