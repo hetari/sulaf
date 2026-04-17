@@ -40,14 +40,16 @@ async function fetchUsers(query: string) {
   }
 
   // Create a new AbortController for this request
-  abortController = new AbortController()
+  const controller = new AbortController()
+  abortController = controller
 
   isLoading.value = true
   try {
     const response = await fetch(`https://dummyjson.com/users`, {
-      signal: abortController.signal,
+      signal: controller.signal,
     })
-    const data: User[] = (await response.json())?.users
+    if (!response.ok) throw new Error(`HTTP ${response.status}`)
+    const data: User[] = (await response.json())?.users ?? []
     items.value = data.filter(
       user =>
         user.firstName.toLowerCase().includes(query.toLowerCase()) ||
@@ -61,11 +63,11 @@ async function fetchUsers(query: string) {
     // eslint-disable-next-line no-console
     console.error('[Demo]: Failed to fetch users:', error)
   } finally {
-    // Only set loading to false if this is still the active request
-    if (abortController && !abortController.signal.aborted) {
+    // Only clear state if we're still the active request
+    if (abortController === controller) {
       isLoading.value = false
+      abortController = null
     }
-    abortController = null
   }
 }
 

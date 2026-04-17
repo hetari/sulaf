@@ -39,7 +39,12 @@ function removeItem(item: string) {
     <div v-if="value.length > 0" class="flex flex-wrap gap-2">
       <Badge v-for="v in value" :key="v" variant="secondary" class="gap-1">
         {{ v }}
-        <button class="outline-none" @click="removeItem(v)">
+        <button
+          type="button"
+          class="outline-none"
+          :aria-label="`Remove ${v}`"
+          @click="removeItem(v)"
+        >
           <XIcon class="size-3" />
         </button>
       </Badge>

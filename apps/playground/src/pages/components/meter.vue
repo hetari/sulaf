@@ -31,12 +31,7 @@ const updateProperties = () => {
   }
 
   // Update value with a smooth wave pattern
-  const val = Math.floor(25 + 50 * Math.sin(Date.now() / 2000))
-  if (val < 0) {
-    currentValue.value = val * -1
-  } else {
-    currentValue.value = val
-  }
+  currentValue.value = Math.floor(50 + 50 * Math.sin(Date.now() / 2000))
 }
 
 let intervalId: ReturnType<typeof setInterval>

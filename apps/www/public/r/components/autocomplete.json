@@ -48,7 +48,7 @@
     {
       "type": "registry:ui",
       "path": "autocomplete/AutocompleteTrigger.vue",
-      "content": "<script setup lang=\"ts\">\nimport { cn } from '@/lib/utils'\nimport { ComboboxTrigger } from '@/components/ui/combobox'\nimport type { ComboboxTriggerProps } from 'reka-ui'\nimport { useForwardProps } from 'reka-ui'\nimport type { HTMLAttributes } from 'vue'\n\nconst props = defineProps<ComboboxTriggerProps & { class?: HTMLAttributes['class'] }>()\n\nconst forwarded = useForwardProps(props)\n</script>\n\n<template>\n  <ComboboxTrigger\n    v-bind=\"forwarded\"\n    aria-label=\"Toggle menu\"\n    :class=\"cn('outline-none cursor-pointer', props.class)\"\n    data-slot=\"autocomplete-trigger\"\n  >\n    <slot />\n  </ComboboxTrigger>\n</template>\n"
+      "content": "<script setup lang=\"ts\">\nimport { cn } from '@/lib/utils'\nimport { ComboboxTrigger } from '@/components/ui/combobox'\nimport type { ComboboxTriggerProps } from 'reka-ui'\nimport { useForwardProps } from 'reka-ui'\nimport type { HTMLAttributes } from 'vue'\n\nconst props = defineProps<ComboboxTriggerProps & { class?: HTMLAttributes['class'] }>()\n\nconst forwarded = useForwardProps(props)\n</script>\n\n<template>\n  <ComboboxTrigger\n    v-bind=\"forwarded\"\n    aria-label=\"Toggle autocomplete options\"\n    :class=\"cn('outline-none cursor-pointer', props.class)\"\n    data-slot=\"autocomplete-trigger\"\n  >\n    <slot />\n  </ComboboxTrigger>\n</template>\n"
     },
     {
       "type": "registry:ui",

@@ -17,7 +17,7 @@ const longText = `This is some very long content that demonstrates how the ShowM
         <ShowMoreContent class="text-muted-foreground">
           <p>{{ longText }}</p>
         </ShowMoreContent>
-        <div v-if="isTruncated" class="flex items-center gap-4 mt-4">
+        <div class="flex items-center gap-4 mt-4">
           <div class="flex-1 h-px bg-border"></div>
           <ShowMoreButton
             class="group h-8 px-4 text-xs font-semibold uppercase tracking-wide rounded-full border border-border flex items-center gap-2 [&>svg]:hidden"

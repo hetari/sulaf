@@ -10,20 +10,15 @@ const props = defineProps<{
 }>()
 
 const meterCtx = useMeterRootContext()
-const indicatorClass = computed(() =>
-  meterIndicatorVariants({
-    variant: meterCtx.variant.value ?? 'default',
-  }),
-)
 </script>
 
 <template>
   <div
-    :class="cn(indicatorClass, props.class)"
+    :class="cn(meterIndicatorVariants(), props.class)"
     :style="{
-      width: meterCtx.percentage.value,
+      width: meterCtx.percentage,
     }"
-    :data-variant="meterCtx.variant.value"
+    :data-variant="meterCtx.variant"
     data-slot="meter-indicator"
   >
     <slot />

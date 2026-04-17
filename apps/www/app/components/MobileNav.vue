@@ -48,7 +48,7 @@ function handleNavigate(path: string) {
 </script>
 
 <template>
-  <Popover v-model:open="open" class="bg-red-400">
+  <Popover v-model:open="open">
     <PopoverTrigger as-child>
       <Button
         variant="ghost"

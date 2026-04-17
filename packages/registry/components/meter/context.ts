@@ -21,9 +21,11 @@ export const useMeterRootContext = () => {
     throw new Error('[Meter] useMeterRootContext must be used within a MeterRoot')
   }
 
-  const missingKeys = requiredKeys.filter(key => !ctx[key])
+  const missingKeys = requiredKeys.filter(key => ctx[key] === undefined)
   if (missingKeys.length > 0) {
-    throw new Error(`[Meter] Missing required context property: "${missingKeys.join(', ')}".`)
+    throw new Error(
+      `[Meter] Missing required context ${missingKeys.length === 1 ? 'property' : 'properties'}: ${missingKeys.map(k => `"${k}"`).join(', ')}.`,
+    )
   }
 
   return ctx

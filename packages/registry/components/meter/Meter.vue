@@ -5,7 +5,7 @@ import { provideMeterRootContext } from './context'
 import { Primitive } from 'reka-ui'
 import { meterVariants } from '.'
 import { cn } from '@sulaf/ui/lib/utils'
-import { computed, toRefs } from 'vue'
+import { computed, toRefs, useId } from 'vue'
 
 const props = withDefaults(
   defineProps<
@@ -22,7 +22,7 @@ const props = withDefaults(
   },
 )
 
-const meterId = computed(() => `meter-${Math.random().toString(36).slice(2, 9)}`)
+const meterId = useId()
 
 const percentage = computed<`${number}%`>(() => {
   const min = props.min
@@ -39,8 +39,8 @@ const percentage = computed<`${number}%`>(() => {
 })
 
 provideMeterRootContext({
-  ...toRefs(props),
-  percentage,
+  ...props,
+  percentage: percentage.value,
   meterId,
 })
 </script>

@@ -13,7 +13,7 @@ const forwarded = useForwardProps(props)
 <template>
   <ComboboxTrigger
     v-bind="forwarded"
-    aria-label="Toggle menu"
+    aria-label="Toggle autocomplete options"
     :class="cn('outline-none cursor-pointer', props.class)"
     data-slot="autocomplete-trigger"
   >

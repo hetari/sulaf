@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, shallowRef, onUnmounted } from 'vue'
 import {
   Meter,
   MeterHeader,
@@ -11,17 +11,17 @@ import {
 import { Button } from '@/components/ui/button'
 
 const dynamicValue = ref(0)
-let interval: ReturnType<typeof setInterval> | null = null
+const interval = shallowRef<ReturnType<typeof setInterval> | null>(null)
 
 const startProgress = () => {
-  if (interval) clearInterval(interval)
+  if (interval.value) clearInterval(interval.value)
   dynamicValue.value = 0
-  interval = setInterval(() => {
+  interval.value = setInterval(() => {
     if (dynamicValue.value < 100) {
       dynamicValue.value += 10
     } else {
-      clearInterval(interval as ReturnType<typeof setInterval>)
-      interval = null
+      if (interval.value) clearInterval(interval.value)
+      interval.value = null
     }
   }, 500)
 }
@@ -31,7 +31,7 @@ onMounted(() => {
 })
 
 onUnmounted(() => {
-  if (interval) clearInterval(interval)
+  if (interval.value) clearInterval(interval.value)
 })
 
 const getMeterVariant = (value: number) => {
@@ -54,7 +54,8 @@ const getMeterVariant = (value: number) => {
       </MeterTrack>
     </Meter>
 
-    <Button @click="startProgress" :disabled="dynamicValue < 100 && interval !== null">
+    <Button `@click`="startProgress" :disabled="dynamicValue < 100 && interval !== null">
+      +
       {{ dynamicValue < 100 && interval !== null ? 'In Progress...' : 'Restart Progress' }}
     </Button>
 
