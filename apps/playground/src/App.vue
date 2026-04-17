@@ -25,6 +25,7 @@ const { isDark, toggleDark } = useTheme()
 const navItems = [
   { label: 'autocomplete', to: '/components/autocomplete' },
   { label: 'show-more', to: '/components/show-more' },
+  { label: 'meter', to: '/components/meter' },
 ]
 </script>
 

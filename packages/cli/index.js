@@ -35,15 +35,22 @@ const commandPrefix = getCommandPrefix()
 // Parse command line arguments
 const args = process.argv.slice(2)
 
-// Get all components or default to 'all' if no component is provided
-const components = args.length >= 2 ? args.slice(1) : ['all']
+// Filter out options (starting with -) from component names
+const components = args.filter(arg => !arg.startsWith('-'))
+
+// Get options (flags that start with -)
+const options = args.filter(arg => arg.startsWith('-')).join(' ')
+
+// Default to 'all' if no components provided
+const finalComponents = components.length === 0 ? ['all'] : components
 
 // Get the target URLs for all components
-const targetUrls = components
+const targetUrls = finalComponents
   .map(component => new URL(`${component}.json`, ELEMENTS_REGISTRY_URL).toString())
   .join(' ')
 
-const fullCommand = `${commandPrefix} shadcn-vue@latest add ${targetUrls}`
+// Build the full command with options at the end
+const fullCommand = `${commandPrefix} shadcn-vue@latest add ${targetUrls} ${options}`.trim()
 
 const result = spawnSync(fullCommand, {
   stdio: 'inherit',

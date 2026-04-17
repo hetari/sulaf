@@ -34,6 +34,13 @@ declare module 'vue-router/auto-routes' {
       Record<never, never>,
       never
     >
+    '/components/meter': RouteRecordInfo<
+      '/components/meter',
+      '/components/meter',
+      Record<never, never>,
+      Record<never, never>,
+      never
+    >
     '/components/show-more': RouteRecordInfo<
       '/components/show-more',
       '/components/show-more',
@@ -60,6 +67,10 @@ declare module 'vue-router/auto-routes' {
     }
     'src/pages/components/autocomplete.vue': {
       routes: '/components/autocomplete'
+      views: never
+    }
+    'src/pages/components/meter.vue': {
+      routes: '/components/meter'
       views: never
     }
     'src/pages/components/show-more.vue': {
