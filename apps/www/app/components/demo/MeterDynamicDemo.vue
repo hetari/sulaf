@@ -54,7 +54,7 @@ const getMeterVariant = (value: number) => {
       </MeterTrack>
     </Meter>
 
-    <Button `@click`="startProgress" :disabled="dynamicValue < 100 && interval !== null">
+    <Button @click="startProgress" :disabled="dynamicValue < 100 && interval !== null">
       +
       {{ dynamicValue < 100 && interval !== null ? 'In Progress...' : 'Restart Progress' }}
     </Button>
