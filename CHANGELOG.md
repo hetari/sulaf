@@ -2,29 +2,49 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.1-alpha.3] - 2026-04-17
+
+### Miscellaneous Tasks
+
+- Bump package version to 0.0.4 (5105586)
+- add meter component (4aff35a)
+
+### Refactor
+
+- Standardize navigation structure using NAV_SECTIONS (4a88d93)
+
 ## [0.0.1-alpha.2] - 2026-04-10
 
 ### Bug Fixes
 
-- docs: Add error handling to search fetcher and remove unused database configuration (1455909)
-- docs: Use mobile-web-app-capable meta tag (19bbec9)
-- registry: Show-more container classes and gradient (acf58f5)
-- registry: Add reka-ui to excludedDeps and inline list (23458e0)
+- Add error handling to search fetcher and remove unused database configuration (1455909)
+- Support class prop and validate context (ce8680f)
+- Show-more container classes and gradient (acf58f5)
+- Enable auto review and consolidate path rules (271c0ee)
+- Use mobile-web-app-capable meta tag (19bbec9)
+- Add reka-ui to excludedDeps and inline list (23458e0)
 
 ### Features
 
-- docs: Add manual installation component and integrate code tabs for documentation (7d8b0ad)
-- docs: Add comprehensive apple-touch-icon support and update favicon configuration (9e77d3f)
-- docs: Add support for 'soon' and 'hide' navigation states with UI badges and filtering (b0c68e3)
-- docs: Add ShowMore component to the docs (7e54ff4)
-- registry: Add show-more component to registry (9f421f9)
-- registry: Add show-more demo page and route in playground (82d0224)
+- Add manual installation component and integrate code tabs for documentation (7d8b0ad)
+- Add comprehensive apple-touch-icon support and update favicon configuration (9e77d3f)
+- Add support for 'soon' and 'hide' navigation states with UI badges and filtering (b0c68e3)
+- Add ShineBorder component and replace legacy shine badge on index page (466af47)
+- Add show-more component to registry (9f421f9)
+- Add show-mMore demo page and route in playground (82d0224)
+- Add configurable animation to ShowMore component (8ac3c77)
+- Add show-more demo (5fd9faf)
+- Add ShowMore component to the docs (7e54ff4)
 
 ### Miscellaneous Tasks
 
 - Update release script instructions to include tag pushing and cleanup steps (6e4ef95)
+- Bump package version to 0.0.2 (a4aa1bd)
 - Update project homepage and registry base URL references (0532bdf)
+- Bump package version to 0.0.3 (f36778f)
 - Add nuxt-content skills (fd90ca5)
+- Add documentation stubs for new upcoming components (1c4dfe7)
+- Add ShowMore component to the registry (28d8d4c)
 - Automate build workflow (ab2b894)
 
 ### Refactor
@@ -37,6 +57,52 @@ All notable changes to this project will be documented in this file.
 ### Testing
 
 - Add unit tests for ShowMore component and update ShowMoreButton to consume root context (b43499d)
+
+## [0.0.1-alpha.1] - 2026-04-05
+
+### Bug Fixes
+
+- Update the docker file (7abd3d1)
+- Docker file (0fe8ed4)
+- Fix: load optional local registry.json per component group to override
+  item metadata, and merge dependencies
+
+Add README and support local metadata (239c7c8)
+
+- Docs navigation and update deps (377c387)
+- Update test command to use bun run test (df6b44a)
+- Add custom filter support and keyword indexing to Command component (0c72f36)
+
+### Features
+
+- Implement a new release process using git-cliff (f5e286d)
+- Add autocomplete components and demo (742eb00)
+- Implement Autocomplete test and configure Vitest for testing (d1ccdee)
+- Add Autocomplete demo (374956d)
+
+### Miscellaneous Tasks
+
+- Add docker file (18aa7b0)
+- Add playground files (f997c95)
+- Update dependencies and fix path in tsconfig (3bbd97a)
+- Add Tailwind CSS and update style.css with custom themes and variables (27f98a0)
+- Add ai skills (bc2c872)
+- Delete hello-world component (ecda6ba)
+- Add code-rabbit config and standardize deps (b45755a)
+- Update dependency versions (ee10270)
+- Update registry (1883774)
+- Rename CLI package from @sulaf/cli to sulaf (935a22a)
+- Rename package to sulaf and remove execution log output (c96d237)
+
+### Refactor
+
+- Registry scripts, add types and utils (b483b67)
+- Docs structure and update links (bd7a986)
+- Restructure registry package and rewrite builder (2010408)
+
+### Build
+
+- Remove --frozen-lockfile flag from bun install in Dockerfile (31a7d3a)
 
 ## [0.0.1] - 2026-03-23
 
