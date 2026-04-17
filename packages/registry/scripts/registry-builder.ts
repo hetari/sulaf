@@ -464,11 +464,7 @@ export async function generateRegistryAssets(ctx: { rootDir: string }) {
 
     // Validate before writing
     if (validateRegistryItem(itemJson, `component-${group}`)) {
-      await fs.writeFile(
-        join(outBase, 'components', `${group}.json`),
-        JSON.stringify(itemJson, null, 2),
-        'utf-8',
-      )
+      await fs.writeFile(join(outBase, `${group}.json`), JSON.stringify(itemJson, null, 2), 'utf-8')
     } else {
       // eslint-disable-next-line no-console
       console.error(`Skipping invalid component: ${group}`)
