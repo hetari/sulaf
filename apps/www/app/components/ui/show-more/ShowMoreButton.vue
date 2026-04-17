@@ -3,7 +3,7 @@ import { AccordionTrigger, useForwardProps } from 'reka-ui'
 import { cn } from '@/lib/utils'
 import { Button, type ButtonVariants } from '@/components/ui/button'
 import type { HTMLAttributes } from 'vue'
-import { useShowMoreItemContext } from './context'
+import { useShowMoreItemContext, useShowMoreRootContext } from './context'
 
 // TODO
 interface Props {
@@ -16,10 +16,15 @@ const props = defineProps<Props>()
 const forwarded = useForwardProps(props)
 
 const itemContext = useShowMoreItemContext()
+const rootContext = useShowMoreRootContext()
 </script>
 
 <template>
-  <AccordionTrigger v-if="itemContext.isTruncated.value" v-bind="forwarded" as-child>
+  <AccordionTrigger
+    v-if="itemContext.isTruncated.value && rootContext.showToggle"
+    v-bind="forwarded"
+    as-child
+  >
     <Button :variant="props.variant" :size="props.size" :class="cn(props.class)">
       <slot />
     </Button>

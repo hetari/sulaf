@@ -26,6 +26,7 @@ function handleClear() {
 <template>
   <ComboboxCancel
     v-bind="forwarded"
+    aria-label="Clear selection"
     :class="
       cn(
         'inline-flex items-center justify-center rounded-sm',
@@ -35,6 +36,7 @@ function handleClear() {
         props.class,
       )
     "
+    data-slot="autocomplete-clear"
     @click="handleClear"
   >
     <slot>

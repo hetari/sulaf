@@ -1,9 +1,8 @@
 {
   "$schema": "https://shadcn-vue.com/schema.json",
   "style": "new-york",
-  "base": "reka",
-  "font": "inter",
   "typescript": true,
+  "font": "inter",
   "tailwind": {
     "config": "",
     "css": "app/assets/css/main.css",

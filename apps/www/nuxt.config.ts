@@ -1,6 +1,7 @@
 import { createHash } from 'node:crypto'
 import { readdirSync, statSync } from 'node:fs'
-import { join } from 'node:path'
+import { execSync } from 'node:child_process'
+import { join, resolve } from 'node:path'
 import tailwindcss from '@tailwindcss/vite'
 
 // Compute the docs version at BUILD TIME by hashing all .md files.
@@ -32,7 +33,37 @@ function getAllMdFiles(dirPath: string, files: string[] = []): string[] {
   return files
 }
 
+function computeLastUpdatedMap(): Map<string, string> {
+  const map = new Map<string, string>()
+  try {
+    const root = execSync('git rev-parse --show-toplevel', { encoding: 'utf8' }).trim()
+    const output = execSync('git log --pretty=format:"%cI" --name-only -- "apps/www/content"', {
+      cwd: root,
+      encoding: 'utf8',
+      stdio: ['pipe', 'pipe', 'ignore'],
+    })
+    const lines = output.split('\n')
+    let currentDate = ''
+    for (const line of lines) {
+      const trimmed = line.trim()
+      if (!trimmed) continue
+      if (trimmed.match(/^\d{4}-\d{2}-\d{2}T/)) {
+        currentDate = trimmed
+      } else {
+        const fullPath = join(root, trimmed)
+        if (!map.has(fullPath)) {
+          map.set(fullPath, currentDate)
+        }
+      }
+    }
+  } catch {
+    // skip
+  }
+  return map
+}
+
 const DOCS_VERSION = computeDocsVersion()
+const LAST_UPDATED_MAP = computeLastUpdatedMap()
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -55,15 +86,9 @@ export default defineNuxtConfig({
   },
 
   routeRules: {
-    // redurct from /docs/animation to /docs/components/animation
+    // redirect from /docs/animation to /docs/components/animation
     '/docs/animation': {
       redirect: '/docs/components',
-    },
-
-    // Docs layout - uses navigation data, all docs pages
-    // ISR: Generate at build/first request, cache for 1 hour, regenerate in background
-    '/docs/**': {
-      isr: 3600,
     },
     // Raw markdown content endpoint
     '/raw/**': {
@@ -139,6 +164,7 @@ export default defineNuxtConfig({
   },
 
   fonts: {
+    families: [{ name: 'Inter', provider: 'google', weights: [400, 500, 600, 700] }],
     defaults: {
       weights: [400, 500, 600, 700],
     },
@@ -190,11 +216,17 @@ export default defineNuxtConfig({
   hooks: {
     'content:file:afterParse': function ({ file, content }) {
       if (file.path && file.path.endsWith('.md')) {
-        try {
-          const stats = require('node:fs').statSync(file.path)
-          content.lastUpdated = stats.mtime.toISOString()
-        } catch {
-          // ignore
+        const fullPath = resolve(file.path)
+        const date = LAST_UPDATED_MAP.get(fullPath)
+        if (date) {
+          content.lastUpdated = date
+        } else {
+          try {
+            const stats = statSync(fullPath)
+            content.lastUpdated = stats.mtime.toISOString()
+          } catch {
+            content.lastUpdated = new Date().toISOString()
+          }
         }
       }
     },
