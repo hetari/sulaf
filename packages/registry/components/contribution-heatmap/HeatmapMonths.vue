@@ -17,7 +17,12 @@ const monthMarkers = computed(() => getMonthMarkers(cells.value, cols.value))
   <div :class="cn('mb-2 flex items-end', props.class)">
     <div class="w-8 shrink-0 sm:w-10" />
     <div class="flex gap-0.5 sm:gap-0.75">
-      <div v-for="(label, i) in monthMarkers" :key="i" class="relative h-3.5 w-3.5 sm:h-4 sm:w-4">
+      <div
+        v-for="(label, i) in monthMarkers"
+        :key="i"
+        v-memo="[label]"
+        class="relative h-3.5 w-3.5 sm:h-4 sm:w-4"
+      >
         <span
           v-if="label"
           aria-hidden="true"

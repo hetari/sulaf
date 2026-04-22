@@ -11,7 +11,7 @@ const props = defineProps<{
   <div :class="cn('relative w-full', props.class)">
     <div class="flex flex-col gap-1 sm:gap-1.5">
       <slot name="months" />
-      <div class="flex items-start gap-0.5 sm:gap-0.75">
+      <div class="flex items-start gap-0.5 sm:gap-0.75 py-0.5">
         <slot name="weekdays" />
         <slot />
       </div>
