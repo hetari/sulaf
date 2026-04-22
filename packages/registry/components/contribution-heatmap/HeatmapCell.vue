@@ -76,7 +76,6 @@ onKeyStroke(
             `data-[level='2']:bg-[var(--heatmap-level-2,theme(colors.emerald.400))]`,
             `data-[level='3']:bg-[var(--heatmap-level-3,theme(colors.emerald.600))]`,
             `data-[level='4']:bg-[var(--heatmap-level-4,theme(colors.emerald.800))]`,
-            // dark mode
             `dark:data-[level='1']:bg-[var(--heatmap-level-1,theme(colors.emerald.300))]`,
             `dark:data-[level='2']:bg-[var(--heatmap-level-2,theme(colors.emerald.500))]`,
             `dark:data-[level='3']:bg-[var(--heatmap-level-3,theme(colors.emerald.700))]`,

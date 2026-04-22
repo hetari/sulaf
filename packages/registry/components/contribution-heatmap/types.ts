@@ -82,7 +82,23 @@ export type HeatmapEmits = {
   'click:cell': [cell: HeatmapCellProp]
 }
 
-import type { ComputedRef, Ref } from 'vue'
+export interface GitHubProfile {
+  login: string
+  name: string | null
+  avatar_url: string
+  bio: string | null
+  location: string | null
+  blog: string | null
+  company: string | null
+  followers: number
+  following: number
+  public_repos: number
+  public_gists: number
+  twitter_username: string | null
+  html_url: string
+}
+
+import type { ComputedRef, Ref, ShallowRef } from 'vue'
 
 export type HeatmapDataRootContext = {
   /** The unique ID of the heatmap. */
@@ -101,6 +117,8 @@ export type HeatmapDataRootContext = {
   isLoading: ComputedRef<boolean> | Ref<boolean>
   /** Whether there was an error fetching data. */
   isError: ComputedRef<boolean> | Ref<boolean>
+  /** The GitHub user profile data. */
+  profile?: ShallowRef<GitHubProfile | null>
   /** Number of rows in the grid. */
   rows: ComputedRef<number> | Ref<number>
   /** Number of columns in the grid. */

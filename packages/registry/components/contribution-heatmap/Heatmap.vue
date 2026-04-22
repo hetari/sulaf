@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { provideHeatmapDataRootContext } from './context'
-import type { HeatmapProps, HeatmapEmits } from './types'
+import type { HeatmapProps, HeatmapEmits, GitHubProfile } from './types'
 import { computed, useId } from 'vue'
 import { useHeatmap, useContributionData } from './useHeatmap'
 import { Card } from '@sulaf/ui/components/card'
@@ -27,16 +27,27 @@ const props = withDefaults(
   },
 )
 
+defineSlots<{
+  default(props: { githubProfile: GitHubProfile | null }): any
+}>()
+
 const emits = defineEmits<HeatmapEmits>()
 const DAYMS = 86400000
 
-const { actualStartDate, actualEndDate, contributionData, totalContributions, isLoading, isError } =
-  useContributionData({
-    githubUsername: () => props.githubUsername,
-    data: () => props.data,
-    startDate: () => props.startDate,
-    endDate: () => props.endDate,
-  })
+const {
+  actualStartDate,
+  actualEndDate,
+  contributionData,
+  totalContributions,
+  isLoading,
+  isError,
+  profile,
+} = useContributionData({
+  githubUsername: () => props.githubUsername,
+  data: () => props.data,
+  startDate: () => props.startDate,
+  endDate: () => props.endDate,
+})
 
 const { createHeatmapCells } = useHeatmap()
 const heatmapCells = computed(() =>
@@ -62,6 +73,7 @@ provideHeatmapDataRootContext({
   totalContributions,
   isLoading,
   isError,
+  profile,
   dayMs: DAYMS,
   rows: computed(() => props.rows),
   cols: computed(() => props.cols),
@@ -86,7 +98,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
     v-bind="forwarded"
   >
     <TooltipProvider>
-      <slot />
+      <slot :githubProfile="profile" />
     </TooltipProvider>
   </Card>
 </template>

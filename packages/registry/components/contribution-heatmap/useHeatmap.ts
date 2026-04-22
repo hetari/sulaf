@@ -1,5 +1,5 @@
 import { startOfWeek, formatHeatmapDate, getActualStartDate, getActualEndDate } from './utils'
-import type { HeatmapCellProp } from './types'
+import type { HeatmapCellProp, GitHubProfile } from './types'
 import { computed, type MaybeRefOrGetter, toValue } from 'vue'
 import { useFetch } from '@vueuse/core'
 
@@ -132,6 +132,12 @@ export function useContributionData(options: UseContributionDataOptions) {
     total?: { lastYear?: number; [year: string]: number | undefined }
   }>()
 
+  const profileUrl = computed(() =>
+    resolvedUsername.value ? `https://api.github.com/users/${resolvedUsername.value}` : '',
+  )
+
+  const { data: profileData } = useFetch(profileUrl, { refetch: true }).get().json<GitHubProfile>()
+
   const isLoading = computed(() => isFetching.value)
 
   const isError = computed(() => !!fetchError.value)
@@ -163,5 +169,6 @@ export function useContributionData(options: UseContributionDataOptions) {
     totalContributions,
     isLoading,
     isError,
+    profile: profileData,
   }
 }
