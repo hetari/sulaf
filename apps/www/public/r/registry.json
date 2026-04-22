@@ -3,6 +3,74 @@
   "homepage": "https://github.com/hetari/sulaf",
   "items": [
     {
+      "name": "contribution-heatmap",
+      "type": "registry:ui",
+      "title": "Contribution Heatmap",
+      "description": "sulaf contribution heatmap components.",
+      "files": [
+        {
+          "path": "contribution-heatmap/HeatmapGrid.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "contribution-heatmap/context.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "contribution-heatmap/HeatmapFooter.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "contribution-heatmap/HeatmapMonths.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "contribution-heatmap/Heatmap.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "contribution-heatmap/HeatmapMain.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "contribution-heatmap/index.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "contribution-heatmap/HeatmapCell.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "contribution-heatmap/HeatmapLegend.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "contribution-heatmap/HeatmapContent.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "contribution-heatmap/useHeatmap.ts",
+          "type": "registry:hook"
+        },
+        {
+          "path": "contribution-heatmap/HeatmapHeader.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "contribution-heatmap/types.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "contribution-heatmap/HeatmapWeekdays.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "contribution-heatmap/utils.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "autocomplete",
       "type": "registry:ui",
       "title": "Autocomplete",
