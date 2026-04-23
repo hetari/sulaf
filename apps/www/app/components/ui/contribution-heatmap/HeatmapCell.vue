@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { computed, ref } from 'vue'
 import type { HTMLAttributes } from 'vue'
-import { useElementHover, useFocus } from '@vueuse/core'
+import { refDebounced, useElementHover, useFocus } from '@vueuse/core'
 
 const props = defineProps<
   HeatmapCellProps & {
@@ -16,12 +16,12 @@ const props = defineProps<
 const { onCellClick } = useHeatmapDataRootContext()
 const cellRef = ref<HTMLElement | null>(null)
 
-// ── Tooltip visibility ──────────────────────────────────────────────────
-// Show tooltip while the cell is hovered OR keyboard-focused.
-// VueUse composables replace 4 manual event handlers and auto-cleanup.
 const isHovered = useElementHover(cellRef)
 const { focused } = useFocus(cellRef)
-const isActive = computed(() => isHovered.value || focused.value)
+const rawActive = computed(() => isHovered.value || focused.value)
+
+// Use debounced state to make it smoother and avoid flickering during fast navigation
+const isActive = refDebounced(rawActive, 250)
 
 function handleClick() {
   onCellClick?.(props.cell)
