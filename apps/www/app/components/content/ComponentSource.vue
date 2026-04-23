@@ -20,27 +20,35 @@ const props = withDefaults(
   },
 )
 
-const rawDemos = import.meta.glob('../demo/**/*.{vue,ts}', {
-  query: '?raw',
-  import: 'default',
-})
+const rawSources = import.meta.glob(
+  ['../ui/**/*.{vue,ts}', '../../composables/**/*.{vue,ts}', '../demo/**/*.{vue,ts}'],
+  {
+    query: '?raw',
+    import: 'default',
+  },
+)
 
-const rawUi = import.meta.glob('../ui/**/*.{vue,ts}', {
-  query: '?raw',
-  import: 'default',
-})
+const SEARCH_DIRS = ['../ui/', '../../composables/', '../demo/']
 
 async function getCode() {
   if (!props.name) return ''
 
   const nameL = props.name?.toLowerCase()
 
-  // Try to find in UI folder first (for manual install) or Demo folder
-  const loader =
-    rawUi[`../ui/${props.name}.${props.language}`] ||
-    rawUi[`../ui/${nameL}/${props.name}.${props.language}`] ||
-    rawDemos[`../demo/${props.name}.${props.language}`] ||
-    rawDemos[`../demo/${props.name}Demo.${props.language}`]
+  let loader: any = null
+
+  for (const baseDir of SEARCH_DIRS) {
+    loader =
+      rawSources[`${baseDir}${props.name}.${props.language}`] ||
+      rawSources[`${baseDir}${nameL}/${props.name}.${props.language}`]
+
+    // Special case for demos which might have "Demo" suffix
+    if (!loader && baseDir === '../demo/') {
+      loader = rawSources[`${baseDir}${props.name}Demo.${props.language}`]
+    }
+
+    if (loader) break
+  }
 
   if (loader) {
     const rawCode = await loader()
