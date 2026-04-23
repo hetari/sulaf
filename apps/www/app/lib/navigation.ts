@@ -22,6 +22,7 @@ export const NAV_SECTIONS: NavItem[] = [
   { name: 'Get Started', href: '/docs/introduction' },
   { name: 'Installation', href: '/docs/installation' },
   { name: 'Components', href: '/docs/components' },
+  { name: 'Composables', href: '/docs/composables' },
   { name: 'Animations', href: '/docs/animation' },
 ]
 

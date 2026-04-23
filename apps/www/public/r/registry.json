@@ -50,7 +50,7 @@
         },
         {
           "path": "contribution-heatmap/useHeatmap.ts",
-          "type": "registry:hook"
+          "type": "registry:ui"
         },
         {
           "path": "contribution-heatmap/HeatmapHeader.vue",
@@ -215,6 +215,18 @@
         {
           "path": "show-more/ShowMoreItem.vue",
           "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "use-github-profile",
+      "type": "registry:hook",
+      "title": "Use Github Profile",
+      "description": "sulaf use github-profile components.",
+      "files": [
+        {
+          "path": "use-github-profile.ts",
+          "type": "registry:hook"
         }
       ]
     }
