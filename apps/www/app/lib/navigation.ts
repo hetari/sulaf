@@ -45,4 +45,8 @@ export const MAIN_NAVIGATION: NavItem[] = [
     href: '/docs/components',
     name: 'Components',
   },
+  {
+    href: '/docs/composables',
+    name: 'Composables',
+  },
 ]

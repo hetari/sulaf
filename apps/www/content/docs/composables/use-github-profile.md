@@ -17,18 +17,41 @@ bun add @vueuse/core
 
 ## Usage
 
+::component-preview
+---
+name: GithubProfileDemo
+hideCode: true
+---
+::
+
 ```vue
 <script setup lang="ts">
-const { profile, contributionData, totalContributions, isLoading } = useGithubProfile('octocat')
+import { ref } from 'vue'
+import { useGithubProfile } from '#imports'
+
+const username = ref('octocat') // Default username
+
+const { profile, totalContributions, isLoading, isError } = useGithubProfile(username)
 </script>
 
 <template>
-  <div v-if="isLoading">Loading...</div>
-  <div v-else-if="profile">
-    <img :src="profile.avatar_url" :alt="profile.name" />
-    <h1>{{ profile.name }}</h1>
-    <p>{{ profile.bio }}</p>
-    <p>Total Contributions (last year): {{ totalContributions }}</p>
+  <div class="flex flex-col gap-4">
+    <Input v-model="username" placeholder="Enter GitHub username" />
+
+    <div v-if="isLoading">Loading profile for {{ username }}...</div>
+
+    <div v-else-if="isError" class="text-red-500">
+      Error fetching profile for {{ username }}. Please check the username.
+    </div>
+
+    <div v-else-if="profile">
+      <img :src="profile.avatar_url" :alt="profile.name || profile.login" class="w-16 h-16 rounded-full" />
+      <h1>{{ profile.name || profile.login }}</h1>
+      <p>@{{ profile.login }}</p>
+      <p v-if="profile.bio">{{ profile.bio }}</p>
+      <p>Followers: {{ profile.followers }}</p>
+      <p>Total Contributions (last year): {{ totalContributions }}</p>
+    </div>
   </div>
 </template>
 ```
