@@ -3,13 +3,13 @@ import { provideHeatmapDataRootContext } from './context'
 import type { HeatmapProps, HeatmapEmits } from './types'
 import { computed, useId } from 'vue'
 import { useHeatmap, useContributionData } from './useHeatmap'
-import { Card } from '@sulaf/ui/components/card'
-import { TooltipProvider } from '@sulaf/ui/components/tooltip'
-import { cn } from '@sulaf/ui/lib/utils'
+import { Card } from '@/components/ui/card'
+import { TooltipProvider } from '@/components/ui/tooltip'
+import { cn } from '@/lib/utils'
 import { reactiveOmit } from '@vueuse/core'
 import { useForwardPropsEmits } from 'reka-ui'
 import type { HTMLAttributes } from 'vue'
-import type { GitHubProfile } from '@/hooks/use-github-profile'
+import type { GitHubProfile } from '@/composables/use-github-profile'
 
 const props = withDefaults(
   defineProps<

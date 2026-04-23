@@ -1,7 +1,7 @@
 import type { HeatmapCellProp } from './types'
 import { startOfWeek, formatHeatmapDate, getActualStartDate, getActualEndDate } from './utils'
 import { computed, type MaybeRefOrGetter, toValue } from 'vue'
-import { useGithubProfile } from '@/hooks/use-github-profile'
+import { useGithubProfile } from '@/composables/use-github-profile'
 
 /**
  * Options for creating heatmap cells.

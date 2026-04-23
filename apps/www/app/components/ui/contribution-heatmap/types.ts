@@ -1,5 +1,5 @@
 import type { ComputedRef, Ref, ShallowRef } from 'vue'
-import type { GitHubProfile } from '@/hooks/use-github-profile'
+import type { GitHubProfile } from '@/composables/use-github-profile'
 
 export type HeatmapProps = {
   /**
