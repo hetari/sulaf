@@ -13,6 +13,7 @@ export type {
   HeatmapCellProp,
   HeatmapDataRootContext,
   HeatmapEmits,
+  HeatmapPalette,
   HeatmapProps,
   HeatmapCellProps,
   HeatmapLegendProps,

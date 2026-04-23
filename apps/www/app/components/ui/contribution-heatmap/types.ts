@@ -1,6 +1,17 @@
 import type { ComputedRef, Ref, ShallowRef } from 'vue'
 import type { GitHubProfile } from '@/composables/use-github-profile'
 
+/**
+ * A 5-element tuple of Tailwind CSS class strings that map directly to
+ * contribution levels 0 (no activity) through 4 (highest activity).
+ *
+ * Example (blue palette):
+ * ```ts
+ * ['bg-muted', 'bg-blue-200', 'bg-blue-400', 'bg-blue-600', 'bg-blue-800']
+ * ```
+ */
+export type HeatmapPalette = [string, string, string, string, string]
+
 export type HeatmapProps = {
   /**
    * The start date of the heatmap.
@@ -53,6 +64,13 @@ export type HeatmapProps = {
    * @default (level) => level * 2
    */
   getContributionsForLevel?: (level: number, index: number) => number
+  /**
+   * A color palette for the heatmap cells expressed as Tailwind CSS class
+   * strings, one per level (index 0 = no activity, index 4 = highest activity).
+   *
+   * @default ['bg-muted', 'bg-emerald-200', 'bg-emerald-400', 'bg-emerald-600', 'bg-emerald-800']
+   */
+  palette?: HeatmapPalette
 }
 
 export type HeatmapCellProps = {
@@ -120,6 +138,8 @@ export type HeatmapDataRootContext = {
     | Ref<(level: number, index: number) => number>
   /** Optional click handler for cells. */
   onCellClick?: (cell: HeatmapCellProp) => void
+  /** Active color palette (Tailwind class strings for levels 0–4). */
+  palette: ComputedRef<HeatmapPalette> | Ref<HeatmapPalette>
 }
 
 export type HeatmapCellProp = {

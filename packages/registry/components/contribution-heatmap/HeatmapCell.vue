@@ -13,7 +13,7 @@ const props = defineProps<
   }
 >()
 
-const { onCellClick } = useHeatmapDataRootContext()
+const { onCellClick, palette } = useHeatmapDataRootContext()
 const cellRef = ref<HTMLElement | null>(null)
 
 const isHovered = useElementHover(cellRef)
@@ -34,7 +34,7 @@ function handleClick() {
       <!-- v-memo: skip re-rendering if level, activity, or class haven't changed -->
       <div
         ref="cellRef"
-        v-memo="[cell.level, isActive]"
+        v-memo="[cell.level, isActive, palette[cell.level as 0 | 1 | 2 | 3 | 4]]"
         :data-level="cell.level"
         :data-date="cell.key"
         :data-row="cell.row"
@@ -46,15 +46,7 @@ function handleClick() {
           cn(
             'h-3.5 w-3.5 rounded-[2px] transition-all duration-200 ease-out sm:h-4 sm:w-4 cursor-pointer',
             'hover:scale-[1.05] hover:ring-1 hover:ring-primary/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50',
-            'bg-muted',
-            `data-[level='1']:bg-[var(--heatmap-level-1,theme(colors.emerald.200))]`,
-            `data-[level='2']:bg-[var(--heatmap-level-2,theme(colors.emerald.400))]`,
-            `data-[level='3']:bg-[var(--heatmap-level-3,theme(colors.emerald.600))]`,
-            `data-[level='4']:bg-[var(--heatmap-level-4,theme(colors.emerald.800))]`,
-            `dark:data-[level='1']:bg-[var(--heatmap-level-1,theme(colors.emerald.300))]`,
-            `dark:data-[level='2']:bg-[var(--heatmap-level-2,theme(colors.emerald.500))]`,
-            `dark:data-[level='3']:bg-[var(--heatmap-level-3,theme(colors.emerald.700))]`,
-            `dark:data-[level='4']:bg-[var(--heatmap-level-4,theme(colors.emerald.900))]`,
+            palette[cell.level as 0 | 1 | 2 | 3 | 4],
             props.class,
           )
         "

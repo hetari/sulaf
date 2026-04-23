@@ -1,9 +1,9 @@
 <script setup lang="ts">
+import HeatmapCell from './HeatmapCell.vue'
 import { useHeatmapDataRootContext } from './context'
 import { computed, type HTMLAttributes } from 'vue'
 import type { HeatmapLegendProps } from './types'
 import { cn } from '@/lib/utils'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { getLevels } from './utils'
 
 const props = defineProps<
@@ -35,26 +35,25 @@ const levels = computed(() => getLevels(maxLevel.value, getContributionsForLevel
         <span class="mr-0.5 text-[10px]">Less</span>
       </slot>
       <div class="flex items-center gap-1">
-        <Tooltip v-for="item in levels" :key="item.level">
-          <TooltipTrigger as-child>
-            <div
-              :class="
-                cn(
-                  'h-3 w-3 rounded-[2px] sm:h-3.5 sm:w-3.5',
-                  'bg-muted',
-                  `data-[level='1']:bg-[var(--heatmap-level-1,theme(colors.emerald.200))]`,
-                  `data-[level='2']:bg-[var(--heatmap-level-2,theme(colors.emerald.400))]`,
-                  `data-[level='3']:bg-[var(--heatmap-level-3,theme(colors.emerald.600))]`,
-                  `data-[level='4']:bg-[var(--heatmap-level-4,theme(colors.emerald.800))]`,
-                )
-              "
-              :data-level="item.level"
-            />
-          </TooltipTrigger>
-          <TooltipContent>
+        <HeatmapCell
+          v-for="item in levels"
+          :key="item.level"
+          :cell="{
+            level: item.level,
+            contributions: item.contributions,
+            key: `legend-${item.level}`,
+            date: new Date(),
+            dateLabel: `${item.contributions}+ contributions`,
+            weekdayLabel: '',
+            row: 0,
+            col: 0,
+          }"
+          class="h-3 w-3 cursor-default sm:h-3.5 sm:w-3.5"
+        >
+          <template #tooltip>
             <span class="text-xs">{{ item.contributions }}+ contributions</span>
-          </TooltipContent>
-        </Tooltip>
+          </template>
+        </HeatmapCell>
       </div>
       <slot name="after">
         <span class="ml-0.5 text-[10px]">More</span>

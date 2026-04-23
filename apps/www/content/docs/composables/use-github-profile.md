@@ -8,12 +8,52 @@ beta: true
 
 ## Installation
 
-This composable is part of the registry and can be added to your project manually.
+::code-tabs
 
-```bash
-# Required dependency
-bun add @vueuse/core
-```
+  ::doc-tabs-list
+
+    ::doc-tabs-trigger{value="cli"}
+    CLI
+    ::
+
+    ::doc-tabs-trigger{value="manual"}
+    Manual
+    ::
+
+  ::
+
+  ::doc-tabs-content{value="cli"}
+  ```bash
+  npx sulaf@latest add use-github-profile
+  ```
+  ::
+
+  ::doc-tabs-content{value="manual"}
+
+    ::steps
+
+      ::step
+      Install the following dependencies:
+      ::
+
+      ```bash
+      bun add @vueuse/core
+      ```
+
+      ::step
+        ::manual-install{folder="use-github-profile"}
+        ::
+      ::
+
+      ::step
+      Update the import paths to match your project setup.
+      ::
+
+    ::
+
+  ::
+
+::
 
 ## Usage
 

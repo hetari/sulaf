@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { provideHeatmapDataRootContext } from './context'
-import type { HeatmapProps, HeatmapEmits } from './types'
+import type { HeatmapProps, HeatmapEmits, HeatmapPalette } from './types'
 import { computed, useId } from 'vue'
 import { useHeatmap, useContributionData } from './useHeatmap'
 import { Card } from '@sulaf/ui/components/card'
@@ -25,6 +25,13 @@ const props = withDefaults(
     data: () => ({}),
     getLevel: (count: number) => Math.min(Math.floor(count / 2), 4),
     getContributionsForLevel: (level: number) => level * 2,
+    palette: (): HeatmapPalette => [
+      'bg-muted',
+      'bg-emerald-200',
+      'bg-emerald-400',
+      'bg-emerald-600',
+      'bg-emerald-800',
+    ],
   },
 )
 
@@ -81,6 +88,7 @@ provideHeatmapDataRootContext({
   maxLevel: computed(() => props.maxLevel),
   getLevel: computed(() => props.getLevel),
   getContributionsForLevel: computed(() => props.getContributionsForLevel),
+  palette: computed(() => props.palette),
   onCellClick: cell => {
     emits('click:cell', cell)
   },
