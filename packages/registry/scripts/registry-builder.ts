@@ -195,6 +195,16 @@ function analyzeDependencies(
       if (slug && slug !== options?.currentGroup) registryDependencies.add(slug)
     }
 
+    if (mod.startsWith('@/hooks/')) {
+      const slug = extractRegistrySlug(mod, '@/hooks/')
+      if (slug && slug !== options?.currentGroup) registryDependencies.add(slug)
+    }
+
+    if (mod.startsWith('@/composables/')) {
+      const slug = extractRegistrySlug(mod, '@/composables/')
+      if (slug && slug !== options?.currentGroup) registryDependencies.add(slug)
+    }
+
     const appComponentPath = `@/components/${registryConfig.componentDir}/`
     if (mod.startsWith(appComponentPath)) {
       const slug = extractRegistrySlug(mod, appComponentPath)
@@ -289,7 +299,11 @@ export async function generateRegistryAssets(ctx: { rootDir: string }) {
 
     // Determine registry type based on source directory
     const baseType: ComponentAssetFile['type'] =
-      srcDirName === 'components' ? 'registry:ui' : 'registry:component'
+      srcDirName === 'components'
+        ? 'registry:ui'
+        : srcDirName === 'hooks'
+          ? 'registry:hook'
+          : 'registry:component'
 
     for (const abs of files) {
       const raw = await fs.readFile(abs, 'utf-8')
@@ -297,13 +311,14 @@ export async function generateRegistryAssets(ctx: { rootDir: string }) {
       for (const replacement of registryConfig.replacements) {
         parsed = parsed.replace(replacement.from, replacement.to)
       }
-      const rel = relative(srcPath, abs).split('\\').join('/')
+      let rel = relative(srcPath, abs).split('\\').join('/')
 
-      // Auto-detect hooks by filename
-      let fileType: ComponentAssetFile['type'] = baseType
-      if (abs.endsWith('.ts') && basename(abs).startsWith('use')) {
-        fileType = 'registry:hook'
+      // Flatten hooks: use-foo/index.ts -> use-foo.ts
+      if (srcDirName === 'hooks' && rel.endsWith('/index.ts')) {
+        rel = rel.replace('/index.ts', '.ts')
       }
+
+      const fileType: ComponentAssetFile['type'] = baseType
 
       componentFiles.push({
         type: fileType,
@@ -339,7 +354,12 @@ export async function generateRegistryAssets(ctx: { rootDir: string }) {
   const groupMap = new Map<string, ComponentAssetFile[]>()
   for (const f of componentFiles) {
     const rel = f.path
-    const group = rel.split('/')[0]
+    let group = rel.split('/')[0]
+
+    // For flattened hooks, the group should be the slug (filename without .ts)
+    if (f.type === 'registry:hook' && !rel.includes('/') && rel.endsWith('.ts')) {
+      group = rel.replace('.ts', '')
+    }
 
     if (!group) continue
 
@@ -450,16 +470,37 @@ export async function generateRegistryAssets(ctx: { rootDir: string }) {
       groupFiles.find(f => f.type === 'registry:component')?.type ||
       'registry:component'
 
+    // Bundle hooks instead of adding them as registry dependencies
+    const finalRegistryDeps = new Set<string>()
+    const bundledFiles = [...groupFiles]
+
+    for (const dep of groupRegistryDeps) {
+      const depFiles = groupMap.get(dep)
+      if (depFiles) {
+        const isHook = depFiles.some(f => f.type === 'registry:hook')
+        if (isHook) {
+          // Add hook files to the current component's files
+          for (const df of depFiles) {
+            if (!bundledFiles.some(bf => bf.path === df.path)) {
+              bundledFiles.push(df)
+            }
+          }
+          continue
+        }
+      }
+      finalRegistryDeps.add(dep)
+    }
+
     const itemJson = {
       $schema: 'https://shadcn-vue.com/schema/registry-item.json',
       name: group,
       type: primaryType as 'registry:ui' | 'registry:component' | 'registry:hook',
       title: toTitle(group),
       description: `${registryConfig.registry.name} ${group.replace('-', ' ')} components.`,
-      files: groupFiles,
+      files: bundledFiles,
       dependencies: Array.from(groupDeps),
       devDependencies: Array.from(groupDevDeps),
-      registryDependencies: Array.from(groupRegistryDeps),
+      registryDependencies: Array.from(finalRegistryDeps),
     }
 
     // Validate before writing

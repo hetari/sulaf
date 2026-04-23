@@ -30,7 +30,9 @@
     "paths": {
       "@sulaf/ui/components/*": ["../ui/src/components/ui/*"],
       "@sulaf/ui/lib/*": ["../ui/src/lib/*"],
-      "@/lib/*": ["../ui/src/lib/*"]
+      "@/lib/*": ["../ui/src/lib/*"],
+      "@/hooks/*": ["./hooks/*"],
+      "@/*": ["./*"]
     }
   }
 }

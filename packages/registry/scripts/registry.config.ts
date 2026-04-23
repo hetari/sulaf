@@ -14,7 +14,7 @@ export const registryConfig = {
   /**
    * Directory containing the source components to be registered.
    */
-  srcDirs: ['components', 'blocks', 'pages'],
+  srcDirs: ['components', 'blocks', 'pages', 'hooks'],
 
   /**
    * Directory where the registry JSON files will be generated.
@@ -42,6 +42,7 @@ export const registryConfig = {
   replacements: [
     { from: /@sulaf\/ui\/components\//g, to: '@/components/ui/' },
     { from: /@sulaf\/ui\/lib\/utils/g, to: '@/lib/utils' },
+    { from: /@\/hooks\//g, to: '@/composables/' },
   ],
 
   /**
