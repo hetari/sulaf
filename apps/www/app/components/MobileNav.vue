@@ -137,21 +137,26 @@ function handleNavigate(path: string) {
                 class="size-6 shrink-0"
               />
               {{ item.title }}
-              <span
-                v-if="item.new"
-                class="size-2 rounded-full border-0 bg-green-600 dark:bg-green-500"
-              />
-              <span
-                v-else-if="item.beta"
-                class="size-2 rounded-full border-0 bg-orange-600 dark:bg-orange-500"
-              />
               <Badge
-                v-if="item.soon"
-                variant="secondary"
-                class="ms-auto flex h-5 items-center justify-center rounded-md border bg-secondary/50 px-2 text-[0.7rem] font-semibold tracking-widest uppercase text-muted-foreground"
+                v-if="item.new"
+                variant="outline"
+                class="ms-auto h-4 px-1.5 text-[0.65rem] leading-none border-green-600 dark:border-green-500 bg-green-600/10 dark:bg-green-500/10 text-green-600 dark:text-green-500"
               >
-                Soon
+                New
               </Badge>
+              <Badge
+                v-else-if="item.beta"
+                variant="outline"
+                class="ms-auto h-4 px-1.5 text-[0.65rem] leading-none border-amber-500 dark:border-amber-500 bg-amber-500/10 dark:bg-amber-500/10 text-amber-500 dark:text-amber-500"
+              >
+                Beta
+              </Badge>
+              <Badge
+                v-else-if="item.soon"
+                variant="outline"
+                class="ms-auto h-4 px-1.5 text-[0.65rem] leading-none"
+                >Soon</Badge
+              >
             </NuxtLink>
           </div>
         </div>
@@ -164,8 +169,8 @@ function handleNavigate(path: string) {
                 {{ group.title }}
                 <Badge
                   v-if="group.soon"
-                  variant="secondary"
-                  class="flex h-4 items-center justify-center rounded bg-secondary/50 px-1.5 text-[0.6rem] font-semibold tracking-wider uppercase"
+                  variant="outline"
+                  class="h-4 px-1.5 text-[0.65rem] leading-none"
                 >
                   Soon
                 </Badge>
@@ -187,21 +192,26 @@ function handleNavigate(path: string) {
                     class="size-6 shrink-0"
                   />
                   {{ item.title }}
-                  <span
-                    v-if="item.new"
-                    class="size-2 rounded-full border-0 bg-green-600 dark:bg-green-500"
-                  />
-                  <span
-                    v-else-if="item.beta"
-                    class="size-2 rounded-full border-0 bg-orange-600 dark:bg-orange-500"
-                  />
                   <Badge
-                    v-if="item.soon"
-                    variant="secondary"
-                    class="ms-auto flex h-5 items-center justify-center rounded-md border bg-secondary/50 px-2 text-[0.7rem] font-semibold tracking-widest uppercase text-muted-foreground"
+                    v-if="item.new"
+                    variant="outline"
+                    class="ms-auto h-4 px-1.5 text-[0.65rem] leading-none border-green-600 dark:border-green-500 bg-green-600/10 dark:bg-green-500/10 text-green-600 dark:text-green-500"
                   >
-                    Soon
+                    New
                   </Badge>
+                  <Badge
+                    v-else-if="item.beta"
+                    variant="outline"
+                    class="ms-auto h-4 px-1.5 text-[0.65rem] leading-none border-amber-500 dark:border-amber-500 bg-amber-500/10 dark:bg-amber-500/10 text-amber-500 dark:text-amber-500"
+                  >
+                    Beta
+                  </Badge>
+                  <Badge
+                    v-else-if="item.soon"
+                    variant="outline"
+                    class="ms-auto h-4 px-1.5 text-[0.65rem] leading-none"
+                    >Soon</Badge
+                  >
                 </NuxtLink>
               </div>
             </div>

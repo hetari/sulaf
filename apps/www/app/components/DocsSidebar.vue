@@ -72,17 +72,23 @@ function isActive(href: string) {
                     class="mr-2 size-4 shrink-0"
                   />
                   {{ item.title }}
-                  <span
-                    v-if="item.new"
-                    class="size-2 items-center gap-1 rounded-md border-0 bg-green-600 dark:bg-green-500"
-                  />
-                  <span
-                    v-else-if="item.beta"
-                    class="size-2 items-center gap-1 rounded-md border-0 bg-orange-600 dark:bg-orange-500"
-                  />
                   <Badge
-                    v-if="item.soon"
-                    variant="secondary"
+                    v-if="item.new"
+                    variant="outline"
+                    class="ms-auto h-4 px-1.5 text-[0.65rem] leading-none border-green-600 dark:border-green-500 bg-green-600/10 dark:bg-green-500/10 text-green-600 dark:text-green-500"
+                  >
+                    New
+                  </Badge>
+                  <Badge
+                    v-else-if="item.beta"
+                    variant="outline"
+                    class="ms-auto h-4 px-1.5 text-[0.65rem] leading-none border-amber-500 dark:border-amber-500 bg-amber-500/10 dark:bg-amber-500/10 text-amber-500 dark:text-amber-500"
+                  >
+                    Beta
+                  </Badge>
+                  <Badge
+                    v-else-if="item.soon"
+                    variant="outline"
                     class="ms-auto h-4 px-1.5 text-[0.65rem] leading-none"
                     >Soon</Badge
                   >
@@ -97,10 +103,7 @@ function isActive(href: string) {
       <SidebarGroup v-for="group in folderGroups" :key="group.title">
         <SidebarGroupLabel class="flex items-center gap-2 font-medium text-muted-foreground">
           {{ group.title }}
-          <Badge
-            v-if="group.soon"
-            variant="secondary"
-            class="h-4 px-1.5 text-[0.65rem] leading-none"
+          <Badge v-if="group.soon" variant="outline" class="h-4 px-1.5 text-[0.65rem] leading-none"
             >Soon</Badge
           >
         </SidebarGroupLabel>
@@ -127,17 +130,23 @@ function isActive(href: string) {
                       class="mr-2 size-4 shrink-0"
                     />
                     {{ childItem.title }}
-                    <span
-                      v-if="childItem.new"
-                      class="size-2 items-center gap-1 rounded-md border-0 bg-green-600 dark:bg-green-500"
-                    />
-                    <span
-                      v-else-if="childItem.beta"
-                      class="size-2 items-center gap-1 rounded-md border-0 bg-orange-600 dark:bg-orange-500"
-                    />
                     <Badge
-                      v-if="childItem.soon"
-                      variant="secondary"
+                      v-if="childItem.new"
+                      variant="outline"
+                      class="ms-auto h-4 px-1.5 text-[0.65rem] leading-none border-green-600 dark:border-green-500 bg-green-600/10 dark:bg-green-500/10 text-green-600 dark:text-green-500"
+                    >
+                      New
+                    </Badge>
+                    <Badge
+                      v-else-if="childItem.beta"
+                      variant="outline"
+                      class="ms-auto h-4 px-1.5 text-[0.65rem] leading-none border-amber-500 dark:border-amber-500 bg-amber-500/10 dark:bg-amber-500/10 text-amber-500 dark:text-amber-500"
+                    >
+                      Beta
+                    </Badge>
+                    <Badge
+                      v-else-if="childItem.soon"
+                      variant="outline"
                       class="ms-auto h-4 px-1.5 text-[0.65rem] leading-none"
                       >Soon</Badge
                     >

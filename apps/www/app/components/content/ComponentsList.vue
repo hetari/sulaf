@@ -18,16 +18,24 @@ const list = computed(
     >
       {{ component.title }}
 
-      <span v-if="component.new" class="flex size-2 rounded-full bg-green-500" title="New" />
-      <span
+      <Badge
+        v-if="component.new"
+        variant="outline"
+        class="h-4 px-1.5 text-[0.65rem] border-green-600 dark:border-green-500 bg-green-600/10 dark:bg-green-500/10 text-green-600 dark:text-green-500"
+      >
+        New
+      </Badge>
+      <Badge
         v-else-if="component.beta"
-        class="flex size-2 rounded-full bg-orange-500"
-        title="Beta"
-      />
+        variant="outline"
+        class="h-4 px-1.5 text-[0.65rem] border-amber-500 dark:border-amber-500 bg-amber-500/10 dark:bg-amber-500/10 text-amber-500 dark:text-amber-500"
+      >
+        Beta
+      </Badge>
       <Badge
         v-else-if="component.soon"
-        variant="secondary"
-        class="flex h-4 items-center justify-center rounded bg-secondary/50 px-1.5 text-[0.6rem] font-semibold tracking-wider uppercase"
+        variant="outline"
+        class="h-4 px-1.5 text-[0.65rem] leading-none"
       >
         Soon
       </Badge>
