@@ -16,7 +16,11 @@ const forwarded = useForwardProps(delegatedProps)
 </script>
 
 <template>
-  <ComboboxGroup v-bind="forwarded" :class="cn('overflow-hidden p-1 text-foreground', props.class)">
+  <ComboboxGroup
+    v-bind="forwarded"
+    :class="cn('overflow-hidden p-1 text-foreground', props.class)"
+    data-slot="autocomplete-group"
+  >
     <slot />
   </ComboboxGroup>
 </template>

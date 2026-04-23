@@ -23,7 +23,8 @@ const { searchTerm } = useAutocompleteContext()
   <ComboboxInput
     v-bind="forwarded"
     v-model="searchTerm"
-    data-slot="input-group-control"
+    data-slot="autocomplete-input"
+    aria-label="Search"
     :class="
       cn(
         'flex h-9 w-full rounded-md bg-transparent px-3 py-1 text-sm',

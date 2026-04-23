@@ -2,9 +2,9 @@
 import { Label } from '@/components/ui/label'
 import type { LabelProps } from 'reka-ui'
 import type { HTMLAttributes } from 'vue'
-import { computed } from 'vue'
 import { cn } from '@/lib/utils'
 import { useMeterRootContext } from './context'
+import { reactiveOmit } from '@vueuse/core'
 
 const props = defineProps<
   LabelProps & {
@@ -12,10 +12,7 @@ const props = defineProps<
   }
 >()
 
-const delegatedProps = computed(() => {
-  const { class: _, ...delegated } = props
-  return delegated
-})
+const delegatedProps = reactiveOmit(props, 'class')
 
 const { label, meterId } = useMeterRootContext()
 </script>

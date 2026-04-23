@@ -4,8 +4,6 @@ import type { VariantProps } from 'class-variance-authority'
 export type MeterVariantProps = VariantProps<typeof meterIndicatorVariants>
 export type MeterSizeProps = VariantProps<typeof meterTrackVariants>
 
-import type { Ref, ComputedRef } from 'vue'
-
 export type MeterProps = {
   /**
    * The variant of the meter.
@@ -45,12 +43,12 @@ export type MeterProps = {
 }
 
 export type MeterRootContext = {
-  variant: Ref<MeterVariantProps['variant']>
-  size: Ref<MeterSizeProps['size']>
-  value: Ref<number>
-  max: Ref<number>
-  min: Ref<number>
-  label: Ref<string | undefined>
-  percentage: ComputedRef<`${number}%`>
-  meterId: ComputedRef<string>
+  variant: MeterVariantProps['variant']
+  size: MeterSizeProps['size']
+  value: number
+  max: number
+  min: number
+  label: string | undefined
+  percentage: `${number}%`
+  meterId: string
 }

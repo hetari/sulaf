@@ -17,7 +17,7 @@ const forwarded = useForwardProps(delegatedProps)
 </script>
 
 <template>
-  <ComboboxViewport v-bind="forwarded" :class="cn(props.class)">
+  <ComboboxViewport v-bind="forwarded" :class="cn(props.class)" data-slot="autocomplete-list">
     <slot />
   </ComboboxViewport>
 </template>

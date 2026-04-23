@@ -11,6 +11,7 @@ const props = defineProps<{
 <template>
   <div
     :class="cn('flex items-center gap-2 px-3 py-2 text-xs text-muted-foreground', props.class)"
+    data-slot="autocomplete-loading"
     aria-live="polite"
     aria-label="Loading options"
   >

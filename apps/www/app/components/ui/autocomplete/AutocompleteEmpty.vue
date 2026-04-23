@@ -20,6 +20,7 @@ const forwarded = useForwardProps(delegatedProps)
   <ComboboxEmpty
     v-bind="forwarded"
     :class="cn('py-6 text-center text-sm text-muted-foreground', props.class)"
+    data-slot="autocomplete-empty"
   >
     <slot />
   </ComboboxEmpty>

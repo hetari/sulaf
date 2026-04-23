@@ -19,6 +19,7 @@ const forwarded = useForwardProps(delegatedProps)
   <ComboboxLabel
     v-bind="forwarded"
     :class="cn('px-2 py-1.5 text-xs font-medium text-muted-foreground', props.class)"
+    data-slot="autocomplete-label"
   >
     <slot />
   </ComboboxLabel>

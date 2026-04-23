@@ -20,7 +20,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
 </script>
 
 <template>
-  <ComboboxItem v-bind="forwarded" :class="cn(props.class)">
+  <ComboboxItem v-bind="forwarded" :class="cn(props.class)" data-slot="autocomplete-item">
     <slot />
 
     <ComboboxItemIndicator class="ms-auto">
