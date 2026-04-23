@@ -1,0 +1,17 @@
+{
+  "$schema": "https://shadcn-vue.com/schema/registry-item.json",
+  "name": "use-is-mac",
+  "type": "registry:hook",
+  "title": "Use Is Mac",
+  "description": "sulaf use is-mac components.",
+  "files": [
+    {
+      "type": "registry:hook",
+      "path": "use-is-mac.ts",
+      "content": "import type { Ref } from 'vue'\nimport { onMounted, ref } from 'vue'\n\n/**\n * Composable to detect if the user is on a Mac.\n * Uses a robust platform check with fallbacks for modern and legacy browsers.\n * Initialized to false to avoid SSR hydration mismatches.\n */\nexport function useIsMac(): Ref<boolean> {\n  const isMac = ref(false)\n  onMounted(() => {\n    const nav = navigator as any\n    const platform = nav.userAgentData?.platform ?? nav.platform ?? nav.userAgent\n    isMac.value = String(platform).toUpperCase().includes('MAC')\n  })\n  return isMac\n}\n"
+    }
+  ],
+  "dependencies": [],
+  "devDependencies": [],
+  "registryDependencies": []
+}

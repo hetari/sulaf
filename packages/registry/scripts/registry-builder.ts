@@ -134,8 +134,8 @@ function buildTypesDevDepsMap(devDependencies: string[]): Map<string, string[]> 
 interface AnalyzeDependenciesOptions {
   filePath?: string
   currentGroup?: string
-  /** If true, skip adding component dependencies (for all.json bundling) */
-  skipAiComponentDeps?: boolean
+  /** If true, skip adding internal component/hook dependencies (useful for all.json bundling) */
+  skipInternalRegistryDeps?: boolean
   /** Mapping from import package to @types/ packages */
   typesDevDepsMap?: Map<string, string[]>
 }
@@ -161,8 +161,8 @@ function analyzeDependencies(
       if (!resolved.startsWith('..')) {
         const targetGroup = resolved.split('/').find(Boolean)
         if (targetGroup && targetGroup !== options.currentGroup) {
-          // Skip component deps for all.json bundling
-          if (!options.skipAiComponentDeps) {
+          // Skip internal deps when they are part of the same bundle
+          if (!options.skipInternalRegistryDeps) {
             registryDependencies.add(targetGroup)
           }
         }
@@ -195,14 +195,16 @@ function analyzeDependencies(
       if (slug && slug !== options?.currentGroup) registryDependencies.add(slug)
     }
 
-    if (mod.startsWith('@/hooks/')) {
-      const slug = extractRegistrySlug(mod, '@/hooks/')
-      if (slug && slug !== options?.currentGroup) registryDependencies.add(slug)
-    }
+    if (!options?.skipInternalRegistryDeps) {
+      if (mod.startsWith('@/hooks/')) {
+        const slug = extractRegistrySlug(mod, '@/hooks/')
+        if (slug && slug !== options?.currentGroup) registryDependencies.add(slug)
+      }
 
-    if (mod.startsWith('@/composables/')) {
-      const slug = extractRegistrySlug(mod, '@/composables/')
-      if (slug && slug !== options?.currentGroup) registryDependencies.add(slug)
+      if (mod.startsWith('@/composables/')) {
+        const slug = extractRegistrySlug(mod, '@/composables/')
+        if (slug && slug !== options?.currentGroup) registryDependencies.add(slug)
+      }
     }
 
     const appComponentPath = `@/components/${registryConfig.componentDir}/`
@@ -210,8 +212,8 @@ function analyzeDependencies(
       const slug = extractRegistrySlug(mod, appComponentPath)
       if (slug) {
         if (options?.currentGroup && slug === options.currentGroup) continue
-        // Skip component deps for all.json bundling
-        if (!options?.skipAiComponentDeps) {
+        // Skip internal component deps when requested (e.g. for bundles)
+        if (!options?.skipInternalRegistryDeps) {
           registryDependencies.add(slug)
         }
       }
@@ -436,7 +438,7 @@ export async function generateRegistryAssets(ctx: { rootDir: string }) {
         const analysis = analyzeDependencies(imports, allowedDeps, allowedDevDeps, {
           filePath: f.path,
           currentGroup: group,
-          skipAiComponentDeps: false,
+          skipInternalRegistryDeps: false,
           typesDevDepsMap,
         })
         analysis.dependencies.forEach(dep => groupDeps.add(dep))
@@ -447,7 +449,7 @@ export async function generateRegistryAssets(ctx: { rootDir: string }) {
         const allAnalysis = analyzeDependencies(imports, allowedDeps, allowedDevDeps, {
           filePath: f.path,
           currentGroup: group,
-          skipAiComponentDeps: true,
+          skipInternalRegistryDeps: true,
           typesDevDepsMap,
         })
         allAnalysis.dependencies.forEach(dep => allDependencies.add(dep))

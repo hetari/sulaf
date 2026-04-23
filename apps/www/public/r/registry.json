@@ -219,6 +219,18 @@
       ]
     },
     {
+      "name": "use-is-mac",
+      "type": "registry:hook",
+      "title": "Use Is Mac",
+      "description": "sulaf use is-mac components.",
+      "files": [
+        {
+          "path": "use-is-mac.ts",
+          "type": "registry:hook"
+        }
+      ]
+    },
+    {
       "name": "use-github-profile",
       "type": "registry:hook",
       "title": "Use Github Profile",
