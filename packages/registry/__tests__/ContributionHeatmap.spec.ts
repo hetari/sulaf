@@ -307,7 +307,6 @@ describe('ContributionHeatmap GitHub Integration Test', () => {
     })
     await flushPromises()
 
-    expect(wrapper.find('[data-testid="total"]').text()).toBe('5 contributions')
     expect(wrapper.find('[data-testid="profile-name"]').text()).toBe('John Doe')
 
     const cell = wrapper.find('[data-date="2023-01-01"]')

@@ -17,6 +17,18 @@ export interface GitHubProfile {
   html_url: string
 }
 
+export interface GitHubContributionDay {
+  date: string
+  contributionCount: number
+  color?: string
+  contributionLevel?: string
+}
+
+export interface GitHubContributionsResponse {
+  contributions: GitHubContributionDay[][]
+  totalContributions: number
+}
+
 export interface UseGithubProfileOptions {
   username: MaybeRefOrGetter<string | undefined>
 }
@@ -49,12 +61,7 @@ export function useGithubProfile(username: MaybeRefOrGetter<string | undefined>)
     data: fetchedData,
     isFetching: isLoadingContributions,
     error: contributionsError,
-  } = useFetch(contributionsUrl, { refetch: true }).get().json<{
-    contributions: Array<
-      Array<{ date: string; contributionCount: number; color?: string; contributionLevel?: string }>
-    >
-    total?: { lastYear?: number; [year: string]: number | undefined }
-  }>()
+  } = useFetch(contributionsUrl, { refetch: true }).get().json<GitHubContributionsResponse>()
 
   const isLoading = computed(() => isLoadingProfile.value || isLoadingContributions.value)
   const isError = computed(() => !!profileError.value || !!contributionsError.value)
@@ -73,8 +80,8 @@ export function useGithubProfile(username: MaybeRefOrGetter<string | undefined>)
   })
 
   const totalContributions = computed(() => {
-    if (resolvedUsername.value && fetchedData.value?.total) {
-      return fetchedData.value.total.lastYear
+    if (resolvedUsername.value && fetchedData.value?.totalContributions) {
+      return fetchedData.value.totalContributions
     }
     return 0
   })
