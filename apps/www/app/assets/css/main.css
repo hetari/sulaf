@@ -152,6 +152,9 @@
   body {
     @apply bg-background text-foreground selection:bg-selection selection:text-selection-foreground;
   }
+  ::search-text {
+    @apply text-teal-300 bg-teal-900 dark:text-teal-600 dark:bg-teal-900;
+  }
 
   [data-slot='layout'] {
     @apply 3xl:px-2 3xl:fixed:p-0 overscroll-none;

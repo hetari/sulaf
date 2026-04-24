@@ -8,6 +8,7 @@ export { default as HeatmapLegend } from './HeatmapLegend.vue'
 export { default as HeatmapMonths } from './HeatmapMonths.vue'
 export { default as HeatmapWeekdays } from './HeatmapWeekdays.vue'
 export { default as HeatmapMain } from './HeatmapMain.vue'
+export { default as HeatmapRow } from './HeatmapRow.vue'
 
 export type {
   HeatmapCellProp,

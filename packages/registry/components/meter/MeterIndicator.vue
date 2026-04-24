@@ -1,19 +1,29 @@
 <script setup lang="ts">
+import { Primitive, useForwardProps, type PrimitiveProps } from 'reka-ui'
 import type { HTMLAttributes } from 'vue'
 import { cn } from '@sulaf/ui/lib/utils'
 import { useMeterRootContext } from './context'
 import { meterIndicatorVariants } from '.'
-import { computed } from 'vue'
 
-const props = defineProps<{
-  class?: HTMLAttributes['class']
-}>()
+const props = withDefaults(
+  defineProps<
+    PrimitiveProps & {
+      class?: HTMLAttributes['class']
+    }
+  >(),
+  {
+    as: 'div',
+  },
+)
+
+const forwarded = useForwardProps(props)
 
 const meterCtx = useMeterRootContext()
 </script>
 
 <template>
-  <div
+  <Primitive
+    v-bind="forwarded"
     :class="cn(meterIndicatorVariants(), props.class)"
     :style="{
       width: meterCtx.percentage,
@@ -22,5 +32,5 @@ const meterCtx = useMeterRootContext()
     data-slot="meter-indicator"
   >
     <slot />
-  </div>
+  </Primitive>
 </template>

@@ -67,6 +67,10 @@
         {
           "path": "contribution-heatmap/utils.ts",
           "type": "registry:ui"
+        },
+        {
+          "path": "contribution-heatmap/HeatmapRow.vue",
+          "type": "registry:ui"
         }
       ]
     },

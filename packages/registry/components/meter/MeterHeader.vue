@@ -1,15 +1,29 @@
 <script setup lang="ts">
+import { Primitive, useForwardProps, type PrimitiveProps } from 'reka-ui'
 import type { HTMLAttributes } from 'vue'
 import { cn } from '@sulaf/ui/lib/utils'
 import { meterHeaderVariants } from '.'
 
-const props = defineProps<{
-  class?: HTMLAttributes['class']
-}>()
+const props = withDefaults(
+  defineProps<
+    PrimitiveProps & {
+      class?: HTMLAttributes['class']
+    }
+  >(),
+  {
+    as: 'div',
+  },
+)
+
+const forwarded = useForwardProps(props)
 </script>
 
 <template>
-  <div :class="cn(meterHeaderVariants(), props.class)" data-slot="meter-header">
+  <Primitive
+    v-bind="forwarded"
+    :class="cn(meterHeaderVariants(), props.class)"
+    data-slot="meter-header"
+  >
     <slot />
-  </div>
+  </Primitive>
 </template>

@@ -13,7 +13,7 @@
     {
       "type": "registry:ui",
       "path": "meter/MeterHeader.vue",
-      "content": "<script setup lang=\"ts\">\nimport type { HTMLAttributes } from 'vue'\nimport { cn } from '@/lib/utils'\nimport { meterHeaderVariants } from '.'\n\nconst props = defineProps<{\n  class?: HTMLAttributes['class']\n}>()\n</script>\n\n<template>\n  <div :class=\"cn(meterHeaderVariants(), props.class)\" data-slot=\"meter-header\">\n    <slot />\n  </div>\n</template>\n"
+      "content": "<script setup lang=\"ts\">\nimport { Primitive, useForwardProps, type PrimitiveProps } from 'reka-ui'\nimport type { HTMLAttributes } from 'vue'\nimport { cn } from '@/lib/utils'\nimport { meterHeaderVariants } from '.'\n\nconst props = withDefaults(\n  defineProps<\n    PrimitiveProps & {\n      class?: HTMLAttributes['class']\n    }\n  >(),\n  {\n    as: 'div',\n  },\n)\n\nconst forwarded = useForwardProps(props)\n</script>\n\n<template>\n  <Primitive\n    v-bind=\"forwarded\"\n    :class=\"cn(meterHeaderVariants(), props.class)\"\n    data-slot=\"meter-header\"\n  >\n    <slot />\n  </Primitive>\n</template>\n"
     },
     {
       "type": "registry:ui",
@@ -23,7 +23,7 @@
     {
       "type": "registry:ui",
       "path": "meter/MeterIndicator.vue",
-      "content": "<script setup lang=\"ts\">\nimport type { HTMLAttributes } from 'vue'\nimport { cn } from '@/lib/utils'\nimport { useMeterRootContext } from './context'\nimport { meterIndicatorVariants } from '.'\nimport { computed } from 'vue'\n\nconst props = defineProps<{\n  class?: HTMLAttributes['class']\n}>()\n\nconst meterCtx = useMeterRootContext()\n</script>\n\n<template>\n  <div\n    :class=\"cn(meterIndicatorVariants(), props.class)\"\n    :style=\"{\n      width: meterCtx.percentage,\n    }\"\n    :data-variant=\"meterCtx.variant\"\n    data-slot=\"meter-indicator\"\n  >\n    <slot />\n  </div>\n</template>\n"
+      "content": "<script setup lang=\"ts\">\nimport { Primitive, useForwardProps, type PrimitiveProps } from 'reka-ui'\nimport type { HTMLAttributes } from 'vue'\nimport { cn } from '@/lib/utils'\nimport { useMeterRootContext } from './context'\nimport { meterIndicatorVariants } from '.'\n\nconst props = withDefaults(\n  defineProps<\n    PrimitiveProps & {\n      class?: HTMLAttributes['class']\n    }\n  >(),\n  {\n    as: 'div',\n  },\n)\n\nconst forwarded = useForwardProps(props)\n\nconst meterCtx = useMeterRootContext()\n</script>\n\n<template>\n  <Primitive\n    v-bind=\"forwarded\"\n    :class=\"cn(meterIndicatorVariants(), props.class)\"\n    :style=\"{\n      width: meterCtx.percentage,\n    }\"\n    :data-variant=\"meterCtx.variant\"\n    data-slot=\"meter-indicator\"\n  >\n    <slot />\n  </Primitive>\n</template>\n"
     },
     {
       "type": "registry:ui",
@@ -33,7 +33,7 @@
     {
       "type": "registry:ui",
       "path": "meter/MeterTrack.vue",
-      "content": "<script setup lang=\"ts\">\nimport type { HTMLAttributes } from 'vue'\nimport { cn } from '@/lib/utils'\nimport { useMeterRootContext } from './context'\nimport { meterTrackVariants } from '.'\nimport { computed } from 'vue'\n\nconst props = defineProps<{\n  class?: HTMLAttributes['class']\n}>()\n\nconst meterCtx = useMeterRootContext()\nconst trackClass = computed(() =>\n  meterTrackVariants({\n    size: meterCtx.size.value ?? 'default',\n  }),\n)\n</script>\n\n<template>\n  <div :class=\"cn(trackClass, props.class)\" data-slot=\"meter-track\">\n    <slot />\n  </div>\n</template>\n"
+      "content": "<script setup lang=\"ts\">\nimport { Primitive, useForwardProps, type PrimitiveProps } from 'reka-ui'\nimport type { HTMLAttributes } from 'vue'\nimport { cn } from '@/lib/utils'\nimport { useMeterRootContext } from './context'\nimport { meterTrackVariants } from '.'\nimport { computed } from 'vue'\n\nconst props = withDefaults(\n  defineProps<\n    PrimitiveProps & {\n      class?: HTMLAttributes['class']\n    }\n  >(),\n  {\n    as: 'div',\n  },\n)\n\nconst forwarded = useForwardProps(props)\n\nconst meterCtx = useMeterRootContext()\nconst trackClass = computed(() =>\n  meterTrackVariants({\n    size: meterCtx.size ?? 'default',\n  }),\n)\n</script>\n\n<template>\n  <Primitive v-bind=\"forwarded\" :class=\"cn(trackClass, props.class)\" data-slot=\"meter-track\">\n    <slot />\n  </Primitive>\n</template>\n"
     },
     {
       "type": "registry:ui",
@@ -43,7 +43,7 @@
     {
       "type": "registry:ui",
       "path": "meter/MeterValue.vue",
-      "content": "<script setup lang=\"ts\">\nimport type { HTMLAttributes } from 'vue'\nimport { cn } from '@/lib/utils'\nimport { useMeterRootContext } from './context'\n\nconst props = defineProps<{\n  class?: HTMLAttributes['class']\n}>()\n\nconst { percentage } = useMeterRootContext()\n</script>\n\n<template>\n  <span\n    :class=\"cn('text-sm text-muted-foreground', props.class)\"\n    data-slot=\"meter-value\"\n    :data-value=\"percentage\"\n  >\n    <slot>{{ percentage }}</slot>\n  </span>\n</template>\n"
+      "content": "<script setup lang=\"ts\">\nimport { Primitive, useForwardProps, type PrimitiveProps } from 'reka-ui'\nimport type { HTMLAttributes } from 'vue'\nimport { cn } from '@/lib/utils'\nimport { useMeterRootContext } from './context'\n\nconst props = withDefaults(\n  defineProps<\n    PrimitiveProps & {\n      class?: HTMLAttributes['class']\n    }\n  >(),\n  {\n    as: 'span',\n  },\n)\n\nconst forwarded = useForwardProps(props)\n\nconst { percentage } = useMeterRootContext()\n</script>\n\n<template>\n  <Primitive\n    v-bind=\"forwarded\"\n    :class=\"cn('text-sm text-muted-foreground', props.class)\"\n    data-slot=\"meter-value\"\n    :data-value=\"percentage\"\n  >\n    <slot>{{ percentage }}</slot>\n  </Primitive>\n</template>\n"
     },
     {
       "type": "registry:ui",

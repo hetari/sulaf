@@ -9,6 +9,7 @@ import {
   HeatmapContent,
   HeatmapGrid,
   HeatmapCell,
+  HeatmapRow,
 } from '../components/contribution-heatmap'
 
 // Mock useFetch to avoid network errors and control responses
@@ -28,6 +29,7 @@ const TestHeatmapWithGithub = defineComponent({
     HeatmapContent,
     HeatmapGrid,
     HeatmapCell,
+    HeatmapRow,
   },
   props: {
     githubUsername: { type: String, default: undefined },
@@ -58,9 +60,9 @@ const TestHeatmapWithGithub = defineComponent({
           <div v-if="isLoading" data-testid="loading">Loading contributions...</div>
           <div v-else-if="isError" data-testid="error">Error fetching contributions.</div>
           <HeatmapGrid v-else v-slot="{ cellGrid }">
-            <div v-for="row in cellGrid" class="flex" :key="row[0].date.toISOString()">
+            <HeatmapRow v-for="row in cellGrid" :key="row[0].date.toISOString()">
               <HeatmapCell v-for="cell in row" :key="cell.key" :cell="cell" />
-            </div>
+            </HeatmapRow>
           </HeatmapGrid>
         </HeatmapContent>
       </template>
@@ -76,6 +78,7 @@ const SimpleTestHeatmap = defineComponent({
     HeatmapContent,
     HeatmapGrid,
     HeatmapCell,
+    HeatmapRow,
   },
   props: {
     data: { type: Object, default: () => ({}) },
@@ -98,9 +101,9 @@ const SimpleTestHeatmap = defineComponent({
       </HeatmapHeader>
       <HeatmapContent>
         <HeatmapGrid v-slot="{ cellGrid }">
-          <div v-for="row in cellGrid" class="flex" :key="row[0].date.toISOString()">
+          <HeatmapRow v-for="row in cellGrid" :key="row[0].date.toISOString()">
             <HeatmapCell v-for="cell in row" :key="cell.key" :cell="cell" />
-          </div>
+          </HeatmapRow>
         </HeatmapGrid>
       </HeatmapContent>
     </Heatmap>

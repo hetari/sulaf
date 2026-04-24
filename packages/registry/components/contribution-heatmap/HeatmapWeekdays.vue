@@ -5,24 +5,29 @@ import type { HTMLAttributes } from 'vue'
 import { cn } from '@sulaf/ui/lib/utils'
 import { getWeekdayLabels } from './utils'
 import type { HeatmapWeekdaysProps } from './types'
+import { Primitive, useForwardProps, type PrimitiveProps } from 'reka-ui'
 
 const props = withDefaults(
   defineProps<
-    HeatmapWeekdaysProps & {
-      class?: HTMLAttributes['class']
-    }
+    PrimitiveProps &
+      HeatmapWeekdaysProps & {
+        class?: HTMLAttributes['class']
+      }
   >(),
   {
     showAll: false,
+    as: 'div',
   },
 )
+
+const forwarded = useForwardProps(props)
 
 const { rows } = useHeatmapDataRootContext()
 const displayDays = computed(() => getWeekdayLabels(rows.value, props.showAll))
 </script>
 
 <template>
-  <div :class="cn('flex w-8 shrink-0 flex-col gap-0.5 pt-px sm:w-10 sm:gap-0.75', props.class)">
+  <Primitive v-bind="forwarded" :class="cn('flex flex-col gap-0.5 pt-px sm:gap-0.75', props.class)">
     <span
       v-for="(day, i) in displayDays"
       :key="i"
@@ -32,5 +37,5 @@ const displayDays = computed(() => getWeekdayLabels(rows.value, props.showAll))
     >
       {{ day }}
     </span>
-  </div>
+  </Primitive>
 </template>
