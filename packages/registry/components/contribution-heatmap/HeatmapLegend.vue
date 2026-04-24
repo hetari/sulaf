@@ -22,7 +22,9 @@ const props = withDefaults(
 const forwarded = useForwardProps(props)
 
 const { maxLevel, getContributionsForLevel } = useHeatmapDataRootContext()
-const levels = computed(() => getLevels(maxLevel.value, getContributionsForLevel.value))
+const levels = computed(() =>
+  getLevels(props.levels ?? maxLevel.value, getContributionsForLevel.value),
+)
 </script>
 
 <template>

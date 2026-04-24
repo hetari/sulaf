@@ -85,6 +85,11 @@ export type HeatmapLegendProps = {
    * Optional label text shown on the left (e.g. "Learn how we count contributions").
    */
   label?: string
+  /**
+   * Specific levels to display in the legend.
+   * If not provided, it will show all levels from 0 to maxLevel.
+   */
+  levels?: number[]
 }
 
 export type HeatmapWeekdaysProps = {

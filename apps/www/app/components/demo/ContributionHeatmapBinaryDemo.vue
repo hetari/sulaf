@@ -72,7 +72,7 @@ const binaryGetContributionsForLevel = (level: number) => (level === 0 ? 0 : 1)
     </HeatmapContent>
 
     <HeatmapFooter>
-      <HeatmapLegend>
+      <HeatmapLegend :levels="[0, 4]">
         <template #before>
           <span class="mr-1 text-[10px]">Inactive</span>
         </template>

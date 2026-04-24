@@ -95,20 +95,6 @@ const onCellClick = (cell: HeatmapCellProp) => {
                       <span class="text-[10px] opacity-60">📅</span>
                       <span class="text-xs font-medium opacity-80">{{ targetCell.dateLabel }}</span>
                     </div>
-
-                    <!-- Progress Bar -->
-                    <div class="w-full bg-muted rounded-full h-1.5 overflow-hidden">
-                      <div
-                        class="h-full rounded-full"
-                        :class="{
-                          'bg-linear-to-r from-primary/60 to-primary': targetCell.contributions > 0,
-                          'bg-muted': targetCell.contributions === 0,
-                        }"
-                        :style="{
-                          width: `${Math.min((targetCell.contributions / 15) * 100, 100)}%`,
-                        }"
-                      />
-                    </div>
                   </div>
                 </template>
               </HeatmapCell>

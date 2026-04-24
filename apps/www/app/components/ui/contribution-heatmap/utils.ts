@@ -90,10 +90,14 @@ export function getActualEndDate(endDate?: Date): Date {
 }
 
 export function getLevels(
-  maxLevel: number,
+  maxLevelOrLevels: number | number[],
   getContributionsForLevel: (level: number, index: number) => number,
 ) {
-  return Array.from({ length: maxLevel + 1 }, (_, i) => ({
+  const levels = Array.isArray(maxLevelOrLevels)
+    ? maxLevelOrLevels
+    : Array.from({ length: maxLevelOrLevels + 1 }, (_, i) => i)
+
+  return levels.map(i => ({
     level: i,
     contributions: getContributionsForLevel(i, 0),
   }))
