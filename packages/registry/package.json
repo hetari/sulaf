@@ -22,11 +22,11 @@
   },
   "dependencies": {
     "@sulaf/ui": "workspace:*",
-    "@vueuse/core": "^14.2.1",
+    "@vueuse/core": "catalog:",
     "class-variance-authority": "^0.7.1",
     "lucide-vue-next": "^1.0.0",
     "motion-v": "^2.2.0",
-    "reka-ui": "^2.9.2",
-    "vue": "^3.5.31"
+    "reka-ui": "catalog:",
+    "vue": "catalog:"
   }
 }
