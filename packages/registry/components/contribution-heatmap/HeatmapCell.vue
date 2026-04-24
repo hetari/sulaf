@@ -3,7 +3,7 @@ import type { HeatmapCellProps } from './types'
 import { useHeatmapDataRootContext } from './context'
 import { cn } from '@sulaf/ui/lib/utils'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@sulaf/ui/components/tooltip'
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import type { HTMLAttributes } from 'vue'
 import { refDebounced, useElementHover, useFocus } from '@vueuse/core'
 
@@ -51,6 +51,7 @@ function handleClick() {
           )
         "
         @click="handleClick"
+        @keyup.enter="handleClick"
       >
         <slot :cell="cell" />
       </div>

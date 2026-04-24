@@ -51,6 +51,7 @@ function handleClick() {
           )
         "
         @click="handleClick"
+        @keyup.enter="handleClick"
       >
         <slot :cell="cell" />
       </div>
