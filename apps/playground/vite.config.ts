@@ -13,6 +13,7 @@ export default defineConfig({
     alias: {
       '@/lib/utils': path.resolve(__dirname, '../../packages/ui/src/lib/utils.ts'),
       '@/components/ui': path.resolve(__dirname, '../../packages/ui/src/components/ui'),
+      '@/hooks': path.resolve(__dirname, '../../packages/registry/hooks'),
       '@': path.resolve(__dirname, './src'),
     },
   },

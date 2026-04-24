@@ -9,6 +9,7 @@
     "paths": {
       "@/lib/utils": ["../../packages/ui/src/lib/utils"],
       "@/components/ui/*": ["../../packages/ui/src/components/ui/*"],
+      "@/hooks/*": ["../../packages/registry/hooks/*"],
       "@/*": ["./src/*"]
     },
     // `vue-tsc --build` produces a .tsbuildinfo file for incremental type-checking.
