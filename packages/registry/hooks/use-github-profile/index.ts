@@ -41,27 +41,37 @@ export function useGithubProfile(username: MaybeRefOrGetter<string | undefined>)
 
   // Fetch GitHub User Profile
   const profileUrl = computed(() =>
-    resolvedUsername.value ? `https://api.github.com/users/${resolvedUsername.value}` : '',
+    resolvedUsername.value
+      ? `https://api.github.com/users/${resolvedUsername.value}`
+      : (null as unknown as string),
   )
 
   const {
     data: profile,
     isFetching: isLoadingProfile,
     error: profileError,
-  } = useFetch(profileUrl, { refetch: true }).get().json<GitHubProfile>()
+  } = useFetch(profileUrl, {
+    refetch: true,
+  })
+    .get()
+    .json<GitHubProfile>()
 
   // Fetch GitHub Contributions
   const contributionsUrl = computed(() =>
     resolvedUsername.value
       ? `https://github-contributions-api.deno.dev/${resolvedUsername.value}.json`
-      : '',
+      : (null as unknown as string),
   )
 
   const {
     data: fetchedData,
     isFetching: isLoadingContributions,
     error: contributionsError,
-  } = useFetch(contributionsUrl, { refetch: true }).get().json<GitHubContributionsResponse>()
+  } = useFetch(contributionsUrl, {
+    refetch: true,
+  })
+    .get()
+    .json<GitHubContributionsResponse>()
 
   const isLoading = computed(() => isLoadingProfile.value || isLoadingContributions.value)
   const isError = computed(() => !!profileError.value || !!contributionsError.value)
@@ -80,7 +90,7 @@ export function useGithubProfile(username: MaybeRefOrGetter<string | undefined>)
   })
 
   const totalContributions = computed(() => {
-    if (resolvedUsername.value && fetchedData.value?.totalContributions) {
+    if (resolvedUsername.value && fetchedData.value?.totalContributions !== undefined) {
       return fetchedData.value.totalContributions
     }
     return 0

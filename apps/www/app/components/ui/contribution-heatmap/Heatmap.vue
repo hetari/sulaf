@@ -23,7 +23,7 @@ const props = withDefaults(
     maxLevel: 4,
     githubUsername: undefined,
     data: () => ({}),
-    getLevel: (count: number) => Math.min(Math.floor(count / 2), 4),
+    getLevel: undefined,
     getContributionsForLevel: (level: number) => level * 2,
     palette: (): HeatmapPalette => [
       'bg-muted',
@@ -34,6 +34,11 @@ const props = withDefaults(
     ],
   },
 )
+
+const defaultGetLevel = computed(
+  () => (count: number) => Math.min(Math.floor(count / 2), props.maxLevel),
+)
+const resolvedGetLevel = computed(() => props.getLevel ?? defaultGetLevel.value)
 
 defineSlots<{
   default(props: { githubProfile: GitHubProfile | null }): any
@@ -59,7 +64,7 @@ const {
   rows: () => props.rows,
   cols: () => props.cols,
   maxLevel: () => props.maxLevel,
-  getLevel: () => props.getLevel,
+  getLevel: () => resolvedGetLevel.value,
   dayMs: DAYMS,
 })
 
@@ -78,7 +83,7 @@ provideHeatmapDataRootContext({
   rows: computed(() => props.rows),
   cols: computed(() => props.cols),
   maxLevel: computed(() => props.maxLevel),
-  getLevel: computed(() => props.getLevel),
+  getLevel: resolvedGetLevel,
   getContributionsForLevel: computed(() => props.getContributionsForLevel),
   palette: computed(() => props.palette),
   onCellClick: cell => {

@@ -3,7 +3,7 @@ import type { HeatmapCellProps } from './types'
 import { useHeatmapDataRootContext } from './context'
 import { cn } from '@/lib/utils'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import type { HTMLAttributes } from 'vue'
 import { refDebounced, useElementHover, useFocus } from '@vueuse/core'
 

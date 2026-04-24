@@ -270,7 +270,7 @@ describe('ContributionHeatmap GitHub Integration Test', () => {
   it('renders GitHub contributions and profile data', async () => {
     const mockContributions = {
       contributions: [[{ date: '2023-01-01', contributionCount: 5 }]],
-      total: { lastYear: 5 },
+      totalContributions: 5,
     }
     const mockProfile = { name: 'John Doe', avatar_url: 'url', login: 'johndoe' }
 

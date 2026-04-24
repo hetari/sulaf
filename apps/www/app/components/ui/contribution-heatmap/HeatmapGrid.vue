@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useHeatmapDataRootContext } from './context'
-import { computed, onMounted, onUnmounted, ref, useTemplateRef, watch } from 'vue'
+import { computed, onMounted, onUnmounted, useTemplateRef, watch } from 'vue'
 import type { HTMLAttributes } from 'vue'
 import { cn } from '@/lib/utils'
 import { groupCellsByRow } from './utils'

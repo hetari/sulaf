@@ -57,8 +57,8 @@ export function useHeatmap(options: UseHeatmapOptions) {
     return getActualEndDate(resolvedEndDate.value)
   })
 
-  const isLoading = computed(() => isGithubLoading.value)
-  const isError = computed(() => isGithubError.value)
+  const isLoading = computed(() => (resolvedUsername.value ? isGithubLoading.value : false))
+  const isError = computed(() => (resolvedUsername.value ? isGithubError.value : false))
 
   const contributionData = computed(() => {
     if (resolvedUsername.value) {
