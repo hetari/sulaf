@@ -9,6 +9,7 @@ import {
   HeatmapFooter,
   HeatmapLegend,
   HeatmapMain,
+  HeatmapRow,
   HeatmapMonths,
   HeatmapWeekdays,
   type HeatmapCellProp,
@@ -112,15 +113,11 @@ const onCellClick = (cell: HeatmapCellProp) => {
 
       <HeatmapContent>
         <HeatmapMain>
-          <template #months>
-            <HeatmapMonths />
-          </template>
-          <template #weekdays>
-            <HeatmapWeekdays />
-          </template>
+          <HeatmapMonths />
+          <HeatmapWeekdays class="row-start-2" />
 
-          <HeatmapGrid v-slot="{ cellGrid }">
-            <div v-for="(row, rowIdx) in cellGrid" :key="rowIdx" class="flex gap-0.5 sm:gap-0.75">
+          <HeatmapGrid class="row-start-2" v-slot="{ cellGrid }">
+            <HeatmapRow v-for="(row, rowIdx) in cellGrid" :key="rowIdx">
               <HeatmapCell
                 v-for="cell in row"
                 :key="cell.key"
@@ -139,7 +136,7 @@ const onCellClick = (cell: HeatmapCellProp) => {
                   </div>
                 </template>
               </HeatmapCell>
-            </div>
+            </HeatmapRow>
           </HeatmapGrid>
         </HeatmapMain>
       </HeatmapContent>

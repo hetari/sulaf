@@ -1,8 +1,7 @@
 <script setup lang="ts">
+import { cn } from '@/lib/utils'
 import { Primitive, useForwardProps, type PrimitiveProps } from 'reka-ui'
 import type { HTMLAttributes } from 'vue'
-import { cn } from '@/lib/utils'
-import { useMeterRootContext } from './context'
 
 const props = withDefaults(
   defineProps<
@@ -11,22 +10,15 @@ const props = withDefaults(
     }
   >(),
   {
-    as: 'span',
+    as: 'div',
   },
 )
 
 const forwarded = useForwardProps(props)
-
-const { percentage } = useMeterRootContext()
 </script>
 
 <template>
-  <Primitive
-    v-bind="forwarded"
-    :class="cn('text-sm text-muted-foreground', props.class)"
-    data-slot="meter-value"
-    :data-value="percentage"
-  >
-    <slot>{{ percentage }}</slot>
+  <Primitive v-bind="forwarded" role="row" :class="cn('flex gap-0.5 sm:gap-0.75', props.class)">
+    <slot />
   </Primitive>
 </template>

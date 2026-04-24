@@ -5,19 +5,29 @@ import { computed, type HTMLAttributes } from 'vue'
 import type { HeatmapLegendProps } from './types'
 import { cn } from '@/lib/utils'
 import { getLevels } from './utils'
+import { Primitive, useForwardProps, type PrimitiveProps } from 'reka-ui'
 
-const props = defineProps<
-  HeatmapLegendProps & {
-    class?: HTMLAttributes['class']
-  }
->()
+const props = withDefaults(
+  defineProps<
+    PrimitiveProps &
+      HeatmapLegendProps & {
+        class?: HTMLAttributes['class']
+      }
+  >(),
+  {
+    as: 'div',
+  },
+)
+
+const forwarded = useForwardProps(props)
 
 const { maxLevel, getContributionsForLevel } = useHeatmapDataRootContext()
 const levels = computed(() => getLevels(maxLevel.value, getContributionsForLevel.value))
 </script>
 
 <template>
-  <div
+  <Primitive
+    v-bind="forwarded"
     :class="
       cn(
         'flex w-full items-center justify-between gap-3 text-xs text-muted-foreground',
@@ -61,5 +71,5 @@ const levels = computed(() => getLevels(maxLevel.value, getContributionsForLevel
     </div>
 
     <slot />
-  </div>
+  </Primitive>
 </template>

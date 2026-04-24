@@ -31,14 +31,6 @@ for (let i = 0; i < 365; i++) {
 // Binary: Level 0 for 0, Level 4 for anything else
 const binaryGetLevel = (count: number) => (count > 0 ? 4 : 0)
 const binaryGetContributionsForLevel = (level: number) => (level === 0 ? 0 : 1)
-
-const binaryPalette = [
-  'bg-muted',
-  'bg-primary/20',
-  'bg-primary/40',
-  'bg-primary/60',
-  'bg-primary',
-] as const
 </script>
 
 <template>
@@ -48,7 +40,7 @@ const binaryPalette = [
     :end-date="today"
     :get-level="binaryGetLevel"
     :get-contributions-for-level="binaryGetContributionsForLevel"
-    :palette="binaryPalette"
+    :palette="['bg-muted', 'bg-primary/20', 'bg-primary/40', 'bg-primary/60', 'bg-primary']"
     :max-level="4"
   >
     <HeatmapHeader>
@@ -60,24 +52,21 @@ const binaryPalette = [
 
     <HeatmapContent>
       <HeatmapMain>
-        <template #months>
-          <HeatmapMonths />
-        </template>
-        <template #weekdays>
-          <HeatmapWeekdays />
-        </template>
+        <HeatmapMonths />
+        <HeatmapWeekdays class="row-start-2" />
 
         <HeatmapGrid v-slot="{ cellGrid }">
-          <div v-for="(row, rowIdx) in cellGrid" :key="rowIdx" class="flex gap-0.5 sm:gap-0.75">
+          <HeatmapRow v-for="(row, rowIdx) in cellGrid" :key="rowIdx">
             <HeatmapCell v-for="cell in row" :key="cell.key" :cell="cell">
               <template #tooltip="{ cell: targetCell }">
                 <div class="p-1 text-xs">
-                  {{ targetCell.contributions > 0 ? 'Active' : 'No activity' }} on
+                  {{ targetCell.contributions > 0 ? 'Active' : 'No activity' }}
+                  on
                   {{ targetCell.dateLabel }}
                 </div>
               </template>
             </HeatmapCell>
-          </div>
+          </HeatmapRow>
         </HeatmapGrid>
       </HeatmapMain>
     </HeatmapContent>

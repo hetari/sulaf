@@ -72,17 +72,13 @@ const customGetContributionsForLevel = (level: number) => {
 
     <HeatmapContent>
       <HeatmapMain>
-        <template #months>
-          <HeatmapMonths />
-        </template>
-        <template #weekdays>
-          <HeatmapWeekdays />
-        </template>
+        <HeatmapMonths />
+        <HeatmapWeekdays class="row-start-2" />
 
         <HeatmapGrid v-slot="{ cellGrid }">
-          <div v-for="(row, rowIdx) in cellGrid" :key="rowIdx" class="flex gap-0.5 sm:gap-0.75">
+          <HeatmapRow v-for="(row, rowIdx) in cellGrid" :key="rowIdx">
             <HeatmapCell v-for="cell in row" :key="cell.key" :cell="cell" />
-          </div>
+          </HeatmapRow>
         </HeatmapGrid>
       </HeatmapMain>
     </HeatmapContent>

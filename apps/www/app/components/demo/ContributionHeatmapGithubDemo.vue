@@ -38,15 +38,11 @@ const githubUsername = ref('hetari')
 
     <HeatmapContent>
       <HeatmapMain>
-        <template #months>
-          <HeatmapMonths />
-        </template>
-        <template #weekdays>
-          <HeatmapWeekdays />
-        </template>
+        <HeatmapMonths />
+        <HeatmapWeekdays class="row-start-2" />
 
         <HeatmapGrid v-slot="{ cellGrid }">
-          <div v-for="(row, rowIdx) in cellGrid" :key="rowIdx" class="flex gap-0.5 sm:gap-0.75">
+          <HeatmapRow v-for="(row, rowIdx) in cellGrid" :key="rowIdx">
             <HeatmapCell v-for="cell in row" :key="cell.key" :cell="cell">
               <template #tooltip="{ cell: targetCell }">
                 <div class="flex flex-col gap-1 px-1 py-0.5 text-left">
@@ -60,7 +56,7 @@ const githubUsername = ref('hetari')
                 </div>
               </template>
             </HeatmapCell>
-          </div>
+          </HeatmapRow>
         </HeatmapGrid>
       </HeatmapMain>
     </HeatmapContent>

@@ -1,20 +1,27 @@
 <script setup lang="ts">
 import { cn } from '@/lib/utils'
+import { Primitive, useForwardProps, type PrimitiveProps } from 'reka-ui'
 import type { HTMLAttributes } from 'vue'
 
-const props = defineProps<{
-  class?: HTMLAttributes['class']
-}>()
+const props = withDefaults(
+  defineProps<
+    PrimitiveProps & {
+      class?: HTMLAttributes['class']
+    }
+  >(),
+  {
+    as: 'div',
+  },
+)
+
+const forwarded = useForwardProps(props)
 </script>
 
 <template>
-  <div :class="cn('relative w-full', props.class)">
-    <div class="flex flex-col gap-1 sm:gap-1.5">
-      <slot name="months" />
-      <div class="flex items-start gap-0.5 sm:gap-0.75 py-0.5">
-        <slot name="weekdays" />
-        <slot />
-      </div>
-    </div>
-  </div>
+  <Primitive
+    v-bind="forwarded"
+    :class="cn('grid grid-cols-[auto_1fr] gap-x-2 sm:gap-x-3', props.class)"
+  >
+    <slot />
+  </Primitive>
 </template>
