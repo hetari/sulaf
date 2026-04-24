@@ -31,10 +31,8 @@ function handleClick() {
 <template>
   <Tooltip as-child>
     <TooltipTrigger as-child>
-      <!-- v-memo: skip re-rendering if level, activity, or class haven't changed -->
       <div
         ref="cellRef"
-        v-memo="[cell.level, isActive, palette[cell.level as 0 | 1 | 2 | 3 | 4]]"
         :data-level="cell.level"
         :data-date="cell.key"
         :data-row="cell.row"

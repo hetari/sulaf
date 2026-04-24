@@ -31,7 +31,6 @@ const displayDays = computed(() => getWeekdayLabels(rows.value, props.showAll))
     <span
       v-for="(day, i) in displayDays"
       :key="i"
-      v-memo="[day]"
       aria-hidden="true"
       class="flex h-3.5 items-center justify-start pr-1 text-[9px] leading-none text-muted-foreground sm:h-4 sm:text-[10px]"
     >

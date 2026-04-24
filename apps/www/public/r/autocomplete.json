@@ -81,7 +81,14 @@
       "content": "import type { ComboboxRootEmits, ComboboxRootProps } from 'reka-ui'\n\nexport type AutocompleteProps = ComboboxRootProps & {\n  searchTerm?: string\n}\n\nexport type AutocompleteEmits = ComboboxRootEmits & {\n  'update:searchTerm': [searchTerm: string]\n}\n"
     }
   ],
-  "dependencies": ["@vueuse/core", "lucide-vue-next"],
+  "dependencies": [
+    "@vueuse/core",
+    "lucide-vue-next"
+  ],
   "devDependencies": [],
-  "registryDependencies": ["input-group", "combobox", "spinner"]
+  "registryDependencies": [
+    "input-group",
+    "combobox",
+    "spinner"
+  ]
 }
