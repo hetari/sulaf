@@ -26,40 +26,33 @@ import {
 
 const palettes: Record<string, HeatmapPalette | undefined> = {
   default: undefined,
-  rainbow: [
+  Indigo: [
     'bg-muted',
-    'bg-orange-200 dark:bg-amber-200',
-    'bg-yellow-400 dark:bg-red-400',
-    'bg-green-600 dark:bg-cyan-400',
-    'bg-blue-800 dark:bg-purple-400',
-  ],
-  Blue: [
-    'bg-muted',
-    'bg-blue-200 dark:bg-blue-300',
-    'bg-blue-400 dark:bg-blue-500',
-    'bg-blue-600 dark:bg-blue-700',
-    'bg-blue-800 dark:bg-blue-900',
-  ],
-  Purple: [
-    'bg-muted',
-    'bg-purple-200 dark:bg-purple-300',
-    'bg-purple-400 dark:bg-purple-500',
-    'bg-purple-600 dark:bg-purple-700',
-    'bg-purple-800 dark:bg-purple-900',
+    'bg-indigo-100 dark:bg-indigo-950',
+    'bg-indigo-300 dark:bg-indigo-800',
+    'bg-indigo-500 dark:bg-indigo-600',
+    'bg-indigo-700 dark:bg-indigo-400',
   ],
   Rose: [
     'bg-muted',
-    'bg-rose-200 dark:bg-rose-300',
-    'bg-rose-400 dark:bg-rose-500',
-    'bg-rose-600 dark:bg-rose-700',
-    'bg-rose-800 dark:bg-rose-900',
+    'bg-rose-100 dark:bg-rose-950',
+    'bg-rose-300 dark:bg-rose-800',
+    'bg-rose-500 dark:bg-rose-600',
+    'bg-rose-700 dark:bg-rose-400',
   ],
   Amber: [
     'bg-muted',
-    'bg-amber-200 dark:bg-amber-300',
-    'bg-amber-400 dark:bg-amber-500',
-    'bg-amber-600 dark:bg-amber-700',
-    'bg-amber-800 dark:bg-amber-900',
+    'bg-amber-100 dark:bg-amber-950',
+    'bg-amber-300 dark:bg-amber-800',
+    'bg-amber-500 dark:bg-amber-600',
+    'bg-amber-700 dark:bg-amber-400',
+  ],
+  Slate: [
+    'bg-muted',
+    'bg-slate-200 dark:bg-slate-800',
+    'bg-slate-400 dark:bg-slate-600',
+    'bg-slate-600 dark:bg-slate-400',
+    'bg-slate-800 dark:bg-slate-200',
   ],
 }
 
@@ -71,13 +64,20 @@ const today = new Date()
 const startDate = new Date(today)
 startDate.setFullYear(today.getFullYear() - 1)
 
+// Deterministic pseudo-random function to ensure identical data on server and client in nuxt.
+const pseudoRandom = (seed: number) => {
+  const x = Math.sin(seed) * 100000
+  return x - Math.floor(x)
+}
+
 const newMockData: Record<string, number> = {}
 for (let i = 0; i < 365; i++) {
   const d = new Date(today)
   d.setDate(d.getDate() - i)
   const key = d.toISOString().split('T')[0] as string
-  if (Math.random() > 0.4) {
-    newMockData[key] = Math.floor(Math.random() * 10)
+
+  if (pseudoRandom(i) > 0.4) {
+    newMockData[key] = Math.floor(pseudoRandom(i + 1) * 10)
   }
 }
 mockData.value = newMockData
@@ -114,13 +114,13 @@ const onCellClick = (cell: HeatmapCellProp) => {
       <HeatmapContent>
         <HeatmapMain>
           <HeatmapMonths />
-          <HeatmapWeekdays class="row-start-2" />
+          <HeatmapWeekdays />
 
-          <HeatmapGrid class="row-start-2" v-slot="{ cellGrid }">
+          <HeatmapGrid v-slot="{ cellGrid }">
             <HeatmapRow v-for="(row, rowIdx) in cellGrid" :key="rowIdx">
               <HeatmapCell
                 v-for="cell in row"
-                :key="cell.key"
+                :key="`${cell.key}-${cell.contributions}`"
                 :cell="cell"
                 @click="onCellClick(cell)"
               >

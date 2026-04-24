@@ -24,9 +24,11 @@ const monthMarkers = computed(() => getMonthMarkers(cells.value, cols.value))
 </script>
 
 <template>
-  <Primitive
+  <div
     v-bind="forwarded"
-    :class="cn('col-start-2 mb-2 grid text-[10px] text-muted-foreground', props.class)"
+    :class="
+      cn('col-start-2 row-start-1 mb-2 grid h-4 text-[10px] text-muted-foreground', props.class)
+    "
     :style="{
       gridTemplateColumns: `repeat(${cols}, 1fr)`,
     }"
@@ -43,5 +45,5 @@ const monthMarkers = computed(() => getMonthMarkers(cells.value, cols.value))
         {{ label }}
       </span>
     </div>
-  </Primitive>
+  </div>
 </template>

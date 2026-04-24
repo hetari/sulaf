@@ -20,7 +20,7 @@ const forwarded = useForwardProps(props)
 <template>
   <Primitive
     v-bind="forwarded"
-    :class="cn('grid grid-cols-[auto_1fr] gap-x-2 sm:gap-x-3', props.class)"
+    :class="cn('grid grid-cols-[auto_1fr] grid-rows-[auto_1fr] gap-x-2 sm:gap-x-3', props.class)"
   >
     <slot />
   </Primitive>

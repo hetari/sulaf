@@ -98,7 +98,7 @@ useEventListener(gridRef, 'keydown', e => {
     ref="gridRef"
     v-bind="forwarded"
     role="grid"
-    :class="cn('col-start-2 flex flex-col gap-0.5 sm:gap-0.75', props.class)"
+    :class="cn('col-start-2 row-start-2 flex flex-col gap-0.5 sm:gap-0.75', props.class)"
   >
     <slot :cells="cells" :cell-grid="cellGrid" :rows="rows" :cols="cols" />
   </Primitive>

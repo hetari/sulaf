@@ -27,7 +27,10 @@ const displayDays = computed(() => getWeekdayLabels(rows.value, props.showAll))
 </script>
 
 <template>
-  <Primitive v-bind="forwarded" :class="cn('flex flex-col gap-0.5 pt-px sm:gap-0.75', props.class)">
+  <Primitive
+    v-bind="forwarded"
+    :class="cn('col-start-1 row-start-2 flex flex-col gap-0.5 pt-px sm:gap-0.75', props.class)"
+  >
     <span
       v-for="(day, i) in displayDays"
       :key="i"

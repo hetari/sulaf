@@ -23,8 +23,13 @@ const rawActive = computed(() => isHovered.value || focused.value)
 // Use debounced state to make it smoother and avoid flickering during fast navigation
 const isActive = refDebounced(rawActive, 250)
 
+const emit = defineEmits<{
+  click: [cell: HeatmapCellProps['cell']]
+}>()
+
 function handleClick() {
   onCellClick?.(props.cell)
+  emit('click', props.cell)
 }
 </script>
 
@@ -32,6 +37,7 @@ function handleClick() {
   <Tooltip as-child>
     <TooltipTrigger as-child>
       <div
+        v-bind="$attrs"
         ref="cellRef"
         :data-level="cell.level"
         :data-date="cell.key"
@@ -42,8 +48,8 @@ function handleClick() {
         :aria-label="`${cell.contributions} contributions on ${cell.dateLabel}`"
         :class="
           cn(
-            'h-3.5 w-3.5 rounded-[2px] transition-all duration-200 ease-out sm:h-4 sm:w-4 cursor-pointer',
-            'hover:scale-[1.05] hover:ring-1 hover:ring-primary/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50',
+            'h-3.5 w-3.5 rounded-[3px] border border-black/5 dark:border-white/5 transition-all duration-300 ease-out sm:h-4 sm:w-4 cursor-pointer',
+            'hover:scale-[1.1] hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50',
             palette[cell.level as 0 | 1 | 2 | 3 | 4],
             props.class,
           )
