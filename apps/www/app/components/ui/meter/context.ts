@@ -11,7 +11,6 @@ export const useMeterRootContext = () => {
     'value',
     'max',
     'min',
-    'label',
     'percentage',
     'meterId',
   ]

@@ -2,7 +2,7 @@
 import { provideHeatmapDataRootContext } from './context'
 import type { HeatmapProps, HeatmapEmits, HeatmapPalette } from './types'
 import { computed, useId } from 'vue'
-import { useHeatmap, useContributionData } from './useHeatmap'
+import { useHeatmap } from './useHeatmap'
 import { Card } from '@sulaf/ui/components/card'
 import { TooltipProvider } from '@sulaf/ui/components/tooltip'
 import { cn } from '@sulaf/ui/lib/utils'
@@ -50,26 +50,18 @@ const {
   isLoading,
   isError,
   profile,
-} = useContributionData({
+  cells: heatmapCells,
+} = useHeatmap({
   githubUsername: () => props.githubUsername,
   data: () => props.data,
   startDate: () => props.startDate,
   endDate: () => props.endDate,
+  rows: () => props.rows,
+  cols: () => props.cols,
+  maxLevel: () => props.maxLevel,
+  getLevel: () => props.getLevel,
+  dayMs: DAYMS,
 })
-
-const { createHeatmapCells } = useHeatmap()
-const heatmapCells = computed(() =>
-  createHeatmapCells({
-    startDate: actualStartDate.value,
-    endDate: actualEndDate.value,
-    data: contributionData.value,
-    rows: props.rows,
-    cols: props.cols,
-    dayMs: DAYMS,
-    maxLevel: props.maxLevel,
-    getLevel: props.getLevel,
-  }),
-)
 
 const id = useId()
 provideHeatmapDataRootContext({

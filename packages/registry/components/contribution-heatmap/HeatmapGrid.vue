@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useHeatmapDataRootContext } from './context'
-import { computed, onMounted, onUnmounted, useTemplateRef } from 'vue'
+import { computed, onMounted, onUnmounted, useTemplateRef, watch } from 'vue'
 import type { HTMLAttributes } from 'vue'
 import { cn } from '@sulaf/ui/lib/utils'
 import { groupCellsByRow } from './utils'
@@ -17,10 +17,10 @@ const gridRef = useTemplateRef<HTMLElement | null>('gridRef')
 // Cache for cell elements to ensure O(1) lookup during keyboard navigation
 const cellCache = new Map<string, HTMLElement>()
 
-onMounted(() => {
+const rebuildCellCache = () => {
   if (!gridRef.value) return
 
-  // Populate cache and initialize roving tabindex
+  cellCache.clear()
   const cellElements = gridRef.value.querySelectorAll<HTMLElement>('[role="gridcell"]')
   cellElements.forEach((el, idx) => {
     const r = el.dataset.row
@@ -31,7 +31,18 @@ onMounted(() => {
     // Only the first cell is focusable via Tab by default
     el.tabIndex = idx === 0 ? 0 : -1
   })
-})
+}
+
+onMounted(rebuildCellCache)
+
+// Rebuild cache when cells change (e.g. data loaded asynchronously)
+watch(
+  cells,
+  () => {
+    rebuildCellCache()
+  },
+  { flush: 'post' },
+)
 
 onUnmounted(() => {
   cellCache.clear()

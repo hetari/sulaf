@@ -8,6 +8,17 @@ import { Separator } from '~/components/ui/separator'
 
 const username = ref('hetari')
 const { profile, totalContributions, isLoading, isError } = useGithubProfile(username)
+
+const safeBlogUrl = computed(() => {
+  const raw = profile.value?.blog
+  if (!raw) return ''
+  try {
+    const url = new URL(/^https?:\/\//i.test(raw) ? raw : `https://${raw}`)
+    return ['http:', 'https:'].includes(url.protocol) ? url.toString() : ''
+  } catch {
+    return ''
+  }
+})
 </script>
 
 <template>
@@ -66,11 +77,15 @@ const { profile, totalContributions, isLoading, isError } = useGithubProfile(use
           </div>
         </div>
         <Separator />
-        <div v-if="profile.blog">
+        <div v-if="safeBlogUrl">
           <h4 class="font-medium leading-none">Website</h4>
-          <a :href="profile.blog" target="_blank" class="text-sm text-blue-500 hover:underline">{{
-            profile.blog
-          }}</a>
+          <a
+            :href="safeBlogUrl"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-sm text-blue-500 hover:underline"
+            >{{ profile.blog }}</a
+          >
         </div>
         <div v-if="profile.company">
           <h4 class="font-medium leading-none">Company</h4>

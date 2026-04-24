@@ -23,15 +23,47 @@ import {
   SelectValue,
 } from '~/components/ui/select'
 
-const palettes: Record<string, HeatmapPalette> = {
-  Blue: ['bg-muted', 'bg-blue-200', 'bg-blue-400', 'bg-blue-600', 'bg-blue-800'],
-  Purple: ['bg-muted', 'bg-purple-200', 'bg-purple-400', 'bg-purple-600', 'bg-purple-800'],
-  Rose: ['bg-muted', 'bg-rose-200', 'bg-rose-400', 'bg-rose-600', 'bg-rose-800'],
-  Amber: ['bg-muted', 'bg-amber-200', 'bg-amber-400', 'bg-amber-600', 'bg-amber-800'],
+const palettes: Record<string, HeatmapPalette | undefined> = {
+  default: undefined,
+  rainbow: [
+    'bg-muted',
+    'bg-orange-200 dark:bg-amber-200',
+    'bg-yellow-400 dark:bg-red-400',
+    'bg-green-600 dark:bg-cyan-400',
+    'bg-blue-800 dark:bg-purple-400',
+  ],
+  Blue: [
+    'bg-muted',
+    'bg-blue-200 dark:bg-blue-300',
+    'bg-blue-400 dark:bg-blue-500',
+    'bg-blue-600 dark:bg-blue-700',
+    'bg-blue-800 dark:bg-blue-900',
+  ],
+  Purple: [
+    'bg-muted',
+    'bg-purple-200 dark:bg-purple-300',
+    'bg-purple-400 dark:bg-purple-500',
+    'bg-purple-600 dark:bg-purple-700',
+    'bg-purple-800 dark:bg-purple-900',
+  ],
+  Rose: [
+    'bg-muted',
+    'bg-rose-200 dark:bg-rose-300',
+    'bg-rose-400 dark:bg-rose-500',
+    'bg-rose-600 dark:bg-rose-700',
+    'bg-rose-800 dark:bg-rose-900',
+  ],
+  Amber: [
+    'bg-muted',
+    'bg-amber-200 dark:bg-amber-300',
+    'bg-amber-400 dark:bg-amber-500',
+    'bg-amber-600 dark:bg-amber-700',
+    'bg-amber-800 dark:bg-amber-900',
+  ],
 }
 
-const selectedPaletteName = ref<string>('')
-const activePalette = computed(() => palettes[selectedPaletteName.value]!)
+const selectedPaletteName = ref<keyof typeof palettes>('default')
+const activePalette = computed(() => palettes[selectedPaletteName.value])
 
 const mockData = ref<Record<string, number>>({})
 const today = new Date()

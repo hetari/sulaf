@@ -98,3 +98,72 @@ export function getLevels(
     contributions: getContributionsForLevel(i, 0),
   }))
 }
+
+/**
+ * Options for creating heatmap cells.
+ */
+export interface CreateHeatmapCellsOptions {
+  /** The start date for the heatmap range. */
+  startDate: Date
+  /** The end date for the heatmap range. */
+  endDate: Date
+  /** The contribution data mapping. */
+  data: Record<string, number>
+  /** Number of rows in the grid. */
+  rows: number
+  /** Number of columns in the grid. */
+  cols: number
+  /** Milliseconds in a day. */
+  dayMs: number
+  /** Maximum level of contributions. */
+  maxLevel: number
+  /** Function to determine the level for a count. */
+  getLevel: (count: number) => number
+}
+
+/**
+ * Generates a flat array of cell data for the heatmap grid.
+ */
+export function createHeatmapCells(options: CreateHeatmapCellsOptions): HeatmapCellProp[] {
+  const { startDate, endDate, data, rows, cols, dayMs, getLevel } = options
+  const cells: HeatmapCellProp[] = []
+
+  const gridStart = startOfWeek(startDate)
+  let currentCol = 0
+  const currentDay = new Date(gridStart)
+  currentDay.setHours(0, 0, 0, 0)
+
+  const endTime = endDate.getTime()
+
+  while (currentCol < cols) {
+    const row = currentDay.getDay()
+
+    if (row < rows) {
+      const dateKey = formatHeatmapDate(currentDay, 'key')
+      const count = data[dateKey] || 0
+
+      cells.push({
+        key: dateKey,
+        date: new Date(currentDay),
+        row,
+        col: currentCol,
+        contributions: count,
+        level: getLevel(count),
+        dateLabel: formatHeatmapDate(currentDay, 'label'),
+        weekdayLabel: formatHeatmapDate(currentDay, 'weekday'),
+      })
+    }
+
+    currentDay.setDate(currentDay.getDate() + 1)
+    if (currentDay.getDay() === 0) {
+      currentCol++
+    }
+
+    // Safety break to prevent infinite loops if misconfigured
+    if (currentDay.getTime() > endTime + dayMs * 7) {
+      break
+    }
+  }
+
+  return cells
+}
