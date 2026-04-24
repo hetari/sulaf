@@ -11,13 +11,13 @@
     "type-check": "vue-tsc --build"
   },
   "dependencies": {
-    "reka-ui": "catalog:",
+    "reka-ui": "2.9.2",
     "@sulaf/ui": "workspace:*",
     "@sulaf/registry": "workspace:*",
     "@tailwindcss/vite": "^4.2.2",
-    "@vueuse/core": "catalog:",
-    "tailwindcss": "catalog:",
-    "vue": "catalog:",
+    "@vueuse/core": "^14.2.1",
+    "tailwindcss": "^4.2.2",
+    "vue": "3.5.31",
     "vue-router": "^5.0.3",
     "lucide-vue-next": "^1.0.0"
   },
