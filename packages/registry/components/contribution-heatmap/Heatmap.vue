@@ -100,7 +100,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
     :id="id"
     role="region"
     :aria-labelledby="id"
-    :class="cn('overflow-hidden max-w-fit', props.class)"
+    :class="cn('overflow-hidden w-fit max-w-full', props.class)"
     v-bind="forwarded"
   >
     <TooltipProvider>

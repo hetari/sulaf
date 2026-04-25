@@ -27,20 +27,13 @@ const monthMarkers = computed(() => getMonthMarkers(cells.value, cols.value))
   <div
     v-bind="forwarded"
     :class="
-      cn('col-start-2 row-start-1 mb-2 grid h-4 text-[10px] text-muted-foreground', props.class)
+      cn(
+        'col-start-2 row-start-1 flex items gap-0.5 text-[10px] text-muted-foreground sm:gap-0.75',
+        props.class,
+      )
     "
-    :style="{
-      gridTemplateColumns: `repeat(${cols}, 1fr)`,
-    }"
   >
-    <div
-      v-for="(label, i) in monthMarkers"
-      :key="i"
-      :style="{
-        gridColumnStart: i + 1,
-      }"
-      class="relative"
-    >
+    <div v-for="(label, i) in monthMarkers" :key="i" class="relative w-full flex-1">
       <span v-if="label" aria-hidden="true" class="absolute left-0 bottom-0 whitespace-nowrap">
         {{ label }}
       </span>

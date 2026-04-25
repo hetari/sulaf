@@ -27,9 +27,11 @@ onMounted(() => {
 </script>
 
 <template>
-  <CardContent :class="cn(props.class)">
-    <ScrollArea ref="scrollAreaRef" type="glimpse" tabindex="-1">
-      <slot :is-loading="isLoading" :is-error="isError" :cells="cells" />
+  <CardContent :class="cn('p-0', props.class)">
+    <ScrollArea ref="scrollAreaRef" type="hover" class="w-full">
+      <div class="p-6 w-max min-w-full">
+        <slot :is-loading="isLoading" :is-error="isError" :cells="cells" />
+      </div>
       <ScrollBar orientation="horizontal" />
     </ScrollArea>
   </CardContent>

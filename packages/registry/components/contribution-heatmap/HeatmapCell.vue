@@ -46,10 +46,14 @@ function handleClick() {
         role="gridcell"
         tabindex="-1"
         :aria-label="`${cell.contributions} contributions on ${cell.dateLabel}`"
+        :style="{
+          animationDelay: `${(cell.row + cell.col) * 5}ms`,
+          animationFillMode: 'both',
+        }"
         :class="
           cn(
-            'h-3.5 w-3.5 rounded-[3px] border border-black/5 dark:border-white/5 transition-all duration-300 ease-out sm:h-4 sm:w-4 cursor-pointer',
-            'hover:scale-[1.1] hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50',
+            'h-3.5 w-3.5 rounded-[3px] border border-border/50 sm:h-4 sm:w-4 cursor-pointer',
+            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1',
             palette[cell.level as 0 | 1 | 2 | 3 | 4],
             props.class,
           )
