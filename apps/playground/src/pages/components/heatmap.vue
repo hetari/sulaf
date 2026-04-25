@@ -224,5 +224,150 @@ const onCellClick = (cell: HeatmapCellProp) => {
         <HeatmapLegend label="Mock data" />
       </HeatmapFooter>
     </Heatmap>
+
+    <div class="p-10 flex flex-col gap-16 bg-background min-h-screen">
+      <!-- Test Case 1: Flex Row -->
+      <section>
+        <h2 class="mb-4 text-xl font-bold border-b pb-2">1. Flex Row (with sibling)</h2>
+        <div class="flex items-start gap-6 border p-6 rounded-xl bg-card/50">
+          <div
+            class="h-40 w-40 bg-primary/10 rounded-lg flex items-center justify-center border border-primary/20 shrink-0"
+          >
+            <span class="text-primary font-medium">Sibling</span>
+          </div>
+          <Heatmap :data="mockData">
+            <HeatmapHeader v-slot="{ totalContributions }">
+              <CardTitle>Row Layout</CardTitle>
+              <CardDescription
+                >{{ totalContributions }} contributions in the last year</CardDescription
+              >
+            </HeatmapHeader>
+            <HeatmapContent>
+              <HeatmapMain>
+                <HeatmapWeekdays />
+                <HeatmapMonths />
+                <HeatmapGrid v-slot="{ cellGrid }">
+                  <HeatmapRow v-for="(row, i) in cellGrid" :key="i">
+                    <HeatmapCell v-for="cell in row" :key="cell.key" :cell="cell" />
+                  </HeatmapRow>
+                </HeatmapGrid>
+              </HeatmapMain>
+            </HeatmapContent>
+            <HeatmapFooter>
+              <HeatmapLegend label="Contribution Levels" />
+            </HeatmapFooter>
+          </Heatmap>
+        </div>
+      </section>
+
+      <!-- Test Case 2: Narrow Flex Col -->
+      <section>
+        <h2 class="mb-4 text-xl font-bold border-b pb-2">2. Narrow Flex Column (Scrollable)</h2>
+        <div class="flex flex-col w-72 border p-6 rounded-xl bg-card/50 gap-4">
+          <div class="h-10 bg-muted rounded animate-pulse" />
+          <Heatmap :data="mockData">
+            <HeatmapHeader>
+              <CardTitle class="text-sm">Compact View</CardTitle>
+            </HeatmapHeader>
+            <HeatmapContent>
+              <HeatmapMain>
+                <HeatmapWeekdays />
+                <HeatmapMonths />
+                <HeatmapGrid v-slot="{ cellGrid }">
+                  <HeatmapRow v-for="(row, i) in cellGrid" :key="i">
+                    <HeatmapCell v-for="cell in row" :key="cell.key" :cell="cell" />
+                  </HeatmapRow>
+                </HeatmapGrid>
+              </HeatmapMain>
+            </HeatmapContent>
+            <HeatmapFooter>
+              <HeatmapLegend />
+            </HeatmapFooter>
+          </Heatmap>
+        </div>
+      </section>
+
+      <!-- Test Case 3: Grid Layout -->
+      <section>
+        <h2 class="mb-4 text-xl font-bold border-b pb-2">3. Grid Layout</h2>
+        <div class="grid grid-cols-2 gap-6 border p-6 rounded-xl bg-card/50">
+          <div class="border p-4 rounded bg-muted/20">Grid Item 1</div>
+          <Heatmap :data="mockData">
+            <HeatmapHeader>
+              <CardTitle>Grid Item 2</CardTitle>
+            </HeatmapHeader>
+            <HeatmapContent>
+              <HeatmapMain>
+                <HeatmapWeekdays />
+                <HeatmapMonths />
+                <HeatmapGrid v-slot="{ cellGrid }">
+                  <HeatmapRow v-for="(row, i) in cellGrid" :key="i">
+                    <HeatmapCell v-for="cell in row" :key="cell.key" :cell="cell" />
+                  </HeatmapRow>
+                </HeatmapGrid>
+              </HeatmapMain>
+            </HeatmapContent>
+            <HeatmapFooter>
+              <HeatmapLegend />
+            </HeatmapFooter>
+          </Heatmap>
+        </div>
+      </section>
+
+      <!-- Test Case 4: Absolute Positioning -->
+      <section class="relative h-64 border p-6 rounded-xl bg-card/50">
+        <h2 class="mb-4 text-xl font-bold border-b pb-2">4. Absolute Positioned (Bottom Right)</h2>
+        <div class="absolute bottom-6 right-6 w-[400px]">
+          <Heatmap :data="mockData">
+            <HeatmapHeader>
+              <CardTitle class="text-xs">Pinned Heatmap</CardTitle>
+            </HeatmapHeader>
+            <HeatmapContent>
+              <HeatmapMain>
+                <HeatmapWeekdays />
+                <HeatmapMonths />
+                <HeatmapGrid v-slot="{ cellGrid }">
+                  <HeatmapRow v-for="(row, i) in cellGrid" :key="i">
+                    <HeatmapCell v-for="cell in row" :key="cell.key" :cell="cell" />
+                  </HeatmapRow>
+                </HeatmapGrid>
+              </HeatmapMain>
+            </HeatmapContent>
+            <HeatmapFooter>
+              <HeatmapLegend />
+            </HeatmapFooter>
+          </Heatmap>
+        </div>
+      </section>
+
+      <!-- Test Case 5: Fixed Positioning (Overlay) -->
+      <section>
+        <h2 class="mb-4 text-xl font-bold border-b pb-2">5. Fixed Positioning (Corner Overlay)</h2>
+        <p class="text-muted-foreground italic">Look at the bottom left of your screen.</p>
+        <div
+          class="fixed bottom-6 left-6 z-50 w-80 shadow-2xl scale-75 origin-bottom-left hover:scale-100 transition-transform duration-300"
+        >
+          <Heatmap :data="mockData">
+            <HeatmapHeader>
+              <CardTitle class="text-xs">Floating Activity</CardTitle>
+            </HeatmapHeader>
+            <HeatmapContent class="p-0">
+              <HeatmapMain class="p-4 scale-90 origin-top-left">
+                <HeatmapWeekdays />
+                <HeatmapMonths />
+                <HeatmapGrid v-slot="{ cellGrid }">
+                  <HeatmapRow v-for="(row, i) in cellGrid" :key="i">
+                    <HeatmapCell v-for="cell in row" :key="cell.key" :cell="cell" />
+                  </HeatmapRow>
+                </HeatmapGrid>
+              </HeatmapMain>
+            </HeatmapContent>
+            <HeatmapFooter class="py-2">
+              <HeatmapLegend />
+            </HeatmapFooter>
+          </Heatmap>
+        </div>
+      </section>
+    </div>
   </div>
 </template>

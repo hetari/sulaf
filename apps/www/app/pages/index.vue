@@ -1,66 +1,59 @@
 <script setup lang="ts">
-import { ArrowRightIcon } from 'lucide-vue-next'
+import { ArrowRightIcon, ComponentIcon, FishingHookIcon } from 'lucide-vue-next'
 </script>
 
 <template>
-  <div class="flex flex-col flex-1 items-center justify-start">
+  <div class="flex size-full flex-col flex-1 items-center justify-center relative">
     <section
-      class="animate-in fade-in slide-in-from-bottom-5 duration-700 fill-mode-both md:text-center text-left p-4 md:p-0"
+      class="overflow-x-clip size-full flex flex-col flex-1 animate-in fade-in slide-in-from-bottom-5 duration-700 fill-mode-both md:text-center text-left p-4 md:p-0 space-y-4 justify-center md:items-center"
     >
-      <div class="flex justify-around flex-col gap-4 mx-auto mt-20 md:mt-30 relative">
-        <NuxtLink
-          to="https://github.com/hetari/sulaf"
-          target="_blank"
-          class="flex md:justify-center justify-start items-center group/badge relative"
-          aria-label="Star Sulaf UI on GitHub"
+      <NuxtLink
+        to="https://github.com/hetari/sulaf"
+        target="_blank"
+        class="flex md:justify-center justify-start items-center group/badge relative"
+        aria-label="Star Sulaf UI on GitHub"
+      >
+        <ShineBorder
+          :borderWidth="1"
+          :duration="6"
+          gradient="from-blue-500 via-red-500 to-teal-400"
+          borderRadius="9999px"
+          className="w-fit"
         >
-          <!-- <div
-            class="absolute inset-0 -z-10 bg-emerald-500/20 blur-xl rounded-full opacity-0 group-hover/badge:opacity-100 transition-opacity duration-500"
-          ></div> -->
-
-          <ShineBorder
-            :borderWidth="1"
-            :duration="6"
-            gradient="from-blue-500 via-red-500 to-teal-400"
-            borderRadius="9999px"
-            className="w-fit"
+          <Badge
+            variant="outline"
+            class="border-none font-semibold tracking-wider animate-in fade-in zoom-in duration-500 text-sm cursor-pointer transition-all shadow-sm flex items-center gap-2 py-1.5 px-3 rounded-full bg-background/50 backdrop-blur-sm group-hover/badge:bg-background/80"
           >
-            <Badge
-              variant="outline"
-              class="border-none font-semibold tracking-wider animate-in fade-in zoom-in duration-500 text-sm cursor-pointer transition-all shadow-sm flex items-center gap-2 py-1.5 px-3 rounded-full bg-background/50 backdrop-blur-sm group-hover/badge:bg-background/80"
-            >
-              <span class="flex items-center gap-1.5">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  class="size-4 text-emerald-500 group-hover/badge:scale-110 transition-transform duration-300 drop-shadow-[0_0_8px_rgba(16,185,129,0.5)]"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-                <span
-                  class="font-medium opacity-80 group-hover/badge:opacity-100 transition-opacity"
-                >
-                  Open source
-                </span>
-              </span>
-              <div
-                class="flex items-center gap-1 group-hover/badge:text-foreground transition-colors ml-1 border-l border-border/50 pl-2"
+            <span class="flex items-center gap-1.5">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="size-4 text-emerald-500 group-hover/badge:scale-110 transition-transform duration-300 drop-shadow-[0_0_8px_rgba(16,185,129,0.5)]"
               >
-                <span class="text-xs font-semibold">Star on GitHub</span>
-                <ArrowRightIcon
-                  class="size-3 translate-x-0 group-hover/badge:translate-x-0.5 transition-transform"
+                <path
+                  fill-rule="evenodd"
+                  d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                  clip-rule="evenodd"
                 />
-              </div>
-            </Badge>
-          </ShineBorder>
-        </NuxtLink>
+              </svg>
+              <span class="font-medium opacity-80 group-hover/badge:opacity-100 transition-opacity">
+                Open source
+              </span>
+            </span>
+            <div
+              class="flex items-center gap-1 group-hover/badge:text-foreground transition-colors ml-1 border-l border-border/50 pl-2"
+            >
+              <span class="text-xs font-semibold">Star on GitHub</span>
+              <ArrowRightIcon
+                class="size-3 translate-x-0 group-hover/badge:translate-x-0.5 transition-transform"
+              />
+            </div>
+          </Badge>
+        </ShineBorder>
+      </NuxtLink>
 
-        <!-- <div
+      <!-- <div
           class="animate-in fade-in zoom-in duration-1000 delay-300 absolute top-0 right-0 blur-xl hidden md:block -z-1 opacity-75"
         >
           <svg
@@ -78,31 +71,50 @@ import { ArrowRightIcon } from 'lucide-vue-next'
           </svg>
         </div> -->
 
-        <div
-          class="flex items-center justify-start md:justify-center gap-3 animate-in fade-in slide-in-from-bottom-5 duration-700 delay-100 fill-mode-both"
-        >
-          <span class="text-sm text-muted-foreground"> A shadcn-vue registry </span>
-        </div>
+      <div
+        class="flex items-center justify-start md:justify-center gap-3 animate-in fade-in slide-in-from-bottom-5 duration-700 delay-100 fill-mode-both"
+      >
+        <span class="text-sm text-muted-foreground"> A shadcn-vue registry </span>
+      </div>
 
-        <div class="text-7xl font-bold font-mono">Sulaf</div>
+      <div class="text-7xl font-bold font-mono">Sulaf</div>
 
-        <p class="text-lg md:text-xl leading-relaxed text-balance text-muted-foreground">
-          Beautiful, accessible components built for
-          <span class="text-foreground font-medium text-nowrap">shadcn-vue</span>.
-          <br />
-          <span>Copy, paste, and make them yours.</span>
-        </p>
+      <p class="text-lg md:text-xl leading-relaxed text-balance text-muted-foreground">
+        Beautiful, accessible components built for
+        <span class="text-foreground font-medium text-nowrap">shadcn-vue</span>.
+        <br />
+        <span>Copy, paste, and make them yours.</span>
+      </p>
 
+      <div class="flex flex-col gap-2 mt-4">
         <div class="flex md:justify-center justify-start gap-2 mt-4">
-          <Button class="group font-bold">
-            <NuxtLink prefetch-on="interaction" to="/docs/introduction"> Get Started </NuxtLink>
-            <ArrowRightIcon class="ml-2 size-4 transition-transform group-hover:translate-x-1" />
-          </Button>
+          <NuxtLink class="w-fit" prefetch-on="interaction" to="/docs/introduction">
+            <Button class="group font-bold">
+              <span>Get Started</span>
+              <ArrowRightIcon
+                class="size-4 md:transition-all md:group-hover:translate-x-1 md:will-change-auto"
+              />
+            </Button>
+          </NuxtLink>
 
-          <Button variant="outline">
-            <NuxtLink prefetch-on="interaction" to="/docs/components"> Browse Components </NuxtLink>
-          </Button>
+          <NuxtLink class="w-fit" prefetch-on="interaction" to="/docs/components">
+            <Button class="group" variant="outline">
+              <span>Components</span>
+              <ComponentIcon
+                class="size-4 md:transition-all md:group-hover:scale-110 md:will-change-auto"
+              />
+            </Button>
+          </NuxtLink>
         </div>
+
+        <NuxtLink class="w-fit md:mx-auto mx-0" prefetch-on="interaction" to="/docs/composables">
+          <Button class="group" variant="outline">
+            <span>Composables</span>
+            <FishingHookIcon
+              class="size-4 md:transition-all md:group-hover:rotate-0 -rotate-45 md:will-change-auto"
+            />
+          </Button>
+        </NuxtLink>
       </div>
     </section>
   </div>
