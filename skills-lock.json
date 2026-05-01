@@ -41,6 +41,12 @@
       "sourceType": "github",
       "computedHash": "1eef04180a5278a6869fab117c75fa2acf512bfda0a4b16569409b88b7bcb343"
     },
+    "shadcn-vue": {
+      "source": "noartem/laravel-vue-skills",
+      "sourceType": "github",
+      "skillPath": "skills/shadcn-vue/SKILL.md",
+      "computedHash": "be51072c8a02539c500dcb81a60680f36778ba9064fa2ea95181e40eb9564073"
+    },
     "vite": {
       "source": "antfu/skills",
       "sourceType": "github",
