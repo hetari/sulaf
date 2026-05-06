@@ -5,5 +5,5 @@
   "arrowParens": "avoid",
   "quoteProps": "consistent",
   "experimentalSortPackageJson": false,
-  "ignorePatterns": ["**/docs/**/*.md"]
+  "ignorePatterns": ["**/docs/**/*.md", ".agents/**"]
 }

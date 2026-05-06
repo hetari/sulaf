@@ -75,6 +75,54 @@
       ]
     },
     {
+      "name": "phone-input",
+      "type": "registry:ui",
+      "title": "Phone Input",
+      "description": "sulaf phone input components.",
+      "files": [
+        {
+          "path": "phone-input/PhoneInput.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "phone-input/context.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "phone-input/PhoneInputCountrySelect.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "phone-input/validation.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "phone-input/index.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "phone-input/PhoneFieldCountryFlag.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "phone-input/PhoneInputField.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "phone-input/PhoneInputClear.vue",
+          "type": "registry:ui"
+        },
+        {
+          "path": "phone-input/types.ts",
+          "type": "registry:ui"
+        },
+        {
+          "path": "phone-input/utils.ts",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "autocomplete",
       "type": "registry:ui",
       "title": "Autocomplete",
