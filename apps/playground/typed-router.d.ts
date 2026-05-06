@@ -49,6 +49,13 @@ declare module 'vue-router/auto-routes' {
       Record<never, never>,
       never
     >
+    '/components/phone-input': RouteRecordInfo<
+      '/components/phone-input',
+      '/components/phone-input',
+      Record<never, never>,
+      Record<never, never>,
+      never
+    >
     '/components/show-more': RouteRecordInfo<
       '/components/show-more',
       '/components/show-more',
@@ -83,6 +90,10 @@ declare module 'vue-router/auto-routes' {
     }
     'src/pages/components/meter.vue': {
       routes: '/components/meter'
+      views: never
+    }
+    'src/pages/components/phone-input.vue': {
+      routes: '/components/phone-input'
       views: never
     }
     'src/pages/components/show-more.vue': {
