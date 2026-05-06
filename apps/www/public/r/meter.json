@@ -51,12 +51,7 @@
       "content": "import type { meterIndicatorVariants, meterTrackVariants } from './index'\nimport type { VariantProps } from 'class-variance-authority'\n\nexport type MeterVariantProps = VariantProps<typeof meterIndicatorVariants>\nexport type MeterSizeProps = VariantProps<typeof meterTrackVariants>\n\nexport type MeterProps = {\n  /**\n   * The variant of the meter.\n   * @default default\n   */\n  variant?: MeterVariantProps['variant']\n\n  /**\n   * The size of the meter.\n   * @default default\n   */\n  size?: MeterSizeProps['size']\n\n  /**\n   * The value of the meter.\n   * @default 0\n   */\n  value?: number\n\n  /**\n   * The maximum value of the meter.\n   * @default 100\n   */\n  max?: number\n\n  /**\n   * The minimum value of the meter.\n   * @default 0\n   */\n  min?: number\n\n  /**\n   * The label of the meter.\n   * @default undefined\n   */\n  label?: string\n}\n\nexport type MeterRootContext = {\n  variant: MeterVariantProps['variant']\n  size: MeterSizeProps['size']\n  value: number\n  max: number\n  min: number\n  label: string | undefined\n  percentage: `${number}%`\n  meterId: string\n}\n"
     }
   ],
-  "dependencies": [
-    "@vueuse/core",
-    "class-variance-authority"
-  ],
+  "dependencies": ["@vueuse/core", "class-variance-authority"],
   "devDependencies": [],
-  "registryDependencies": [
-    "label"
-  ]
+  "registryDependencies": ["label"]
 }

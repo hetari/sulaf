@@ -63,10 +63,5 @@
     "class-variance-authority"
   ],
   "devDependencies": [],
-  "registryDependencies": [
-    "input-group",
-    "button",
-    "popover",
-    "scroll-area"
-  ]
+  "registryDependencies": ["input-group", "button", "popover", "scroll-area"]
 }
