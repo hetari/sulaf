@@ -36,7 +36,9 @@ Sulaf is a **shadcn-vue registry** designed to bring premium aesthetics and worl
 ## Getting Started
 
 1. Visit the [Documentation](https://sulaf-socd8d.cranl.net/docs/introduction).
+
 <!-- 2. Follow the [Installation Guide](https://sulaf-socd8d.cranl.net/docs/installation). -->
+
 2. Start copying components!
 3. Run tests: `bun run test` (See [CONTRIBUTING.md](./CONTRIBUTING.md) for details)
 
