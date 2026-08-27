@@ -7,31 +7,18 @@ import { reactive, ref, watch } from 'vue'
 import { cn } from '@/lib/utils'
 import { provideCommandContext } from '.'
 
-const props = withDefaults(
-  defineProps<
-    ListboxRootProps & {
-      class?: HTMLAttributes['class']
-      /**
-       * Custom filter function for items.
-       * @param value The item value (concatenated text, prop value, and keywords).
-       * @param search The current search query.
-       * @param keywords The actual keywords provided to the CommandItem (if any).
-       */
-      filter?: (value: string, search: string, keywords?: string[]) => number
-    }
-  >(),
-  {
-    modelValue: '',
-  },
-)
+const props = withDefaults(defineProps<ListboxRootProps & { class?: HTMLAttributes['class'] }>(), {
+  modelValue: '',
+  highlightOnHover: true,
+})
 
 const emits = defineEmits<ListboxRootEmits>()
 
-const delegatedProps = reactiveOmit(props, 'class', 'filter')
+const delegatedProps = reactiveOmit(props, 'class')
 
 const forwarded = useForwardPropsEmits(delegatedProps, emits)
 
-const allItems = ref<Map<string, { value: string; keywords: string[] }>>(new Map())
+const allItems = ref<Map<string, string>>(new Map())
 const allGroups = ref<Map<string, Set<string>>>(new Map())
 
 const { contains } = useFilter({ sensitivity: 'base' })
@@ -50,8 +37,7 @@ const filterState = reactive({
 function filterItems() {
   if (!filterState.search) {
     filterState.filtered.count = allItems.value.size
-    filterState.filtered.items.clear()
-    filterState.filtered.groups.clear()
+    // Do nothing, each item will know to show itself because search is empty
     return
   }
 
@@ -60,23 +46,16 @@ function filterItems() {
   let itemCount = 0
 
   // Check which items should be included
-  for (const [id, item] of allItems.value) {
-    let score = 0
-    if (props.filter) {
-      // Pass the actual keywords if available, or an empty array.
-      score = props.filter(item.value, filterState.search, item.keywords)
-    } else {
-      score = contains(item.value, filterState.search) ? 1 : 0
-    }
-
-    filterState.filtered.items.set(id, score)
-    if (score > 0) itemCount++
+  for (const [id, value] of allItems.value) {
+    const score = contains(value, filterState.search)
+    filterState.filtered.items.set(id, score ? 1 : 0)
+    if (score) itemCount++
   }
 
   // Check which groups have at least 1 item shown
   for (const [groupId, group] of allGroups.value) {
     for (const itemId of group) {
-      if ((filterState.filtered.items.get(itemId) ?? 0) > 0) {
+      if (filterState.filtered.items.get(itemId)! > 0) {
         filterState.filtered.groups.add(groupId)
         break
       }
@@ -87,11 +66,10 @@ function filterItems() {
 }
 
 watch(
-  [() => filterState.search, () => allItems.value],
+  () => filterState.search,
   () => {
     filterItems()
   },
-  { deep: true },
 )
 
 provideCommandContext({
@@ -107,7 +85,7 @@ provideCommandContext({
     v-bind="forwarded"
     :class="
       cn(
-        'flex size-full flex-col overflow-hidden rounded-md bg-popover text-popover-foreground',
+        'bg-popover text-popover-foreground flex h-full w-full flex-col overflow-hidden rounded-md',
         props.class,
       )
     "
