@@ -2,6 +2,8 @@
 
 **Description:** Extends the Dialog component to display content that complements the main content of the screen.
 
+**Links:** [Documentation](https://reka-ui.com/docs/components/dialog) | [API Reference](https://reka-ui.com/docs/components/dialog#api-reference)
+
 ---
 
 
@@ -14,9 +16,9 @@ description: A sheet component.
 
 ## Installation
 
-::code-tabs
+:::::code-tabs
 
-::tabs-list
+:::tabs-list
 
   ::tabs-trigger{value="cli"}
   CLI
@@ -26,7 +28,7 @@ description: A sheet component.
   Manual
   ::
 
-::
+:::
 
 ::tabs-content{value="cli"}
 
@@ -36,8 +38,8 @@ npx shadcn-vue@latest add sheet
 
 ::
 
-::tabs-content{value="manual"}
-  ::steps
+::::tabs-content{value="manual"}
+  :::steps
     ::step
     Install the following dependencies:
     ::
@@ -53,10 +55,10 @@ npx shadcn-vue@latest add sheet
     ::step
     Update the import paths to match your project setup.
     ::
-  ::
-::
+  :::
+::::
 
-::
+:::::
 
 ## Usage
 

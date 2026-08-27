@@ -2,6 +2,8 @@
 
 **Description:** A collection of links for navigating websites.
 
+**Links:** [Documentation](https://reka-ui.com/docs/components/navigation-menu) | [API Reference](https://reka-ui.com/docs/components/navigation-menu#api-reference)
+
 ---
 
 
@@ -10,14 +12,15 @@
 name: NavigationMenuDemo
 description: A navigation menu component.
 class: '[&_.preview]:!items-start [&_.preview]:p-4 [&_.preview]:pt-8 md:[&_.preview]:pt-16'
+previewClass: h-96
 ---
 ::
 
 ## Installation
 
-::code-tabs
+:::::code-tabs
 
-::tabs-list
+:::tabs-list
 
   ::tabs-trigger{value="cli"}
   CLI
@@ -27,7 +30,7 @@ class: '[&_.preview]:!items-start [&_.preview]:p-4 [&_.preview]:pt-8 md:[&_.prev
   Manual
   ::
 
-::
+:::
 
 ::tabs-content{value="cli"}
 
@@ -37,8 +40,8 @@ npx shadcn-vue@latest add navigation-menu
 
 ::
 
-::tabs-content{value="manual"}
-  ::steps
+::::tabs-content{value="manual"}
+  :::steps
     ::step
     Install the following dependencies:
     ::
@@ -54,10 +57,10 @@ npx shadcn-vue@latest add navigation-menu
     ::step
     Update the import paths to match your project setup.
     ::
-  ::
-::
+  :::
+::::
 
-::
+:::::
 
 ## Usage
 

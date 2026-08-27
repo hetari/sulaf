@@ -2,6 +2,8 @@
 
 **Description:** Accessible one-time password component with copy paste functionality.
 
+**Links:** [Documentation](https://vue-input-otp.vercel.app/)
+
 ---
 
 
@@ -14,9 +16,9 @@ description: An input OTP component.
 
 ## Installation
 
-::code-tabs
+:::::code-tabs
 
-::tabs-list
+:::tabs-list
 
   ::tabs-trigger{value="cli"}
   CLI
@@ -26,7 +28,7 @@ description: An input OTP component.
   Manual
   ::
 
-::
+:::
 
 ::tabs-content{value="cli"}
 
@@ -36,8 +38,8 @@ npx shadcn-vue@latest add input-otp
 
 ::
 
-::tabs-content{value="manual"}
-  ::steps
+::::tabs-content{value="manual"}
+  :::steps
     ::step
     Install the following dependencies:
     ::
@@ -53,10 +55,10 @@ npx shadcn-vue@latest add input-otp
     ::step
     Update the import paths to match your project setup.
     ::
-  ::
-::
+  :::
+::::
 
-::
+:::::
 
 ## Usage
 

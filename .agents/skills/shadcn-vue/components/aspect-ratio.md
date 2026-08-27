@@ -2,6 +2,8 @@
 
 **Description:** Displays content within a desired ratio.
 
+**Links:** [Documentation](https://reka-ui.com/docs/components/aspect-ratio) | [API Reference](https://reka-ui.com/docs/components/aspect-ratio#api-reference)
+
 ---
 
 
@@ -9,14 +11,15 @@
 ---
 name: AspectRatioDemo
 description: A component that displays an image with a 16:9 aspect ratio.
+previewClass: h-[26rem]
 ---
 ::
 
 ## Installation
 
-::code-tabs
+:::::code-tabs
 
-::tabs-list
+:::tabs-list
 
   ::tabs-trigger{value="cli"}
   CLI
@@ -26,7 +29,7 @@ description: A component that displays an image with a 16:9 aspect ratio.
   Manual
   ::
 
-::
+:::
 
 ::tabs-content{value="cli"}
 
@@ -36,8 +39,8 @@ npx shadcn-vue@latest add aspect-ratio
 
 ::
 
-::tabs-content{value="manual"}
-  ::steps
+::::tabs-content{value="manual"}
+  :::steps
     ::step
     Install the following dependencies:
     ::
@@ -53,10 +56,10 @@ npx shadcn-vue@latest add aspect-ratio
     ::step
     Update the import paths to match your project setup.
     ::
-  ::
-::
+  :::
+::::
 
-::
+:::::
 
 ## Usage
 

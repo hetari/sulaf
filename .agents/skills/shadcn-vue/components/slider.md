@@ -2,6 +2,8 @@
 
 **Description:** An input where the user selects a value from within a given range.
 
+**Links:** [Documentation](https://reka-ui.com/docs/components/slider) | [API Reference](https://reka-ui.com/docs/components/slider#api-reference)
+
 ---
 
 
@@ -14,9 +16,9 @@ description: A slider component.
 
 ## Installation
 
-::code-tabs
+:::::code-tabs
 
-::tabs-list
+:::tabs-list
 
   ::tabs-trigger{value="cli"}
   CLI
@@ -26,7 +28,7 @@ description: A slider component.
   Manual
   ::
 
-::
+:::
 
 ::tabs-content{value="cli"}
 
@@ -36,8 +38,8 @@ npx shadcn-vue@latest add slider
 
 ::
 
-::tabs-content{value="manual"}
-  ::steps
+::::tabs-content{value="manual"}
+  :::steps
     ::step
     Install the following dependencies:
     ::
@@ -53,10 +55,10 @@ npx shadcn-vue@latest add slider
     ::step
     Update the import paths to match your project setup.
     ::
-  ::
-::
+  :::
+::::
 
-::
+:::::
 
 ## Usage
 

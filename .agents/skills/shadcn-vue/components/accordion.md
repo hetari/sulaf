@@ -2,23 +2,26 @@
 
 **Description:** A vertically stacked set of interactive headings that each reveal a section of content.
 
+**Links:** [Documentation](https://reka-ui.com/docs/components/accordion) | [API Reference](https://reka-ui.com/docs/components/accordion#api-reference)
+
 ---
 
 
 ::component-preview
 ---
 name: AccordionDemo
-class: '[&_.preview>div]:sm:max-w-[80%] **:[.preview]:min-h-[400px]'
+class: '[&_.preview>div]:sm:max-w-[80%]'
 description: An accordion with three items
 align: start
+previewClass: h-[27rem] sm:h-[25rem]
 ---
 ::
 
 ## Installation
 
-::code-tabs
+:::::code-tabs
 
-::tabs-list
+:::tabs-list
 
   ::tabs-trigger{value="cli"}
   CLI
@@ -28,7 +31,7 @@ align: start
   Manual
   ::
 
-::
+:::
 
 ::tabs-content{value="cli"}
 
@@ -38,8 +41,8 @@ npx shadcn-vue@latest add accordion
 
 ::
 
-::tabs-content{value="manual"}
-  ::steps
+::::tabs-content{value="manual"}
+  :::steps
     ::step
     Install the following dependencies:
     ::
@@ -55,10 +58,10 @@ npx shadcn-vue@latest add accordion
     ::step
     Update the import paths to match your project setup.
     ::
-  ::
-::
+  :::
+::::
 
-::
+:::::
 
 ## Usage
 

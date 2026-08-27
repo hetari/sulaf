@@ -2,6 +2,8 @@
 
 **Description:** For sighted users to preview content available behind a link.
 
+**Links:** [Documentation](https://reka-ui.com/docs/components/hover-card) | [API Reference](https://reka-ui.com/docs/components/hover-card#api-reference)
+
 ---
 
 
@@ -9,14 +11,15 @@
 ---
 name: HoverCardDemo
 description: A hover card component.
+previewClass: h-80
 ---
 ::
 
 ## Installation
 
-::code-tabs
+:::::code-tabs
 
-::tabs-list
+:::tabs-list
 
   ::tabs-trigger{value="cli"}
   CLI
@@ -26,7 +29,7 @@ description: A hover card component.
   Manual
   ::
 
-::
+:::
 
 ::tabs-content{value="cli"}
 
@@ -36,8 +39,8 @@ npx shadcn-vue@latest add hover-card
 
 ::
 
-::tabs-content{value="manual"}
-  ::steps
+::::tabs-content{value="manual"}
+  :::steps
     ::step
     Install the following dependencies:
     ::
@@ -53,10 +56,10 @@ npx shadcn-vue@latest add hover-card
     ::step
     Update the import paths to match your project setup.
     ::
-  ::
-::
+  :::
+::::
 
-::
+:::::
 
 ## Usage
 

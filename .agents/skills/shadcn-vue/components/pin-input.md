@@ -2,6 +2,8 @@
 
 **Description:** Accessible pin input component with copy paste functionality.
 
+**Links:** [Documentation](https://reka-ui.com/docs/components/pin-input) | [API Reference](https://reka-ui.com/docs/components/pin-input#api-reference)
+
 ---
 
 

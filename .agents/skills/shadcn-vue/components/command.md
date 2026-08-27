@@ -2,6 +2,8 @@
 
 **Description:** Fast, composable, unstyled command menu for Vue.
 
+**Links:** [Documentation](https://reka-ui.com/docs/components/listbox) | [API Reference](https://reka-ui.com/docs/components/listbox#api-reference)
+
 ---
 
 
@@ -10,14 +12,15 @@
 name: CommandDemo
 description: A command component.
 class: "[&_.preview>div]:max-w-[450px]"
+previewClass: h-[24.5rem]
 ---
 ::
 
 ## Installation
 
-::code-tabs
+:::::code-tabs
 
-::tabs-list
+:::tabs-list
 
   ::tabs-trigger{value="cli"}
   CLI
@@ -27,7 +30,7 @@ class: "[&_.preview>div]:max-w-[450px]"
   Manual
   ::
 
-::
+:::
 
 ::tabs-content{value="cli"}
 
@@ -37,8 +40,8 @@ npx shadcn-vue@latest add command
 
 ::
 
-::tabs-content{value="manual"}
-  ::steps
+::::tabs-content{value="manual"}
+  :::steps
     ::step
     Install the following dependencies:
     ::
@@ -54,10 +57,10 @@ npx shadcn-vue@latest add command
     ::step
     Update the import paths to match your project setup.
     ::
-  ::
-::
+  :::
+::::
 
-::
+:::::
 
 ## Usage
 

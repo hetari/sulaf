@@ -2,6 +2,8 @@
 
 **Description:** Pagination with page navigation, next and previous links.
 
+**Links:** [Documentation](https://reka-ui.com/docs/components/pagination) | [API Reference](https://reka-ui.com/docs/components/pagination#api-reference)
+
 ---
 
 
@@ -14,9 +16,9 @@ description: A pagination component.
 
 ## Installation
 
-::code-tabs
+:::::code-tabs
 
-::tabs-list
+:::tabs-list
 
   ::tabs-trigger{value="cli"}
   CLI
@@ -26,7 +28,7 @@ description: A pagination component.
   Manual
   ::
 
-::
+:::
 
 ::tabs-content{value="cli"}
 
@@ -36,8 +38,8 @@ npx shadcn-vue@latest add pagination
 
 ::
 
-::tabs-content{value="manual"}
-  ::steps
+::::tabs-content{value="manual"}
+  :::steps
     ::step
     Install the following dependencies:
     ::
@@ -53,10 +55,10 @@ npx shadcn-vue@latest add pagination
     ::step
     Update the import paths to match your project setup.
     ::
-  ::
-::
+  :::
+::::
 
-::
+:::::
 
 ## Usage
 

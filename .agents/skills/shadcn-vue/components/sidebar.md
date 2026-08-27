@@ -34,9 +34,9 @@ Customizable.
 
 ## Installation
 
-::code-tabs
+:::::code-tabs
 
-::tabs-list
+:::tabs-list
 
   ::tabs-trigger{value="cli"}
   CLI
@@ -46,7 +46,7 @@ Customizable.
   Manual
   ::
 
-::
+:::
 
 ::tabs-content{value="cli"}
 
@@ -56,9 +56,9 @@ npx shadcn-vue@latest add sidebar
 
 ::
 
-::tabs-content{value="manual"}
+::::tabs-content{value="manual"}
 
-  ::steps
+  :::steps
     ::step
     Install this component
     ::
@@ -98,11 +98,11 @@ npx shadcn-vue@latest add sidebar
       }
     }
     ```
-  ::
+  :::
 
-::
+::::
 
-::
+:::::
 
 ## Structure
 
@@ -213,7 +213,7 @@ import {
 
 Let's start with the most basic sidebar A collapsible sidebar with a menu.
 
-::steps
+:::steps
 
   ::step
   Add a `SidebarProvider` and `SidebarTrigger` at the root of your application
@@ -260,7 +260,7 @@ Let's start with the most basic sidebar A collapsible sidebar with a menu.
 
   ```vue showLineNumbers
   <script setup lang="ts">
-  import { Calendar, Home, Inbox, Search, Settings } from 'lucide-vue-next'
+  import { Calendar, Home, Inbox, Search, Settings } from '@lucide/vue'
   import {
     Sidebar,
     SidebarContent,
@@ -348,7 +348,7 @@ Let's start with the most basic sidebar A collapsible sidebar with a menu.
   </figcaption>
 </figure>
 
-::
+:::
 
 ## Components
 

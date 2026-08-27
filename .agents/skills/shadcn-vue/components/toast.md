@@ -2,6 +2,8 @@
 
 **Description:** A succinct message that is displayed temporarily.
 
+**Links:** [Documentation](https://reka-ui.com/docs/components/toast) | [API Reference](https://reka-ui.com/docs/components/toast#api-reference)
+
 ---
 
 

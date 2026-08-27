@@ -95,6 +95,7 @@ The `Field` family is designed for composing accessible forms. A typical field i
 ---
 name: FieldInputDemo
 class: '!mb-4 [&_.preview]:p-6'
+previewClass: h-80
 ---
 ::
 
@@ -131,6 +132,7 @@ class: '!mb-4 [&_.preview]:p-6'
 ---
 name: FieldFieldsetDemo
 class: '!mb-4 [&_.preview]:p-6'
+previewClass: h-80 sm:h-72
 ---
 ::
 
@@ -140,6 +142,7 @@ class: '!mb-4 [&_.preview]:p-6'
 ---
 name: FieldCheckboxDemo
 class: '!mb-4 [&_.preview]:p-6'
+previewClass: h-[26rem] sm:h-96
 ---
 ::
 
@@ -169,6 +172,7 @@ Wrap `Field` components inside `FieldLabel` to create selectable field groups. T
 ---
 name: FieldChoiceCardDemo
 class: '!mb-4 [&_.preview]:p-6'
+previewClass: h-88 sm:h-72
 ---
 ::
 
@@ -180,6 +184,7 @@ Stack `Field` components with `FieldGroup`. Add `FieldSeparator` to divide them.
 ---
 name: FieldGroupDemo
 class: '!mb-4 [&_.preview]:p-6'
+previewClass: h-96 sm:h-88
 ---
 ::
 

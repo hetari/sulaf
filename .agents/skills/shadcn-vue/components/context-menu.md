@@ -2,6 +2,8 @@
 
 **Description:** Displays a menu to the user — such as a set of actions or functions — triggered by a right click.
 
+**Links:** [Documentation](https://reka-ui.com/docs/components/context-menu) | [API Reference](https://reka-ui.com/docs/components/context-menu#api-reference)
+
 ---
 
 
@@ -14,9 +16,9 @@ description: A context menu component.
 
 ## Installation
 
-::code-tabs
+:::::code-tabs
 
-::tabs-list
+:::tabs-list
 
   ::tabs-trigger{value="cli"}
   CLI
@@ -26,7 +28,7 @@ description: A context menu component.
   Manual
   ::
 
-::
+:::
 
 ::tabs-content{value="cli"}
 
@@ -36,8 +38,8 @@ npx shadcn-vue@latest add context-menu
 
 ::
 
-::tabs-content{value="manual"}
-  ::steps
+::::tabs-content{value="manual"}
+  :::steps
     ::step
     Install the following dependencies:
     ::
@@ -53,10 +55,10 @@ npx shadcn-vue@latest add context-menu
     ::step
     Update the import paths to match your project setup.
     ::
-  ::
-::
+  :::
+::::
 
-::
+:::::
 
 ## Usage
 

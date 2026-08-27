@@ -15,9 +15,9 @@ description: A breadcrumb with a collapsible dropdown.
 
 ## Installation
 
-::code-tabs
+:::::code-tabs
 
-::tabs-list
+:::tabs-list
 
   ::tabs-trigger{value="cli"}
   CLI
@@ -27,7 +27,7 @@ description: A breadcrumb with a collapsible dropdown.
   Manual
   ::
 
-::
+:::
 
 ::tabs-content{value="cli"}
 
@@ -37,8 +37,8 @@ npx shadcn-vue@latest add breadcrumb
 
 ::
 
-::tabs-content{value="manual"}
-  ::steps
+::::tabs-content{value="manual"}
+  :::steps
     ::step
     Copy and paste the [GitHub source code](https://github.com/unovue/shadcn-vue/tree/dev/apps/v4/registry/new-york-v4/ui/breadcrumb) into your project.
     ::
@@ -46,10 +46,10 @@ npx shadcn-vue@latest add breadcrumb
     ::step
     Update the import paths to match your project setup.
     ::
-  ::
-::
+  :::
+::::
 
-::
+:::::
 
 ## Usage
 
@@ -102,7 +102,7 @@ name: BreadcrumbCustomSeparatorDemo
 
 ```vue showLineNumbers {2,12-14}
 <script setup lang="ts">
-import { SlashIcon } from 'lucide-vue-next'
+import { SlashIcon } from '@lucide/vue'
 // ...
 </script>
 

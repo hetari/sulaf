@@ -2,6 +2,8 @@
 
 **Description:** A number field allows a user to enter a number and increment or decrement the value using stepper buttons.
 
+**Links:** [Documentation](https://reka-ui.com/docs/components/number-field) | [API Reference](https://reka-ui.com/docs/components/number-field#api-reference)
+
 ---
 
 
@@ -14,9 +16,9 @@ description: An default Number Field
 
 ## Installation
 
-::code-tabs
+:::::code-tabs
 
-::tabs-list
+:::tabs-list
 
   ::tabs-trigger{value="cli"}
   CLI
@@ -26,7 +28,7 @@ description: An default Number Field
   Manual
   ::
 
-::
+:::
 
 ::tabs-content{value="cli"}
 
@@ -36,8 +38,8 @@ npx shadcn-vue@latest add number-field
 
 ::
 
-::tabs-content{value="manual"}
-  ::steps
+::::tabs-content{value="manual"}
+  :::steps
     ::step
     Install the following dependencies:
     ::
@@ -53,10 +55,10 @@ npx shadcn-vue@latest add number-field
     ::step
     Update the import paths to match your project setup.
     ::
-  ::
-::
+  :::
+::::
 
-::
+:::::
 
 ### Disabled
 ::component-preview

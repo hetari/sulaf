@@ -8,15 +8,15 @@
 ::component-preview
 ---
 name: EmptyDemo
-class: '[&_.preview]:p-0'
+previewClass: h-96 p-0
 ---
 ::
 
 ## Installation
 
-::code-tabs
+:::::code-tabs
 
-::tabs-list
+:::tabs-list
 
   ::tabs-trigger{value="cli"}
   CLI
@@ -26,7 +26,7 @@ class: '[&_.preview]:p-0'
   Manual
   ::
 
-::
+:::
 
 ::tabs-content{value="cli"}
 
@@ -36,8 +36,8 @@ npx shadcn-vue@latest add empty
 
 ::
 
-::tabs-content{value="manual"}
-  ::steps
+::::tabs-content{value="manual"}
+  :::steps
     ::step
     Copy and paste the [GitHub source code](https://github.com/unovue/shadcn-vue/tree/dev/apps/v4/registry/new-york-v4/ui/empty) into your project.
     ::
@@ -45,14 +45,16 @@ npx shadcn-vue@latest add empty
     ::step
     Update the import paths to match your project setup.
     ::
-  ::
-::
+  :::
+::::
+
+:::::
 
 ## Usage
 
 ```vue showLineNumbers
 <script setup lang="ts">
-import { FolderOpen } from 'lucide-vue-next'
+import { FolderOpen } from '@lucide/vue'
 import { Button } from '@/registry/default/ui/button'
 import {
   Empty,
@@ -90,6 +92,7 @@ Use the `border` utility class to create an outline empty state.
 ---
 name: EmptyOutlineDemo
 class: '[&_.preview]:p-6 md:[&_.preview]:p-10'
+previewClass: h-96
 ---
 ::
 
@@ -112,6 +115,7 @@ Use the `EmptyMedia` component to display an avatar in the empty state.
 ---
 name: EmptyAvatarDemo
 class: '[&_.preview]:p-0'
+previewClass: h-80
 ---
 ::
 

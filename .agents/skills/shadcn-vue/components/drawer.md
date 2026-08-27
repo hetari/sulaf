@@ -2,6 +2,8 @@
 
 **Description:** A drawer component for mobile devices.
 
+**Links:** [Documentation](https://reka-ui.com/docs/components/drawer) | [API Reference](https://reka-ui.com/docs/components/drawer#api-reference)
+
 ---
 
 
@@ -14,9 +16,9 @@ description: A drawer component.
 
 ## Installation
 
-::code-tabs
+:::::code-tabs
 
-::tabs-list
+:::tabs-list
 
   ::tabs-trigger{value="cli"}
   CLI
@@ -26,7 +28,7 @@ description: A drawer component.
   Manual
   ::
 
-::
+:::
 
 ::tabs-content{value="cli"}
 
@@ -36,8 +38,8 @@ npx shadcn-vue@latest add drawer
 
 ::
 
-::tabs-content{value="manual"}
-  ::steps
+::::tabs-content{value="manual"}
+  :::steps
     ::step
     Install the following dependencies:
     ::
@@ -53,10 +55,10 @@ npx shadcn-vue@latest add drawer
     ::step
     Update the import paths to match your project setup.
     ::
-  ::
-::
+  :::
+::::
 
-::
+:::::
 
 ## Usage
 
@@ -98,6 +100,26 @@ import {
 ```
 
 ## Example
+
+### Scrollable Content
+
+Keep actions visible while the content scrolls.
+
+::component-preview
+---
+name: DrawerScrollableContent
+---
+::
+
+### Sides
+
+Use the `swipe-direction` prop to set the direction the drawer swipes toward to dismiss. The drawer is anchored to the edge it dismisses toward, so `up` opens a drawer along the top edge and `down` opens one along the bottom edge. Available options are `up`, `right`, `down`, and `left`.
+
+::component-preview
+---
+name: DrawerSides
+---
+::
 
 ### Responsive Modal (Dialog & Drawer)
 

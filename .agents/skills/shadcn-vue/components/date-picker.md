@@ -2,6 +2,8 @@
 
 **Description:** A date picker component with range and presets.
 
+**Links:** [Documentation](https://reka-ui.com/docs/components/date-picker) | [API Reference](https://reka-ui.com/docs/components/date-picker#api-reference)
+
 ---
 
 
@@ -23,7 +25,7 @@ See installation instructions for the [Popover](/docs/components/popover) and th
 ```vue showLineNumbers
 <script setup lang="ts">
 import { DateFormatter, getLocalTimeZone, today } from '@internationalized/date'
-import { CalendarIcon } from 'lucide-vue-next'
+import { CalendarIcon } from '@lucide/vue'
 import { ref } from 'vue'
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'

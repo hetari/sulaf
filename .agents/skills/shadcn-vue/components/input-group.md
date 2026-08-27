@@ -9,14 +9,15 @@
 ---
 name: InputGroupDemo
 class: '[&_.preview]:p-4'
+previewClass: h-[26rem]
 ---
 ::
 
 ## Installation
 
-::code-tabs
+:::::code-tabs
 
-::tabs-list
+:::tabs-list
 
   ::tabs-trigger{value="cli"}
   CLI
@@ -26,7 +27,7 @@ class: '[&_.preview]:p-4'
   Manual
   ::
 
-::
+:::
 
 ::tabs-content{value="cli"}
 
@@ -36,8 +37,8 @@ npx shadcn-vue@latest add input-group
 
 ::
 
-::tabs-content{value="manual"}
-  ::steps
+::::tabs-content{value="manual"}
+  :::steps
     ::step
     Install the following dependencies:
     ::
@@ -53,10 +54,10 @@ npx shadcn-vue@latest add input-group
     ::step
     Update the import paths to match your project setup.
     ::
-  ::
-::
+  :::
+::::
 
-::
+:::::
 
 ## Usage
 
@@ -104,6 +105,7 @@ Display additional text information alongside inputs.
 ---
 name: InputGroupWithText
 class: '[&_.preview]:p-4'
+previewClass: h-80
 ---
 ::
 
@@ -137,6 +139,7 @@ Input groups also work with textarea components. Use `block-start` or `block-end
 ---
 name: InputGroupWithTextarea
 class: '[&_.preview]:p-4'
+previewClass: h-88
 ---
 ::
 

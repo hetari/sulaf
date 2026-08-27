@@ -10,14 +10,15 @@
 name: AlertDemo
 title: An alert with an icon, title and description.
 description: An alert with an icon, title and description.
+previewClass: h-auto sm:h-[22rem] p-6
 ---
 ::
 
 ## Installation
 
-::code-tabs
+:::::code-tabs
 
-::tabs-list
+:::tabs-list
 
   ::tabs-trigger{value="cli"}
   CLI
@@ -27,7 +28,7 @@ description: An alert with an icon, title and description.
   Manual
   ::
 
-::
+:::
 
 ::tabs-content{value="cli"}
 
@@ -37,8 +38,8 @@ npx shadcn-vue@latest add alert
 
 ::
 
-::tabs-content{value="manual"}
-  ::steps
+::::tabs-content{value="manual"}
+  :::steps
     ::step
     Copy and paste the [GitHub source code](https://github.com/unovue/shadcn-vue/tree/dev/apps/v4/registry/new-york-v4/ui/alert) into your project.
     ::
@@ -46,10 +47,10 @@ npx shadcn-vue@latest add alert
     ::step
     Update the import paths to match your project setup.
     ::
-  ::
-::
+  :::
+::::
 
-::
+:::::
 
 ## Usage
 

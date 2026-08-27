@@ -2,6 +2,8 @@
 
 **Description:** Displays a menu to the user — such as a set of actions or functions — triggered by a button.
 
+**Links:** [Documentation](https://reka-ui.com/docs/components/dropdown-menu) | [API Reference](https://reka-ui.com/docs/components/dropdown-menu#api-reference)
+
 ---
 
 
@@ -14,9 +16,9 @@ description: A dropdown menu with actions.
 
 ## Installation
 
-::code-tabs
+:::::code-tabs
 
-::tabs-list
+:::tabs-list
 
   ::tabs-trigger{value="cli"}
   CLI
@@ -26,7 +28,7 @@ description: A dropdown menu with actions.
   Manual
   ::
 
-::
+:::
 
 ::tabs-content{value="cli"}
 
@@ -36,8 +38,8 @@ npx shadcn-vue@latest add dropdown-menu
 
 ::
 
-::tabs-content{value="manual"}
-  ::steps
+::::tabs-content{value="manual"}
+  :::steps
     ::step
     Install the following dependencies:
     ::
@@ -53,10 +55,10 @@ npx shadcn-vue@latest add dropdown-menu
     ::step
     Update the import paths to match your project setup.
     ::
-  ::
-::
+  :::
+::::
 
-::
+:::::
 
 ## Usage
 

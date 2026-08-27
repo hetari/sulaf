@@ -2,6 +2,8 @@
 
 **Description:** Tag inputs render tags inside an input, followed by an actual text input.
 
+**Links:** [Documentation](https://reka-ui.com/docs/components/tags-input) | [API Reference](https://reka-ui.com/docs/components/tags-input#api-reference)
+
 ---
 
 
@@ -13,9 +15,9 @@ name: TagsInputDemo
 
 ## Installation
 
-::code-tabs
+:::::code-tabs
 
-::tabs-list
+:::tabs-list
 
   ::tabs-trigger{value="cli"}
   CLI
@@ -25,7 +27,7 @@ name: TagsInputDemo
   Manual
   ::
 
-::
+:::
 
 ::tabs-content{value="cli"}
 
@@ -35,8 +37,8 @@ npx shadcn-vue@latest add tags-input
 
 ::
 
-::tabs-content{value="manual"}
-  ::steps
+::::tabs-content{value="manual"}
+  :::steps
     ::step
     Install the following dependencies:
     ::
@@ -52,10 +54,10 @@ npx shadcn-vue@latest add tags-input
     ::step
     Update the import paths to match your project setup.
     ::
-  ::
-::
+  :::
+::::
 
-::
+:::::
 
 ## Examples
 

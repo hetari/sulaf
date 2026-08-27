@@ -47,9 +47,9 @@ We do not wrap Unovis. This means you're not locked into an abstraction. When a 
 
 ## Installation
 
-::code-tabs
+:::::code-tabs
 
-::tabs-list
+:::tabs-list
 
   ::tabs-trigger{value="cli"}
   CLI
@@ -59,7 +59,7 @@ We do not wrap Unovis. This means you're not locked into an abstraction. When a 
   Manual
   ::
 
-::
+:::
 
 ::tabs-content{value="cli"}
 
@@ -69,9 +69,9 @@ npx shadcn-vue@latest add chart
 
 ::
 
-::tabs-content{value="manual"}
+::::tabs-content{value="manual"}
 
-  ::steps
+  :::steps
     ::step
     Install the following dependencies
     ::
@@ -111,11 +111,11 @@ npx shadcn-vue@latest add chart
       }
     }
     ```
-  ::
+  :::
 
-::
+::::
 
-::
+:::::
 
 ## Usage
 
@@ -179,7 +179,7 @@ const chartConfig = {
 
 Let's build your first chart. We'll build a bar chart, add a grid, axis, tooltip and legend.
 
-::steps
+:::steps
 
   ::step
   Start by defining your data
@@ -235,13 +235,13 @@ Let's build your first chart. We'll build a bar chart, add a grid, axis, tooltip
   ---
   ::
 
-::
+:::
 
 ### Add an Axis
 
 To add axes to the chart, we use the `VisAxis` component.
 
-::steps
+:::steps
 
   ::step
   Import the `VisAxis` component
@@ -288,13 +288,13 @@ To add axes to the chart, we use the `VisAxis` component.
   ---
   ::
 
-::
+:::
 
 ### Add Tooltip
 
 To add a tooltip, we'll use the custom `ChartTooltip` and `ChartTooltipContent` components from `chart`.
 
-::steps
+:::steps
 
   ::step
   Import the `ChartTooltip` and `ChartTooltipContent` components
@@ -323,13 +323,13 @@ To add a tooltip, we'll use the custom `ChartTooltip` and `ChartTooltipContent` 
 
   Hover to see the tooltips. Easy, right? Two components, and we've got a beautiful tooltip.
 
-::
+:::
 
 ### Add Legend
 
 We'll do the same for the legend. We'll use the `ChartLegend` and `ChartLegendContent` components from `chart`.
 
-::steps
+:::steps
 
   ::step
   Import the `ChartLegendContent` components.
@@ -358,7 +358,7 @@ We'll do the same for the legend. We'll use the `ChartLegend` and `ChartLegendCo
   class: '[&_.preview]:min-h-[250px] [&_.preview]:p-4'
   ---
   ::
-::
+:::
 
 Done. You've built your first chart! What's next?
 
@@ -377,7 +377,7 @@ This allows you to share config and color tokens between charts. It can also wor
 ```vue showLineNumbers
 <script setup lang="ts">
 import type { ChartConfig } from '@/components/ui/chart'
-import { Monitor } from 'lucide-vue-next'
+import { Monitor } from '@lucide/vue'
 
 const chartConfig = {
   desktop: {
@@ -401,7 +401,7 @@ Charts has built-in support for theming. You can use css variables (recommended)
 
 ### CSS Variables
 
-::steps
+:::steps
 
   ::step
   Define your colors in your css file
@@ -438,7 +438,7 @@ Charts has built-in support for theming. You can use css variables (recommended)
   } satisfies ChartConfig
   ```
 
-::
+:::
 
 ### hex, hsl or oklch
 
