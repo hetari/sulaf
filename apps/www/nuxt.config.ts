@@ -7,7 +7,7 @@ import tailwindcss from '@tailwindcss/vite'
 // This avoids reading the filesystem at request time, which fails in serverless.
 function computeDocsVersion(): string {
   try {
-    const contentDir = join(__dirname, 'content')
+    const contentDir = join(import.meta.dirname, 'content')
     const files = getAllMdFiles(contentDir)
     const hash = createHash('md5')
     for (const file of files.sort()) {
