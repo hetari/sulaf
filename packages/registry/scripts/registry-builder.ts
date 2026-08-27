@@ -162,7 +162,11 @@ async function main(rootDir: string): Promise<void> {
     ],
   }
 
-  await fs.writeFile(join(outBase, 'registry.json'), JSON.stringify(registryJson, null, 2), 'utf-8')
+  await fs.writeFile(
+    join(outBase, 'registry.json'),
+    `${JSON.stringify(registryJson, null, 2)}\n`,
+    'utf-8',
+  )
 
   // eslint-disable-next-line no-console
   console.info('[registry] registry assets generated at', outBase)

@@ -34,12 +34,9 @@ function validateRegistryItem(item: unknown, label: string): boolean {
 function primaryType(
   files: CollectedFile[],
 ): 'registry:ui' | 'registry:component' | 'registry:hook' {
-  return (
-    files.find(f => f.type === 'registry:ui')?.type ??
-    files.find(f => f.type === 'registry:hook')?.type ??
-    files.find(f => f.type === 'registry:component')?.type ??
-    'registry:component'
-  )
+  if (files.some(f => f.type === 'registry:ui')) return 'registry:ui'
+  if (files.some(f => f.type === 'registry:hook')) return 'registry:hook'
+  return 'registry:component'
 }
 
 // ---------------------------------------------------------------------------
@@ -138,7 +135,7 @@ export function emitRegistry(
     }
 
     if (validateRegistryItem(itemJson, `component-${slug}`)) {
-      emitted.push({ path: `${slug}.json`, content: JSON.stringify(itemJson, null, 2) })
+      emitted.push({ path: `${slug}.json`, content: `${JSON.stringify(itemJson, null, 2)}\n` })
     } else {
       // eslint-disable-next-line no-console
       console.error(`Skipping invalid component: ${slug}`)
@@ -171,7 +168,10 @@ export function emitRegistry(
     }
 
     if (validateRegistryItem(itemJson, `example-${name}`)) {
-      emitted.push({ path: `examples/${name}.json`, content: JSON.stringify(itemJson, null, 2) })
+      emitted.push({
+        path: `examples/${name}.json`,
+        content: `${JSON.stringify(itemJson, null, 2)}\n`,
+      })
     } else {
       // eslint-disable-next-line no-console
       console.error(`Skipping invalid example: ${name}`)
@@ -234,7 +234,7 @@ export function bundleAll(
   }
 
   if (validateRegistryItem(allJson, 'all')) {
-    return { path: 'all.json', content: JSON.stringify(allJson, null, 2) }
+    return { path: 'all.json', content: `${JSON.stringify(allJson, null, 2)}\n` }
   }
   // eslint-disable-next-line no-console
   console.error('Skipping invalid all.json')

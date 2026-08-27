@@ -20,6 +20,8 @@ export interface CollectedFile {
   slug: string
   /** Source directory name the file was collected from (e.g. `components`). */
   srcDir: string
+  /** Optional target path override for installation. */
+  target?: string
 }
 
 /**

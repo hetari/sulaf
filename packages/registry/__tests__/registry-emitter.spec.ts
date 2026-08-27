@@ -49,7 +49,7 @@ describe('emitRegistry — JSON structure', () => {
     const result = emitRegistry(components, [], resolvedDeps, cfg)
 
     expect(result).toHaveLength(1)
-    expect(result[0].path).toBe('button.json')
+    expect(result[0]!.path).toBe('button.json')
   })
 
   it('serialized JSON contains expected top-level fields', () => {
@@ -59,7 +59,7 @@ describe('emitRegistry — JSON structure', () => {
     ])
     const result = emitRegistry(components, [], resolvedDeps, cfg)
 
-    const parsed = JSON.parse(result[0].content)
+    const parsed = JSON.parse(result[0]!.content)
     expect(parsed.name).toBe('button')
     expect(parsed.type).toBe('registry:ui')
     expect(parsed.title).toBe('Button')
@@ -85,7 +85,7 @@ describe('emitRegistry — JSON structure', () => {
     ])
     const resolvedDeps = new Map([['phone-input', makeResolvedDeps()]])
     const result = emitRegistry(components, [], resolvedDeps, cfg)
-    const parsed = JSON.parse(result[0].content)
+    const parsed = JSON.parse(result[0]!.content)
     expect(parsed.title).toBe('Phone Input')
   })
 
@@ -101,7 +101,7 @@ describe('emitRegistry — JSON structure', () => {
     ])
     const resolvedDeps = new Map([['mixed', makeResolvedDeps()]])
     const result = emitRegistry(components, [], resolvedDeps, cfg)
-    const parsed = JSON.parse(result[0].content)
+    const parsed = JSON.parse(result[0]!.content)
     expect(parsed.type).toBe('registry:ui')
   })
 })
@@ -171,14 +171,14 @@ describe('emitRegistry — example items', () => {
     const resolvedDeps = new Map([['example-ButtonDemo', makeResolvedDeps()]])
     const result = emitRegistry(new Map(), [example], resolvedDeps, cfg)
     expect(result).toHaveLength(1)
-    expect(result[0].path).toBe('examples/ButtonDemo.json')
+    expect(result[0]!.path).toBe('examples/ButtonDemo.json')
   })
 
   it('emitted example has registry:block type', () => {
     const example = makeExampleFile()
     const resolvedDeps = new Map([['example-ButtonDemo', makeResolvedDeps()]])
     const result = emitRegistry(new Map(), [example], resolvedDeps, cfg)
-    const parsed = JSON.parse(result[0].content)
+    const parsed = JSON.parse(result[0]!.content)
     expect(parsed.type).toBe('registry:block')
     expect(parsed.name).toBe('example-ButtonDemo')
   })
