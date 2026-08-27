@@ -9,10 +9,10 @@
   ],
   "type": "module",
   "scripts": {
-    "fmt": "oxfmt",
-    "fmt:check": "oxfmt --check",
-    "lint": "oxlint",
-    "lint:fix": "oxlint --fix",
+    "fmt": "oxfmt --no-error-on-unmatched-pattern",
+    "fmt:check": "oxfmt --check --no-error-on-unmatched-pattern",
+    "lint": "oxlint --no-error-on-unmatched-pattern",
+    "lint:fix": "oxlint --fix --no-error-on-unmatched-pattern",
     "check": "bun fmt && bun lint",
     "fix": "bun fmt && bun lint:fix",
     "prepare": "husky",
@@ -52,7 +52,10 @@
       "bun run registry:build",
       "git add apps/www/public/r"
     ],
-    "*.{js,ts,vue}": "bun check"
+    "*.{js,ts,vue}": [
+      "bun fmt",
+      "bun lint"
+    ]
   },
   "packageManager": "bun@latest",
   "dependencies": {
