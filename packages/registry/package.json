@@ -14,7 +14,7 @@
   },
   "devDependencies": {
     "@types/bun": "latest",
-    "shadcn-vue": "^2.4.3",
+    "shadcn-vue": "^2.8.2",
     "ts-morph": "^27.0.2"
   },
   "peerDependencies": {
@@ -22,12 +22,12 @@
   },
   "dependencies": {
     "@sulaf/ui": "workspace:*",
-    "@vueuse/core": "^14.2.1",
+    "@vueuse/core": "^14.4.0",
     "class-variance-authority": "^0.7.1",
-    "libphonenumber-js": "^1.12.42",
+    "libphonenumber-js": "^1.13.12",
     "lucide-vue-next": "^1.0.0",
-    "motion-v": "^2.2.0",
-    "reka-ui": "2.9.2",
-    "vue": "3.5.31"
+    "motion-v": "^2.4.0",
+    "reka-ui": "2.10.4",
+    "vue": "3.5.42"
   }
 }
