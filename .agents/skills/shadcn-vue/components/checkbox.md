@@ -2,6 +2,8 @@
 
 **Description:** A control that allows the user to toggle between checked and not checked.
 
+**Links:** [Documentation](https://reka-ui.com/docs/components/checkbox) | [API Reference](https://reka-ui.com/docs/components/checkbox#api-reference)
+
 ---
 
 
@@ -9,14 +11,15 @@
 ---
 name: CheckboxDemo
 description: A checkbox
+previewClass: h-88 sm:h-80
 ---
 ::
 
 ## Installation
 
-::code-tabs
+:::::code-tabs
 
-::tabs-list
+:::tabs-list
 
   ::tabs-trigger{value="cli"}
   CLI
@@ -26,7 +29,7 @@ description: A checkbox
   Manual
   ::
 
-::
+:::
 
 ::tabs-content{value="cli"}
 
@@ -36,8 +39,8 @@ npx shadcn-vue@latest add checkbox
 
 ::
 
-::tabs-content{value="manual"}
-  ::steps
+::::tabs-content{value="manual"}
+  :::steps
     ::step
     Install the following dependencies:
     ::
@@ -53,10 +56,10 @@ npx shadcn-vue@latest add checkbox
     ::step
     Update the import paths to match your project setup.
     ::
-  ::
-::
+  :::
+::::
 
-::
+:::::
 
 ## Usage
 

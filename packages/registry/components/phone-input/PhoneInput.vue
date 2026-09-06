@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { computed, useId, type HTMLAttributes, type Ref } from 'vue'
+import { computed, toRefs, useId, type HTMLAttributes, type Ref } from 'vue'
 import type { CountryCode } from 'libphonenumber-js'
-import { toRefs, useNavigatorLanguage } from '@vueuse/core'
+import { useNavigatorLanguage } from '@vueuse/core'
 import { InputGroup } from '@sulaf/ui/components/input-group'
 import { cn } from '@sulaf/ui/lib/utils'
 import { providePhoneInputContext } from './context'

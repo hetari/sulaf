@@ -2,6 +2,8 @@
 
 **Description:** A set of checkable buttons—known as radio buttons—where no more than one of the buttons can be checked at a time.
 
+**Links:** [Documentation](https://reka-ui.com/docs/components/radio-group) | [API Reference](https://reka-ui.com/docs/components/radio-group#api-reference)
+
 ---
 
 
@@ -14,9 +16,9 @@ description: A radio group component.
 
 ## Installation
 
-::code-tabs
+:::::code-tabs
 
-::tabs-list
+:::tabs-list
 
   ::tabs-trigger{value="cli"}
   CLI
@@ -26,7 +28,7 @@ description: A radio group component.
   Manual
   ::
 
-::
+:::
 
 ::tabs-content{value="cli"}
 
@@ -36,8 +38,8 @@ npx shadcn-vue@latest add radio-group
 
 ::
 
-::tabs-content{value="manual"}
-  ::steps
+::::tabs-content{value="manual"}
+  :::steps
     ::step
     Install the following dependencies:
     ::
@@ -53,10 +55,10 @@ npx shadcn-vue@latest add radio-group
     ::step
     Update the import paths to match your project setup.
     ::
-  ::
-::
+  :::
+::::
 
-::
+:::::
 
 ## Usage
 

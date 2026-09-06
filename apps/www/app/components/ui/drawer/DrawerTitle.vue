@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import type { DrawerTitleProps } from 'vaul-vue'
+import type { DrawerTitleProps } from 'reka-ui'
 import type { HTMLAttributes } from 'vue'
 import { reactiveOmit } from '@vueuse/core'
-import { DrawerTitle } from 'vaul-vue'
+import { DrawerTitle } from 'reka-ui'
 import { cn } from '@/lib/utils'
 
 const props = defineProps<DrawerTitleProps & { class?: HTMLAttributes['class'] }>()
@@ -14,7 +14,7 @@ const delegatedProps = reactiveOmit(props, 'class')
   <DrawerTitle
     data-slot="drawer-title"
     v-bind="delegatedProps"
-    :class="cn('font-semibold text-foreground', props.class)"
+    :class="cn('text-foreground font-semibold', props.class)"
   >
     <slot />
   </DrawerTitle>

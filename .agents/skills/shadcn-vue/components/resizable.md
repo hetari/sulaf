@@ -2,6 +2,8 @@
 
 **Description:** Accessible resizable panel groups and layouts with keyboard support.
 
+**Links:** [Documentation](https://reka-ui.com/docs/components/splitter) | [API Reference](https://reka-ui.com/docs/components/splitter#api-reference)
+
 ---
 
 
@@ -9,14 +11,15 @@
 ---
 name: ResizableDemo
 description: A resizable component.
+previewClass: h-80
 ---
 ::
 
 ## Installation
 
-::code-tabs
+:::::code-tabs
 
-::tabs-list
+:::tabs-list
 
   ::tabs-trigger{value="cli"}
   CLI
@@ -26,7 +29,7 @@ description: A resizable component.
   Manual
   ::
 
-::
+:::
 
 ::tabs-content{value="cli"}
 
@@ -36,8 +39,8 @@ npx shadcn-vue@latest add resizable
 
 ::
 
-::tabs-content{value="manual"}
-  ::steps
+::::tabs-content{value="manual"}
+  :::steps
     ::step
     Install the following dependencies:
     ::
@@ -53,10 +56,10 @@ npx shadcn-vue@latest add resizable
     ::step
     Update the import paths to match your project setup.
     ::
-  ::
-::
+  :::
+::::
 
-::
+:::::
 
 ## Usage
 

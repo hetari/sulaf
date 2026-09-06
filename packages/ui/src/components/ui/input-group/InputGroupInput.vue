@@ -10,7 +10,7 @@ const props = defineProps<{
 
 <template>
   <Input
-    data-slot="autocomplete-input"
+    data-slot="input-group-control"
     :class="
       cn(
         'flex-1 rounded-none border-0 bg-transparent shadow-none focus-visible:ring-0 dark:bg-transparent',

@@ -11,10 +11,10 @@ export default defineConfig({
   plugins: [VueRouter(), vue(), vueDevTools(), tailwindcss()],
   resolve: {
     alias: {
-      '@/lib/utils': path.resolve(__dirname, '../../packages/ui/src/lib/utils.ts'),
-      '@/components/ui': path.resolve(__dirname, '../../packages/ui/src/components/ui'),
-      '@/hooks': path.resolve(__dirname, '../../packages/registry/hooks'),
-      '@': path.resolve(__dirname, './src'),
+      '@/lib/utils': path.resolve(import.meta.dirname, '../../packages/ui/src/lib/utils.ts'),
+      '@/components/ui': path.resolve(import.meta.dirname, '../../packages/ui/src/components/ui'),
+      '@/hooks': path.resolve(import.meta.dirname, '../../packages/registry/hooks'),
+      '@': path.resolve(import.meta.dirname, './src'),
     },
   },
 })

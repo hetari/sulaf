@@ -2,6 +2,8 @@
 
 Quick reference with copy-paste examples for common component patterns.
 
+All examples follow the [Critical Rules](../SKILL.md#critical-rules): `FieldGroup`+`Field` for forms, `gap-*` instead of `space-y-*`, `data-icon` for icons, semantic tokens for colors.
+
 ---
 
 ## Form Components
@@ -14,7 +16,7 @@ import { ref } from 'vue'
 import { z } from 'zod'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
+import { Field, FieldGroup, FieldLabel, FieldError } from '@/components/ui/field'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { toast } from 'vue-sonner'
 
@@ -52,28 +54,30 @@ async function handleSubmit() {
       <CardTitle>Login</CardTitle>
       <CardDescription>Enter your credentials to access your account</CardDescription>
     </CardHeader>
-    <CardContent class="space-y-4">
-      <div class="space-y-2">
-        <Label for="email">Email</Label>
-        <Input
-          id="email"
-          v-model="email"
-          type="email"
-          placeholder="you@example.com"
-          :class="{ 'border-destructive': errors.email }"
-        />
-        <p v-if="errors.email" class="text-sm text-destructive">{{ errors.email }}</p>
-      </div>
-      <div class="space-y-2">
-        <Label for="password">Password</Label>
-        <Input
-          id="password"
-          v-model="password"
-          type="password"
-          :class="{ 'border-destructive': errors.password }"
-        />
-        <p v-if="errors.password" class="text-sm text-destructive">{{ errors.password }}</p>
-      </div>
+    <CardContent>
+      <FieldGroup>
+        <Field :data-invalid="!!errors.email">
+          <FieldLabel for="email">Email</FieldLabel>
+          <Input
+            id="email"
+            v-model="email"
+            type="email"
+            placeholder="you@example.com"
+            :aria-invalid="!!errors.email"
+          />
+          <FieldError v-if="errors.email">{{ errors.email }}</FieldError>
+        </Field>
+        <Field :data-invalid="!!errors.password">
+          <FieldLabel for="password">Password</FieldLabel>
+          <Input
+            id="password"
+            v-model="password"
+            type="password"
+            :aria-invalid="!!errors.password"
+          />
+          <FieldError v-if="errors.password">{{ errors.password }}</FieldError>
+        </Field>
+      </FieldGroup>
     </CardContent>
     <CardFooter>
       <Button @click="handleSubmit" class="w-full">Sign In</Button>
@@ -128,7 +132,7 @@ function onSubmit(values: z.infer<typeof contactSchema>) {
 
 ```vue
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { h, ref } from 'vue'
 import {
   useVueTable,
   getCoreRowModel,
@@ -217,7 +221,7 @@ const table = useVueTable({
 </script>
 
 <template>
-  <div class="space-y-4">
+  <div class="flex flex-col gap-4">
     <Input
       v-model="globalFilter"
       placeholder="Search users..."
@@ -286,6 +290,7 @@ const table = useVueTable({
 ```vue
 <script setup lang="ts">
 import { ref } from 'vue'
+import { HomeIcon, ChartIcon, UserIcon, SettingsIcon } from '@lucide/vue'
 import {
   Sidebar,
   SidebarContent,
@@ -303,15 +308,15 @@ const menuItems = [
   {
     title: 'Dashboard',
     items: [
-      { label: 'Overview', icon: 'home', href: '/' },
-      { label: 'Analytics', icon: 'chart', href: '/analytics' }
+      { label: 'Overview', icon: HomeIcon, href: '/' },
+      { label: 'Analytics', icon: ChartIcon, href: '/analytics' }
     ]
   },
   {
     title: 'Settings',
     items: [
-      { label: 'Profile', icon: 'user', href: '/profile' },
-      { label: 'Preferences', icon: 'settings', href: '/preferences' }
+      { label: 'Profile', icon: UserIcon, href: '/profile' },
+      { label: 'Preferences', icon: SettingsIcon, href: '/preferences' }
     ]
   }
 ]
@@ -327,7 +332,8 @@ const menuItems = [
             <SidebarMenu>
               <SidebarMenuItem v-for="item in group.items" :key="item.label">
                 <SidebarMenuButton :href="item.href">
-                  {{ item.label }}
+                  <component :is="item.icon" />
+                  <span>{{ item.label }}</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
             </SidebarMenu>
@@ -420,21 +426,21 @@ const data = [
 const config = {
   revenue: {
     label: 'Revenue',
-    color: 'hsl(var(--chart-1))'
+    color: 'var(--chart-1)'
   },
   expenses: {
     label: 'Expenses',
-    color: 'hsl(var(--chart-2))'
+    color: 'var(--chart-2)'
   },
   profit: {
     label: 'Profit',
-    color: 'hsl(var(--chart-3))'
+    color: 'var(--chart-3)'
   }
 }
 </script>
 
 <template>
-  <div class="space-y-4">
+  <div class="flex flex-col gap-4">
     <h3 class="text-lg font-semibold">Financial Overview</h3>
     <LineChart
       :data="data"

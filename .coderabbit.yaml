@@ -54,11 +54,14 @@ reviews:
         - Ensure Tailwind classes follow logical directions if applicable.
         - Verify use of `class-variance-authority` and `tailwind-merge` for styling.
 
-  # Ignore build artifacts and lock files across the monorepo
+  # Ignore build artifacts, lock files, and shadcn-vue components
   path_filters:
-    - '!**/*.json'
+    - '!apps/www/public/r/**'
     - '!**/node_modules/**'
     - '!**/.nuxt/**'
     - '!**/.output/**'
     - '!**/dist/**'
     - '!bun.lock'
+    - '!packages/ui/src/components/ui/**'
+    - '!apps/www/app/components/ui/**'
+    - '!.agents/**'

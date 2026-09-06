@@ -2,6 +2,8 @@
 
 **Description:** A set of steps that are used to indicate progress through a multi-step process.
 
+**Links:** [Documentation](https://reka-ui.com/docs/components/stepper) | [API Reference](https://reka-ui.com/docs/components/stepper#api-reference)
+
 ---
 
 
@@ -14,9 +16,9 @@ description: A stepper component.
 
 ## Installation
 
-::code-tabs
+:::::code-tabs
 
-::tabs-list
+:::tabs-list
 
   ::tabs-trigger{value="cli"}
   CLI
@@ -26,7 +28,7 @@ description: A stepper component.
   Manual
   ::
 
-::
+:::
 
 ::tabs-content{value="cli"}
 
@@ -36,8 +38,8 @@ npx shadcn-vue@latest add stepper
 
 ::
 
-::tabs-content{value="manual"}
-  ::steps
+::::tabs-content{value="manual"}
+  :::steps
     ::step
     Install the following dependencies:
     ::
@@ -53,10 +55,10 @@ npx shadcn-vue@latest add stepper
     ::step
     Update the import paths to match your project setup.
     ::
-  ::
-::
+  :::
+::::
 
-::
+:::::
 
 ## Usage
 
@@ -111,6 +113,7 @@ description: A horizental stepper component.
 ---
 name: StepperVertical
 description: A vertical stepper component.
+previewClass: h-96
 ---
 ::
 
@@ -120,5 +123,6 @@ description: A vertical stepper component.
 ---
 name: StepperForm
 description: A form stepper component.
+previewClass: h-[28rem]
 ---
 ::

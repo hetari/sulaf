@@ -2,6 +2,8 @@
 
 **Description:** A set of layered sections of content—known as tab panels—that are displayed one at a time.
 
+**Links:** [Documentation](https://reka-ui.com/docs/components/tabs) | [API Reference](https://reka-ui.com/docs/components/tabs#api-reference)
+
 ---
 
 
@@ -9,14 +11,15 @@
 ---
 name: TabsDemo
 description: A tabs component with account and password tabs.
+previewClass: h-[32rem] sm:h-[30rem]
 ---
 ::
 
 ## Installation
 
-::code-tabs
+:::::code-tabs
 
-::tabs-list
+:::tabs-list
 
   ::tabs-trigger{value="cli"}
   CLI
@@ -26,7 +29,7 @@ description: A tabs component with account and password tabs.
   Manual
   ::
 
-::
+:::
 
 ::tabs-content{value="cli"}
 
@@ -36,8 +39,8 @@ npx shadcn-vue@latest add tabs
 
 ::
 
-::tabs-content{value="manual"}
-  ::steps
+::::tabs-content{value="manual"}
+  :::steps
     ::step
     Install the following dependencies:
     ::
@@ -53,10 +56,10 @@ npx shadcn-vue@latest add tabs
     ::step
     Update the import paths to match your project setup.
     ::
-  ::
-::
+  :::
+::::
 
-::
+:::::
 
 ## Usage
 

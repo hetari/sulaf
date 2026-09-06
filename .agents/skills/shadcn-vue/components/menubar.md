@@ -2,6 +2,8 @@
 
 **Description:** A visually persistent menu common in desktop applications that provides quick access to a consistent set of commands.
 
+**Links:** [Documentation](https://reka-ui.com/docs/components/menubar) | [API Reference](https://reka-ui.com/docs/components/menubar#api-reference)
+
 ---
 
 
@@ -14,9 +16,9 @@ description: A menubar component.
 
 ## Installation
 
-::code-tabs
+:::::code-tabs
 
-::tabs-list
+:::tabs-list
 
   ::tabs-trigger{value="cli"}
   CLI
@@ -26,7 +28,7 @@ description: A menubar component.
   Manual
   ::
 
-::
+:::
 
 ::tabs-content{value="cli"}
 
@@ -36,8 +38,8 @@ npx shadcn-vue@latest add menubar
 
 ::
 
-::tabs-content{value="manual"}
-  ::steps
+::::tabs-content{value="manual"}
+  :::steps
     ::step
     Install the following dependencies:
     ::
@@ -53,10 +55,10 @@ npx shadcn-vue@latest add menubar
     ::step
     Update the import paths to match your project setup.
     ::
-  ::
-::
+  :::
+::::
 
-::
+:::::
 
 ## Usage
 

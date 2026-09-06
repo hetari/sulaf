@@ -2,6 +2,8 @@
 
 **Description:** Displays a list of options for the user to pick from—triggered by a button.
 
+**Links:** [Documentation](https://reka-ui.com/docs/components/select) | [API Reference](https://reka-ui.com/docs/components/select#api-reference)
+
 ---
 
 
@@ -14,9 +16,9 @@ description: A select component.
 
 ## Installation
 
-::code-tabs
+:::::code-tabs
 
-::tabs-list
+:::tabs-list
 
   ::tabs-trigger{value="cli"}
   CLI
@@ -26,7 +28,7 @@ description: A select component.
   Manual
   ::
 
-::
+:::
 
 ::tabs-content{value="cli"}
 
@@ -36,8 +38,8 @@ npx shadcn-vue@latest add select
 
 ::
 
-::tabs-content{value="manual"}
-  ::steps
+::::tabs-content{value="manual"}
+  :::steps
     ::step
     Install the following dependencies:
     ::
@@ -53,10 +55,10 @@ npx shadcn-vue@latest add select
     ::step
     Update the import paths to match your project setup.
     ::
-  ::
-::
+  :::
+::::
 
-::
+:::::
 
 ## Usage
 

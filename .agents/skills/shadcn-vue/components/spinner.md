@@ -14,9 +14,9 @@ class: '[&_.preview]:p-6'
 
 ## Installation
 
-::code-tabs
+:::::code-tabs
 
-::tabs-list
+:::tabs-list
 
   ::tabs-trigger{value="cli"}
   CLI
@@ -26,7 +26,7 @@ class: '[&_.preview]:p-6'
   Manual
   ::
 
-::
+:::
 
 ::tabs-content{value="cli"}
 
@@ -36,8 +36,8 @@ npx shadcn-vue@latest add spinner
 
 ::
 
-::tabs-content{value="manual"}
-  ::steps
+::::tabs-content{value="manual"}
+  :::steps
     ::step
     Install the following dependencies:
     ::
@@ -53,10 +53,10 @@ npx shadcn-vue@latest add spinner
     ::step
     Update the import paths to match your project setup.
     ::
-  ::
-::
+  :::
+::::
 
-::
+:::::
 
 ## Usage
 
@@ -139,6 +139,7 @@ You can place a spinner inside an empty state.
 ::component-preview
 ---
 name: SpinnerEmptyDemo
+previewClass: h-96
 ---
 ::
 

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { ListboxFilterProps } from 'reka-ui'
 import type { HTMLAttributes } from 'vue'
+import { Search } from '@lucide/vue'
 import { reactiveOmit } from '@vueuse/core'
-import { Search } from 'lucide-vue-next'
 import { ListboxFilter, useForwardProps } from 'reka-ui'
 import { cn } from '@/lib/utils'
 import { useCommand } from '.'
@@ -21,26 +21,7 @@ const delegatedProps = reactiveOmit(props, 'class')
 
 const forwardedProps = useForwardProps(delegatedProps)
 
-const modelValue = defineModel<string>()
-
 const { filterState } = useCommand()
-
-watch(
-  modelValue,
-  val => {
-    if (val !== undefined) {
-      filterState.search = val
-    }
-  },
-  { immediate: true },
-)
-
-watch(
-  () => filterState.search,
-  val => {
-    modelValue.value = val
-  },
-)
 </script>
 
 <template>
@@ -53,7 +34,7 @@ watch(
       auto-focus
       :class="
         cn(
-          'flex h-10 w-full rounded-md bg-transparent py-3 text-sm outline-hidden placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50',
+          'placeholder:text-muted-foreground flex h-10 w-full rounded-md bg-transparent py-3 text-sm outline-hidden disabled:cursor-not-allowed disabled:opacity-50',
           props.class,
         )
       "

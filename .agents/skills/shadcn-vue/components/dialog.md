@@ -2,6 +2,8 @@
 
 **Description:** A window overlaid on either the primary window or another dialog window, rendering the content underneath inert.
 
+**Links:** [Documentation](https://reka-ui.com/docs/components/dialog) | [API Reference](https://reka-ui.com/docs/components/dialog#api-reference)
+
 ---
 
 
@@ -18,9 +20,9 @@ Watch a Vue School video about dialogs and alerts in shadcn-vue.
 
 ## Installation
 
-::code-tabs
+:::::code-tabs
 
-::tabs-list
+:::tabs-list
 
   ::tabs-trigger{value="cli"}
   CLI
@@ -30,7 +32,7 @@ Watch a Vue School video about dialogs and alerts in shadcn-vue.
   Manual
   ::
 
-::
+:::
 
 ::tabs-content{value="cli"}
 
@@ -40,8 +42,8 @@ npx shadcn-vue@latest add dialog
 
 ::
 
-::tabs-content{value="manual"}
-  ::steps
+::::tabs-content{value="manual"}
+  :::steps
     ::step
     Install the following dependencies:
     ::
@@ -57,10 +59,10 @@ npx shadcn-vue@latest add dialog
     ::step
     Update the import paths to match your project setup.
     ::
-  ::
-::
+  :::
+::::
 
-::
+:::::
 
 ## Usage
 

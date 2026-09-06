@@ -2,6 +2,8 @@
 
 **Description:** A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.
 
+**Links:** [Documentation](https://reka-ui.com/docs/components/tooltip) | [API Reference](https://reka-ui.com/docs/components/tooltip#api-reference)
+
 ---
 
 
@@ -14,9 +16,9 @@ description: A tooltip component.
 
 ## Installation
 
-::code-tabs
+:::::code-tabs
 
-::tabs-list
+:::tabs-list
 
   ::tabs-trigger{value="cli"}
   CLI
@@ -26,7 +28,7 @@ description: A tooltip component.
   Manual
   ::
 
-::
+:::
 
 ::tabs-content{value="cli"}
 
@@ -36,8 +38,8 @@ npx shadcn-vue@latest add tooltip
 
 ::
 
-::tabs-content{value="manual"}
-  ::steps
+::::tabs-content{value="manual"}
+  :::steps
     ::step
     Install the following dependencies:
     ::
@@ -53,10 +55,10 @@ npx shadcn-vue@latest add tooltip
     ::step
     Update the import paths to match your project setup.
     ::
-  ::
-::
+  :::
+::::
 
-::
+:::::
 
 ## Usage
 

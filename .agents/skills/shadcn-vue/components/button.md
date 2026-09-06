@@ -18,9 +18,9 @@ Watch a Vue School video about buttons, variants, and the as-child prop in shadc
 
 ## Installation
 
-::code-tabs
+:::::code-tabs
 
-::tabs-list
+:::tabs-list
 
   ::tabs-trigger{value="cli"}
   CLI
@@ -30,7 +30,7 @@ Watch a Vue School video about buttons, variants, and the as-child prop in shadc
   Manual
   ::
 
-::
+:::
 
 ::tabs-content{value="cli"}
 
@@ -40,8 +40,8 @@ npx shadcn-vue@latest add button
 
 ::
 
-::tabs-content{value="manual"}
-  ::steps
+::::tabs-content{value="manual"}
+  :::steps
     ::step
     Install the following dependencies:
     ::
@@ -57,10 +57,10 @@ npx shadcn-vue@latest add button
     ::step
     Update the import paths to match your project setup.
     ::
-  ::
-::
+  :::
+::::
 
-::
+:::::
 
 ## Usage
 
@@ -81,6 +81,8 @@ import { Button } from '@/components/ui/button'
 Tailwind v4 [switched](https://tailwindcss.com/docs/upgrade-guide#buttons-use-the-default-cursor) from `cursor: pointer` to `cursor: default` for the button component.
 
 If you want to keep the `cursor: pointer` behavior, add the following code to your CSS file:
+
+You can also enable this during project setup with `npx shadcn-vue@latest init --pointer`.
 
 ```css showLineNumbers title="tailwind.css"
 @layer base {

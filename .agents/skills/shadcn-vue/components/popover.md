@@ -2,6 +2,8 @@
 
 **Description:** Displays rich content in a portal, triggered by a button.
 
+**Links:** [Documentation](https://reka-ui.com/docs/components/popover) | [API Reference](https://reka-ui.com/docs/components/popover#api-reference)
+
 ---
 
 
@@ -14,9 +16,9 @@ description: A popover component.
 
 ## Installation
 
-::code-tabs
+:::::code-tabs
 
-::tabs-list
+:::tabs-list
 
   ::tabs-trigger{value="cli"}
   CLI
@@ -26,7 +28,7 @@ description: A popover component.
   Manual
   ::
 
-::
+:::
 
 ::tabs-content{value="cli"}
 
@@ -36,8 +38,8 @@ npx shadcn-vue@latest add popover
 
 ::
 
-::tabs-content{value="manual"}
-  ::steps
+::::tabs-content{value="manual"}
+  :::steps
     ::step
     Install the following dependencies:
     ::
@@ -53,10 +55,10 @@ npx shadcn-vue@latest add popover
     ::step
     Update the import paths to match your project setup.
     ::
-  ::
-::
+  :::
+::::
 
-::
+:::::
 
 ## Usage
 

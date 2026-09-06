@@ -11,7 +11,9 @@ defineProps<{
 const { config } = useChart()
 
 const colorConfig = computed(() => {
-  return Object.entries(config.value).filter(([, c]) => c.theme || c.color)
+  return Object.entries(config.value).filter(
+    ([, itemConfig]) => itemConfig.theme || itemConfig.color,
+  )
 })
 </script>
 
