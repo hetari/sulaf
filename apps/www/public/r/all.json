@@ -293,7 +293,7 @@
     {
       "type": "registry:ui",
       "path": "show-more/ShowMoreItem.vue",
-      "content": "<script setup lang=\"ts\">\nimport { ref, type HTMLAttributes } from 'vue'\nimport { useForwardProps, AccordionItem } from 'reka-ui'\nimport type { ShowMoreItemProps } from './types'\nimport { cn } from '@/lib/utils'\nimport { provideShowMoreItemContext } from './context'\n\nconst props = defineProps<ShowMoreItemProps & { class?: HTMLAttributes['class'] }>()\nconst forwarded = useForwardProps(props)\n\nconst isTruncated = ref(false)\nprovideShowMoreItemContext({\n  value: props.value,\n  isTruncated: isTruncated.value,\n})\n</script>\n\n<template>\n  <AccordionItem v-bind=\"forwarded\" :class=\"cn(props.class)\" data-slot=\"show-more-item\">\n    <slot :is-truncated=\"isTruncated\" />\n  </AccordionItem>\n</template>\n"
+      "content": "<script setup lang=\"ts\">\nimport { ref, reactive, type HTMLAttributes } from 'vue'\nimport { useForwardProps, AccordionItem } from 'reka-ui'\nimport type { ShowMoreItemProps } from './types'\nimport { cn } from '@/lib/utils'\nimport { provideShowMoreItemContext } from './context'\n\nconst props = defineProps<ShowMoreItemProps & { class?: HTMLAttributes['class'] }>()\nconst forwarded = useForwardProps(props)\n\nconst isTruncated = ref(false)\nprovideShowMoreItemContext(\n  reactive({\n    value: props.value,\n    isTruncated,\n  }),\n)\n</script>\n\n<template>\n  <AccordionItem v-bind=\"forwarded\" :class=\"cn(props.class)\" data-slot=\"show-more-item\">\n    <slot :is-truncated=\"isTruncated\" />\n  </AccordionItem>\n</template>\n"
     },
     {
       "type": "registry:hook",
