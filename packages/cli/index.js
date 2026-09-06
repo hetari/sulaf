@@ -37,7 +37,10 @@ const [bin, prefixArgs] = getCommandAndArgs()
 const args = process.argv.slice(2)
 
 // Filter out options (starting with -) from component names
-const components = args.filter(arg => !arg.startsWith('-'))
+const nonOptionArgs = args.filter(arg => !arg.startsWith('-'))
+
+// Strip optional 'add' command keyword if provided (e.g. 'sulaf add button' or 'sulaf button')
+const components = nonOptionArgs[0] === 'add' ? nonOptionArgs.slice(1) : nonOptionArgs
 
 // Get options (flags that start with -)
 const options = args.filter(arg => arg.startsWith('-'))
