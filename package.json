@@ -52,7 +52,7 @@
       "bun run registry:build",
       "git add apps/www/public/r"
     ],
-    "*": "bun check"
+    "*.{js,ts,vue}": "bun check"
   },
   "packageManager": "bun@latest",
   "dependencies": {
