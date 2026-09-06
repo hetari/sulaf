@@ -140,6 +140,80 @@ describe('emitRegistry — hook bundling', () => {
     expect(parsed.registryDependencies).not.toContain('use-counter')
   })
 
+  it('transitively inlines hooks and merges their dependencies, keeping non-hook registry deps', () => {
+    const buttonFile = makeCollectedFile()
+    const hook1File = makeCollectedFile({
+      slug: 'use-counter',
+      path: 'use-counter.ts',
+      type: 'registry:hook',
+      srcDir: 'hooks',
+    })
+    const hook2File = makeCollectedFile({
+      slug: 'use-math',
+      path: 'use-math.ts',
+      type: 'registry:hook',
+      srcDir: 'hooks',
+    })
+    const badgeFile = makeCollectedFile({
+      slug: 'badge',
+      path: 'badge/Badge.vue',
+      type: 'registry:ui',
+    })
+
+    const components = new Map<string, CollectedFile[]>([
+      ['button', [buttonFile]],
+      ['use-counter', [hook1File]],
+      ['use-math', [hook2File]],
+      ['badge', [badgeFile]],
+    ])
+
+    const resolvedDeps = new Map<string, ResolvedComponentDeps>([
+      [
+        'button',
+        makeResolvedDeps({
+          dependencies: new Set(['reka-ui']),
+          registryDependencies: new Set(['use-counter']),
+        }),
+      ],
+      [
+        'use-counter',
+        makeResolvedDeps({
+          dependencies: new Set(['@vueuse/core']),
+          devDependencies: new Set(['@types/node']),
+          registryDependencies: new Set(['use-math', 'badge']),
+        }),
+      ],
+      [
+        'use-math',
+        makeResolvedDeps({
+          dependencies: new Set(['lodash-es']),
+        }),
+      ],
+      ['badge', makeResolvedDeps()],
+    ])
+
+    const result = emitRegistry(components, [], resolvedDeps, cfg)
+    const buttonItem = result.find(r => r.path === 'button.json')!
+    const parsed = JSON.parse(buttonItem.content)
+
+    // Inlines both hooks
+    expect(parsed.files.some((f: { path: string }) => f.path === 'use-counter.ts')).toBe(true)
+    expect(parsed.files.some((f: { path: string }) => f.path === 'use-math.ts')).toBe(true)
+
+    // Merges dependencies transitively
+    expect(parsed.dependencies).toContain('reka-ui')
+    expect(parsed.dependencies).toContain('@vueuse/core')
+    expect(parsed.dependencies).toContain('lodash-es')
+
+    // Merges devDependencies
+    expect(parsed.devDependencies).toContain('@types/node')
+
+    // Hooks removed, non-hook UI component retained
+    expect(parsed.registryDependencies).not.toContain('use-counter')
+    expect(parsed.registryDependencies).not.toContain('use-math')
+    expect(parsed.registryDependencies).toContain('badge')
+  })
+
   it('keeps non-hook registry dependencies in registryDependencies', () => {
     const cardFile = makeCollectedFile({ slug: 'card', path: 'card/Card.vue', type: 'registry:ui' })
     const buttonFile = makeCollectedFile()
@@ -248,7 +322,7 @@ describe('bundleAll', () => {
     expect(sharedFiles.length).toBe(1)
   })
 
-  it('sets registryDependencies to empty array (all slugs are in-bundle)', () => {
+  it('filters out in-bundle registryDependencies while preserving external ones', () => {
     const buttonJson = {
       name: 'button',
       type: 'registry:ui',
@@ -258,17 +332,17 @@ describe('bundleAll', () => {
       files: [{ path: 'button/Button.vue', type: 'registry:ui', content: '' }],
       dependencies: [],
       devDependencies: [],
-      registryDependencies: ['card'],
+      registryDependencies: [],
     }
     const componentItems = [{ path: 'button.json', content: JSON.stringify(buttonJson) }]
     const allDeps = {
       dependencies: new Set<string>(),
       devDependencies: new Set<string>(),
-      registryDependencies: new Set<string>(),
+      registryDependencies: new Set<string>(['button', 'external-dialog']),
     }
     const result = bundleAll(componentItems, allDeps, cfg)!
     const parsed = JSON.parse(result.content)
-    // When no external registryDeps are present, the array is empty.
-    expect(parsed.registryDependencies).toEqual([])
+    // 'button' is in-bundle and should be filtered out, 'external-dialog' is preserved
+    expect(parsed.registryDependencies).toEqual(['external-dialog'])
   })
 })

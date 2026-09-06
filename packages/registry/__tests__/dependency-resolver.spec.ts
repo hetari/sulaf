@@ -47,6 +47,16 @@ import type { Ref } from 'vue'
     expect(result).toContain('./Button')
   })
 
+  it('extracts specifiers from side-effect imports', () => {
+    const code = `
+import 'package/styles.css'
+import "other-package/dist/index.css"
+`
+    const result = parseImportSpecifiers(code)
+    expect(result).toContain('package/styles.css')
+    expect(result).toContain('other-package/dist/index.css')
+  })
+
   it('deduplicates repeated specifiers', () => {
     const code = `
 import { ref } from 'vue'
@@ -123,6 +133,25 @@ import { cva } from 'class-variance-authority'
     expect(result.dependencies.has('class-variance-authority')).toBe(true)
     // vue is not in allowedDeps
     expect(result.dependencies.has('vue')).toBe(false)
+  })
+
+  it('classifies npm dependencies from side-effect bare imports', () => {
+    const content = `import 'libphonenumber-js/bundle.css'`
+    const result = resolveFile(content, 'Component.ts', baseOpts)
+    expect(result.dependencies.has('libphonenumber-js')).toBe(true)
+  })
+
+  it('matches subpath imports to allowedDevDeps base package name', () => {
+    const content = `
+import 'vite/client'
+import type { UserConfig } from 'vite/config'
+`
+    const opts: ResolveDepsOptions = {
+      ...baseOpts,
+      allowedDevDeps: new Set(['vite']),
+    }
+    const result = resolveFile(content, 'vite.config.ts', opts)
+    expect(result.devDependencies.has('vite')).toBe(true)
   })
 
   it('auto-includes @types/ package for a matched npm dep', () => {

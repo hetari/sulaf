@@ -1,5 +1,6 @@
 import { ref } from 'vue'
 import type { Ref } from 'vue'
+import { clampValue } from './utils'
 
 export interface UseCounterOptions {
   min?: number
@@ -15,20 +16,18 @@ export function useCounter(
   decrement: () => void
   reset: () => void
 } {
-  const count = ref(initial)
+  const count = ref(clampValue(initial, opts.min, opts.max))
 
   const increment = () => {
-    if (opts.max !== undefined && count.value >= opts.max) return
-    count.value++
+    count.value = clampValue(count.value + 1, opts.min, opts.max)
   }
 
   const decrement = () => {
-    if (opts.min !== undefined && count.value <= opts.min) return
-    count.value--
+    count.value = clampValue(count.value - 1, opts.min, opts.max)
   }
 
   const reset = () => {
-    count.value = initial
+    count.value = clampValue(initial, opts.min, opts.max)
   }
 
   return { count, increment, decrement, reset }

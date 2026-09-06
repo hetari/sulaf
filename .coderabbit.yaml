@@ -56,7 +56,7 @@ reviews:
 
   # Ignore build artifacts, lock files, and shadcn-vue components
   path_filters:
-    - '!**/*.json'
+    - '!apps/www/public/r/**'
     - '!**/node_modules/**'
     - '!**/.nuxt/**'
     - '!**/.output/**'

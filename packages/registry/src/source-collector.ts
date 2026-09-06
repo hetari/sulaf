@@ -89,27 +89,48 @@ export async function collectSources(
     const absPaths = await walkFiles(srcPath, srcPath)
     const baseType = srcDirToFileType(srcDir)
 
+    // For hooks, count files per hook directory to distinguish single-file vs multi-file hooks
+    const hookDirCounts = new Map<string, number>()
+    if (srcDir === 'hooks') {
+      for (const abs of absPaths) {
+        const relPath = relative(srcPath, abs).split('\\').join('/')
+        if (relPath.includes('/')) {
+          const dir = relPath.split('/')[0]!
+          hookDirCounts.set(dir, (hookDirCounts.get(dir) ?? 0) + 1)
+        }
+      }
+    }
+
     for (const abs of absPaths) {
       const raw = await fs.readFile(abs, 'utf-8')
 
       // Apply alias replacements
       let content = raw
       for (const r of config.replacements) {
-        content = content.replace(r.from as RegExp, r.to)
+        if (typeof r.from === 'string') {
+          content = content.replaceAll(r.from, r.to)
+        } else {
+          content = content.replace(r.from, r.to)
+        }
       }
 
       let rel = relative(srcPath, abs).split('\\').join('/')
-
-      // Flatten hooks: use-foo/index.ts → use-foo.ts
-      if (srcDir === 'hooks' && rel.endsWith('/index.ts')) {
-        rel = rel.replace('/index.ts', '.ts')
-      }
-
-      // Derive slug from path
       let slug: string
-      if (baseType === 'registry:hook' && !rel.includes('/') && rel.endsWith('.ts')) {
-        // Flattened hook file — slug is the filename without extension
-        slug = rel.replace('.ts', '')
+
+      // Flatten single-file hooks: use-foo/index.ts → use-foo.ts (when only index.ts is in directory)
+      // Multi-file hooks retain directory structure so relative imports (e.g. ./utils) resolve.
+      if (srcDir === 'hooks') {
+        if (rel.includes('/')) {
+          const dir = rel.split('/')[0]!
+          if (hookDirCounts.get(dir) === 1 && rel.endsWith('/index.ts')) {
+            rel = `${dir}.ts`
+            slug = dir
+          } else {
+            slug = dir
+          }
+        } else {
+          slug = rel.replace(/\.ts$/, '')
+        }
       } else {
         slug = rel.split('/')[0] ?? ''
       }
@@ -135,7 +156,11 @@ export async function collectSources(
       const raw = await fs.readFile(abs, 'utf-8')
       let content = raw
       for (const r of config.replacements) {
-        content = content.replace(r.from as RegExp, r.to)
+        if (typeof r.from === 'string') {
+          content = content.replaceAll(r.from, r.to)
+        } else {
+          content = content.replace(r.from, r.to)
+        }
       }
       examples.push({
         path: `examples/${basename(abs)}`,

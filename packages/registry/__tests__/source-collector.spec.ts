@@ -35,21 +35,22 @@ describe('collectSources', () => {
   })
 
   describe('hook path flattening', () => {
-    it('flattens use-counter/index.ts to use-counter.ts', async () => {
+    it('flattens single-file hook use-single/index.ts to use-single.ts', async () => {
       const { components } = await collectSources(FIXTURES_DIR, baseConfig)
-      const hookFiles = components.get('use-counter')!
-      expect(hookFiles.some(f => f.path === 'use-counter.ts')).toBe(true)
+      const singleFiles = components.get('use-single')!
+      expect(singleFiles.some(f => f.path === 'use-single.ts')).toBe(true)
     })
 
-    it('does NOT include the /index.ts path for hooks', async () => {
+    it('preserves directory structure for multi-file hook use-counter', async () => {
       const { components } = await collectSources(FIXTURES_DIR, baseConfig)
       const hookFiles = components.get('use-counter')!
-      expect(hookFiles.some(f => f.path.endsWith('/index.ts'))).toBe(false)
+      expect(hookFiles.some(f => f.path === 'use-counter/index.ts')).toBe(true)
+      expect(hookFiles.some(f => f.path === 'use-counter/utils.ts')).toBe(true)
     })
   })
 
   describe('alias replacements', () => {
-    it('applies string replacements to file content', async () => {
+    it('applies regex replacements to file content', async () => {
       const config: SourceCollectorConfig = {
         srcDirs: ['components'],
         replacements: [{ from: /reka-ui/g, to: '@REPLACED' }],
@@ -59,6 +60,19 @@ describe('collectSources', () => {
       const mainFile = buttonFiles.find(f => f.path.endsWith('.vue'))!
       expect(mainFile.content).toContain('@REPLACED')
       expect(mainFile.content).not.toContain('reka-ui')
+    })
+
+    it('replaces every occurrence when from is a string', async () => {
+      const config: SourceCollectorConfig = {
+        srcDirs: ['components'],
+        replacements: [{ from: 'default', to: '@REPLACED' }],
+      }
+      const { components } = await collectSources(FIXTURES_DIR, config)
+      const buttonFiles = components.get('button')!
+      const mainFile = buttonFiles.find(f => f.path.endsWith('.vue'))!
+      expect(mainFile.content).not.toContain('default')
+      const occurrences = (mainFile.content.match(/@REPLACED/g) || []).length
+      expect(occurrences).toBeGreaterThanOrEqual(2)
     })
 
     it('does not mutate content when no replacements match', async () => {

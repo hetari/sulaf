@@ -96,25 +96,53 @@ export function emitRegistry(
       registryDependencies: new Set<string>(),
     }
 
-    // Hook bundling: inline hook files, remove from registryDependencies.
+    // Hook bundling: transitively inline hook files and merge their dependencies, remove from registryDependencies.
     const finalRegistryDeps = new Set<string>()
     const bundledFiles = [...groupFiles]
+    const mergedDependencies = new Set(deps.dependencies)
+    const mergedDevDependencies = new Set(deps.devDependencies)
+
+    const hookQueue: string[] = []
+    const visitedHooks = new Set<string>()
 
     for (const dep of deps.registryDependencies) {
       const depFiles = components.get(dep)
-      if (depFiles) {
-        const isHook = depFiles.some(f => f.type === 'registry:hook')
-        if (isHook) {
-          // Inline hook files — avoid duplicates.
-          for (const df of depFiles) {
-            if (!bundledFiles.some(bf => bf.path === df.path)) {
-              bundledFiles.push(df)
-            }
+      if (depFiles && depFiles.some(f => f.type === 'registry:hook')) {
+        hookQueue.push(dep)
+      } else {
+        finalRegistryDeps.add(dep)
+      }
+    }
+
+    while (hookQueue.length > 0) {
+      const hookSlug = hookQueue.shift()!
+      if (visitedHooks.has(hookSlug)) continue
+      visitedHooks.add(hookSlug)
+
+      const hookFiles = components.get(hookSlug)
+      if (hookFiles) {
+        for (const hf of hookFiles) {
+          if (!bundledFiles.some(bf => bf.path === hf.path)) {
+            bundledFiles.push(hf)
           }
-          continue // hook is NOT added to finalRegistryDeps
         }
       }
-      finalRegistryDeps.add(dep)
+
+      const hookDeps = resolvedDeps.get(hookSlug)
+      if (hookDeps) {
+        hookDeps.dependencies.forEach(d => mergedDependencies.add(d))
+        hookDeps.devDependencies.forEach(d => mergedDevDependencies.add(d))
+        for (const transDep of hookDeps.registryDependencies) {
+          const transFiles = components.get(transDep)
+          if (transFiles && transFiles.some(f => f.type === 'registry:hook')) {
+            if (!visitedHooks.has(transDep)) {
+              hookQueue.push(transDep)
+            }
+          } else {
+            finalRegistryDeps.add(transDep)
+          }
+        }
+      }
     }
 
     const itemJson = {
@@ -129,8 +157,8 @@ export function emitRegistry(
           f.target !== undefined ? { target: f.target } : {},
         ),
       ),
-      dependencies: Array.from(deps.dependencies),
-      devDependencies: Array.from(deps.devDependencies),
+      dependencies: Array.from(mergedDependencies),
+      devDependencies: Array.from(mergedDevDependencies),
       registryDependencies: Array.from(finalRegistryDeps),
     }
 
@@ -230,7 +258,9 @@ export function bundleAll(
     files: allFiles,
     dependencies: Array.from(allDeps.dependencies),
     devDependencies: Array.from(allDeps.devDependencies),
-    registryDependencies: Array.from(allDeps.registryDependencies),
+    registryDependencies: Array.from(allDeps.registryDependencies).filter(
+      dep => !slugsInBundle.has(dep),
+    ),
   }
 
   if (validateRegistryItem(allJson, 'all')) {

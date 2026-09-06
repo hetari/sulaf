@@ -6,7 +6,8 @@ import type { DependencyResult } from './types'
 // Matches: import ... from '...' / export ... from '...'
 // Deliberately avoids ts-morph to eliminate per-file Project instantiation cost.
 // ---------------------------------------------------------------------------
-const IMPORT_RE = /(?:^|\n)\s*(?:import|export)\s[\s\S]*?from\s+['"]([^'"]+)['"]/g
+const IMPORT_RE =
+  /(?:^|\n)\s*(?:(?:import|export)\s[\s\S]*?from\s+['"]([^'"]+)['"]|import\s+['"]([^'"]+)['"])/g
 
 /** Extract all import/export specifiers from a block of TypeScript/JavaScript code. */
 export function parseImportSpecifiers(code: string): string[] {
@@ -15,7 +16,8 @@ export function parseImportSpecifiers(code: string): string[] {
   // Reset lastIndex before each use (regex is stateful when using /g flag)
   IMPORT_RE.lastIndex = 0
   while ((match = IMPORT_RE.exec(code)) !== null) {
-    if (match[1]) seen.add(match[1])
+    const specifier = match[1] || match[2]
+    if (specifier) seen.add(specifier)
   }
   return Array.from(seen)
 }
@@ -135,8 +137,8 @@ export function resolveFile(
       }
     }
 
-    if (opts.allowedDevDeps.has(mod)) {
-      devDependencies.add(mod)
+    if (opts.allowedDevDeps.has(pkg)) {
+      devDependencies.add(pkg)
     }
 
     // Internal component alias: @/components/ui/<slug>/...
