@@ -10,7 +10,8 @@
   },
   "scripts": {
     "build": "bun ./scripts/registry-builder.ts",
-    "test": "vitest"
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "devDependencies": {
     "@types/bun": "latest",

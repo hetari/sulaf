@@ -100,19 +100,20 @@ const { profile, totalContributions, isLoading, isError } = useGithubProfile(use
 
 ### Parameters
 
-| Parameter  | Type                          | Description                               |
-| ---------- | ----------------------------- | ----------------------------------------- |
-| `username` | `MaybeRefOrGetter<string \| undefined>` | The GitHub username to fetch data for. |
+| Parameter  | Type                                    | Description                                                                                     |
+| ---------- | --------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| `username` | `MaybeRefOrGetter<string \| undefined>` | The GitHub username to fetch data for.                                                          |
+| `options`  | `UseGithubProfileOptions`               | Optional configuration (`year` such as `'last'`, `'all'`, or a year number, custom `endpoint`). |
 
 ### Return Values
 
-| Value                | Type                                     | Description                                                                 |
-| -------------------- | ---------------------------------------- | --------------------------------------------------------------------------- |
-| `profile`            | `Ref<GitHubProfile \| null>`             | The GitHub user profile data.                                               |
-| `contributionData`   | `Ref<Record<string, number>>`            | A map of dates (YYYY-MM-DD) to contribution counts.                        |
-| `totalContributions` | `Ref<number>`                            | The total number of contributions in the last year.                         |
-| `isLoading`          | `Ref<boolean>`                           | Whether the data is currently being fetched.                                |
-| `isError`            | `Ref<boolean>`                           | Whether an error occurred during fetching.                                  |
+| Value                | Type                          | Description                                         |
+| -------------------- | ----------------------------- | --------------------------------------------------- |
+| `profile`            | `Ref<GitHubProfile \| null>`  | The GitHub user profile data.                       |
+| `contributionData`   | `Ref<Record<string, number>>` | A map of dates (YYYY-MM-DD) to contribution counts. |
+| `totalContributions` | `Ref<number>`                 | The total number of contributions in the range.     |
+| `isLoading`          | `Ref<boolean>`                | Whether the data is currently being fetched.        |
+| `isError`            | `Ref<boolean>`                | Whether an error occurred during fetching.          |
 
 ## Interfaces
 
@@ -131,5 +132,25 @@ export interface GitHubProfile {
   public_gists: number
   twitter_username: string | null
   html_url: string
+}
+
+export interface GitHubContributionDay {
+  date: string
+  count: number
+  level?: number
+  contributionCount?: number
+  color?: string
+  contributionLevel?: string
+}
+
+export interface GitHubContributionsResponse {
+  contributions: GitHubContributionDay[] | GitHubContributionDay[][]
+  total?: number | Record<string, number>
+  totalContributions?: number
+}
+
+export interface UseGithubProfileOptions {
+  year?: MaybeRefOrGetter<string | number | undefined>
+  endpoint?: MaybeRefOrGetter<string | undefined>
 }
 ```

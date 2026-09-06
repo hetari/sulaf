@@ -267,16 +267,20 @@ describe('ContributionHeatmap GitHub Integration Test', () => {
     expect(wrapper.find('[data-testid="total"]').exists()).toBe(false)
   })
 
-  it('renders GitHub contributions and profile data', async () => {
+  it('renders GitHub contributions and profile data with real API response structure', async () => {
     const mockContributions = {
-      contributions: [[{ date: '2023-01-01', contributionCount: 5 }]],
-      totalContributions: 5,
+      total: {
+        lastYear: 5,
+      },
+      contributions: [{ date: '2023-01-01', count: 5, level: 2 }],
     }
     const mockProfile = { name: 'John Doe', avatar_url: 'url', login: 'johndoe' }
+    let requestedContributionsUrl = ''
 
     ;(useFetch as Mock).mockImplementation((u: any) => {
       const url = typeof u === 'string' ? u : u.value || ''
       if (url.includes('github-contributions-api')) {
+        requestedContributionsUrl = url
         return {
           get: () => ({
             json: () => ({
@@ -310,7 +314,9 @@ describe('ContributionHeatmap GitHub Integration Test', () => {
     })
     await flushPromises()
 
+    expect(requestedContributionsUrl).toContain('github-contributions-api.jogruber.de/v4/testuser')
     expect(wrapper.find('[data-testid="profile-name"]').text()).toBe('John Doe')
+    expect(wrapper.find('[data-testid="total"]').text()).toBe('5 contributions')
 
     const cell = wrapper.find('[data-date="2023-01-01"]')
     expect(cell.exists()).toBe(true)

@@ -145,8 +145,14 @@ const onCellClick = (cell: HeatmapCellProp) => {
         </div>
       </HeatmapHeader>
 
-      <HeatmapContent>
-        <HeatmapMain>
+      <HeatmapContent v-slot="{ isLoading, isError }">
+        <div v-if="isLoading" class="p-8 text-center text-sm text-muted-foreground">
+          Loading GitHub activity...
+        </div>
+        <div v-else-if="isError" class="p-8 text-center text-sm text-destructive">
+          Failed to fetch contributions for @{{ githubUsername }}. Please check the username.
+        </div>
+        <HeatmapMain v-else>
           <HeatmapMonths />
           <HeatmapWeekdays class="row-start-2" />
 
