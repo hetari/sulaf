@@ -27,7 +27,6 @@ const navItems = [
   { label: 'heatmap', to: '/components/heatmap' },
   { label: 'phone-input', to: '/components/phone-input' },
   { label: 'show-more', to: '/components/show-more' },
-  { label: 'meter', to: '/components/meter' },
 ]
 </script>
 

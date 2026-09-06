@@ -44,13 +44,6 @@ declare module 'vue-router/auto-routes' {
       Record<never, never>,
       never
     >
-    '/components/meter': RouteRecordInfo<
-      '/components/meter',
-      '/components/meter',
-      Record<never, never>,
-      Record<never, never>,
-      never
-    >
     '/components/phone-input': RouteRecordInfo<
       '/components/phone-input',
       '/components/phone-input',
@@ -90,11 +83,6 @@ declare module 'vue-router/auto-routes' {
     }
     'src/pages/components/heatmap.vue': {
       routes: '/components/heatmap'
-      views: never
-      pathParamNames: never
-    }
-    'src/pages/components/meter.vue': {
-      routes: '/components/meter'
       views: never
       pathParamNames: never
     }
