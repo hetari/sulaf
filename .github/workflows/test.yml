@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
       - name: setup bun
         uses: oven-sh/setup-bun@v2
