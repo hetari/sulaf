@@ -19,7 +19,7 @@ export interface GitHubProfile {
 
 export interface GitHubContributionDay {
   date: string
-  count: number
+  count?: number
   level?: number
   contributionCount?: number
   color?: string
@@ -144,7 +144,10 @@ export function useGithubProfile(
       if (yearKey === 'last' && typeof total.lastYear === 'number') {
         return total.lastYear
       }
-      return Object.values(total).reduce((acc, curr) => acc + (Number(curr) || 0), 0)
+      return Object.entries(total).reduce(
+        (acc, [key, curr]) => (key === 'lastYear' ? acc : acc + (Number(curr) || 0)),
+        0,
+      )
     }
 
     return Object.values(contributionData.value).reduce((acc, curr) => acc + (Number(curr) || 0), 0)

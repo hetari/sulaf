@@ -108,10 +108,11 @@ describe('useGithubProfile composable (TDD)', () => {
         '2024': 100,
         '2025': 200,
         '2026': 300,
+        'lastYear': 300,
       },
       contributions: [
         { date: '2024-01-01', count: 5, level: 1 },
-        { date: '2025-01-01', count: 10, level: 2 },
+        { date: '2025-01-01', contributionCount: 10, level: 2 },
       ],
     }
 

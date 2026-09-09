@@ -150,7 +150,8 @@ const onCellClick = (cell: HeatmapCellProp) => {
           Loading GitHub activity...
         </div>
         <div v-else-if="isError" class="p-8 text-center text-sm text-destructive">
-          Failed to fetch contributions for @{{ githubUsername }}. Please check the username.
+          Failed to fetch contributions for @{{ githubUsername }}. Please check the username or try
+          again later.
         </div>
         <HeatmapMain v-else>
           <HeatmapMonths />

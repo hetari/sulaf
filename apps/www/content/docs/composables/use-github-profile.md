@@ -136,7 +136,7 @@ export interface GitHubProfile {
 
 export interface GitHubContributionDay {
   date: string
-  count: number
+  count?: number
   level?: number
   contributionCount?: number
   color?: string
