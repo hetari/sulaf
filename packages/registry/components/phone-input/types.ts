@@ -4,6 +4,10 @@ import type { Ref, ComputedRef } from 'vue'
 export type PhoneFieldCountryFlagProps = {
   type?: 'cdn' | 'unicode'
   countryCode: CountryCode
+  /**
+   * Accessible label for CDN flag images.
+   * Defaults to an empty string for decorative flags.
+   */
   alt?: string
 }
 

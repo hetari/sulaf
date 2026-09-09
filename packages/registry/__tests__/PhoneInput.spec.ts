@@ -178,6 +178,16 @@ describe('PhoneFieldCountryFlag component', () => {
     expect(img.attributes('alt')).toBe('United States Flag')
   })
 
+  it('defaults cdn flag alt to an empty string', () => {
+    const flagWrapper = mount(PhoneFieldCountryFlag, {
+      props: {
+        countryCode: 'US',
+      },
+    })
+
+    expect(flagWrapper.find('img').attributes('alt')).toBe('')
+  })
+
   it('renders unicode emoji when type="unicode"', () => {
     const flagWrapper = mount(PhoneFieldCountryFlag, {
       props: {
@@ -216,6 +226,44 @@ describe('phone input validation', () => {
 
     expect(isValidPhoneNumberForCountry('', 'US')).toBe(false)
     expect(isValidPhoneNumberForCountry('2025550123', 'US')).toBe(true)
+  })
+})
+
+describe('PhoneInputField delegated attrs', () => {
+  it('reflects parent updates that change or remove delegated attributes', async () => {
+    const AttrTest = defineComponent({
+      components: { PhoneInput, PhoneInputField },
+      setup() {
+        const readonly = ref(true)
+        const testId = ref<string | undefined>('phone-field')
+        return { readonly, testId }
+      },
+      template: `
+        <PhoneInput model-value="">
+          <PhoneInputField :readonly="readonly" :data-testid="testId" />
+        </PhoneInput>
+      `,
+    })
+
+    wrapper = mount(AttrTest, { attachTo: document.body })
+    await flushPromises()
+
+    const input = () => wrapper.find('input[data-slot="input-group-control"]')
+
+    expect(input().attributes('readonly')).toBeDefined()
+    expect(input().attributes('data-testid')).toBe('phone-field')
+
+    wrapper.vm.readonly = false
+    await flushPromises()
+    expect(input().attributes('readonly')).toBeUndefined()
+
+    wrapper.vm.testId = 'updated-phone-field'
+    await flushPromises()
+    expect(input().attributes('data-testid')).toBe('updated-phone-field')
+
+    wrapper.vm.testId = undefined
+    await flushPromises()
+    expect(input().attributes('data-testid')).toBeUndefined()
   })
 })
 

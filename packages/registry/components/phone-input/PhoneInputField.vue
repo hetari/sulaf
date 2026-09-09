@@ -109,11 +109,8 @@ watch([country, format], () => {
 })
 
 const delegatedProps = reactiveOmit(props, 'class')
+const delegatedAttrs = reactiveOmit(attrs, 'class')
 const forwarded = useForwardProps(delegatedProps)
-const delegatedAttrs = computed(() => {
-  const { class: _cls, ...rest } = attrs
-  return rest
-})
 </script>
 
 <template>
