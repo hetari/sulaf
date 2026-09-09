@@ -49,7 +49,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
-          ref: ${{ inputs.tag_name || github.ref }}
+          ref: ${{ steps.vars.outputs.tag }}
           fetch-depth: 0
 
       - name: Verify tag is merged into main
