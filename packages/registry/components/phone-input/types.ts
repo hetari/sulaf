@@ -2,9 +2,9 @@ import type { CountryCode } from 'libphonenumber-js'
 import type { Ref, ComputedRef } from 'vue'
 
 export type PhoneFieldCountryFlagProps = {
-  type: 'cdn' | 'unicode'
+  type?: 'cdn' | 'unicode'
   countryCode: CountryCode
-  alt: string
+  alt?: string
 }
 
 export interface PhoneInputCountrySelectProps {

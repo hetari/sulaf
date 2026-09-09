@@ -5,68 +5,96 @@
 const { spawnSync } = require('node:child_process')
 const process = require('node:process')
 
-const rawRegistryUrl = process.env.SULAF_REGISTRY_URL || 'https://sulaf-socd8d.cranl.net/r/'
-const registryBaseUrl = rawRegistryUrl.endsWith('/') ? rawRegistryUrl : `${rawRegistryUrl}/`
+function resolveRegistryBaseUrl(
+  rawUrl = process.env.SULAF_REGISTRY_URL || 'https://sulaf-socd8d.cranl.net/r/',
+) {
+  return rawUrl.endsWith('/') ? rawUrl : `${rawUrl}/`
+}
 
-// Function to detect the command and prefix arguments used to invoke this script
-function getCommandAndArgs() {
-  // Check for common package manager environment variables
-  if (process.env.npm_config_user_agent) {
-    const userAgent = process.env.npm_config_user_agent
+function getCommandAndArgs(userAgent) {
+  const ua =
+    arguments.length > 0
+      ? userAgent
+      : typeof process !== 'undefined'
+        ? process.env.npm_config_user_agent
+        : undefined
 
-    if (userAgent.includes('pnpm')) {
+  if (ua) {
+    if (ua.includes('pnpm')) {
       return ['pnpm', ['dlx']]
     }
 
-    if (userAgent.includes('yarn')) {
+    if (ua.includes('yarn')) {
       return ['yarn', ['dlx']]
     }
 
-    if (userAgent.includes('bun')) {
+    if (ua.includes('bun')) {
       return ['bunx', ['--bun']]
     }
   }
 
-  // Default fallback
   return ['npx', ['-y']]
 }
 
-const [bin, prefixArgs] = getCommandAndArgs()
+function parseCliArgs(args, baseUrl) {
+  const nonOptionArgs = args.filter(arg => !arg.startsWith('-'))
+  const components = nonOptionArgs[0] === 'add' ? nonOptionArgs.slice(1) : nonOptionArgs
+  const options = args.filter(arg => arg.startsWith('-'))
+  const finalComponents = components.length === 0 ? ['all'] : components
 
-// Parse command line arguments
-const args = process.argv.slice(2)
+  const targetUrls = finalComponents.map(component =>
+    new URL(`${component}.json`, baseUrl).toString(),
+  )
 
-// Filter out options (starting with -) from component names
-const nonOptionArgs = args.filter(arg => !arg.startsWith('-'))
+  return {
+    components: finalComponents,
+    options,
+    targetUrls,
+  }
+}
 
-// Strip optional 'add' command keyword if provided (e.g. 'sulaf add button' or 'sulaf button')
-const components = nonOptionArgs[0] === 'add' ? nonOptionArgs.slice(1) : nonOptionArgs
+function buildCommandArgs(prefixArgs, targetUrls, options) {
+  return [...prefixArgs, 'shadcn-vue@latest', 'add', ...targetUrls, ...options]
+}
 
-// Get options (flags that start with -)
-const options = args.filter(arg => arg.startsWith('-'))
+function runCli(
+  args = process.argv.slice(2),
+  env = process.env,
+  { spawnSyncFn = spawnSync, exitFn = code => process.exit(code) } = {},
+) {
+  const rawRegistryUrl = env.SULAF_REGISTRY_URL || 'https://sulaf-socd8d.cranl.net/r/'
+  const registryBaseUrl = resolveRegistryBaseUrl(rawRegistryUrl)
+  const [bin, prefixArgs] = getCommandAndArgs(env.npm_config_user_agent)
+  const { targetUrls, options } = parseCliArgs(args, registryBaseUrl)
+  const commandArgs = buildCommandArgs(prefixArgs, targetUrls, options)
 
-// Default to 'all' if no components provided
-const finalComponents = components.length === 0 ? ['all'] : components
+  const result = spawnSyncFn(bin, commandArgs, {
+    stdio: 'inherit',
+    shell: false,
+  })
 
-// Get the target URLs for all components
-const targetUrls = finalComponents.map(component =>
-  new URL(`${component}.json`, registryBaseUrl).toString(),
-)
+  if (result.error) {
+    // eslint-disable-next-line no-console
+    console.error('Failed to execute command:', result.error.message)
+    exitFn(1)
+    return
+  }
 
-// Build command arguments array with options at the end
-const commandArgs = [...prefixArgs, 'shadcn-vue@latest', 'add', ...targetUrls, ...options]
+  if (result.status !== 0) {
+    // eslint-disable-next-line no-console
+    console.error(`Command failed with exit code ${result.status}`)
+    exitFn(1)
+  }
+}
 
-const result = spawnSync(bin, commandArgs, {
-  stdio: 'inherit',
-  shell: false,
-})
+if (require.main === module) {
+  runCli()
+}
 
-if (result.error) {
-  // eslint-disable-next-line no-console
-  console.error('Failed to execute command:', result.error.message)
-  process.exit(1)
-} else if (result.status !== 0) {
-  // eslint-disable-next-line no-console
-  console.error(`Command failed with exit code ${result.status}`)
-  process.exit(1)
+module.exports = {
+  getCommandAndArgs,
+  resolveRegistryBaseUrl,
+  parseCliArgs,
+  buildCommandArgs,
+  runCli,
 }

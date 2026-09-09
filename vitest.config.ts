@@ -6,7 +6,7 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'happy-dom',
-    projects: ['packages/*'],
+    projects: ['packages/*', 'scripts'],
     reporters: ['default'],
   },
 })

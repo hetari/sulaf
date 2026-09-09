@@ -10,6 +10,9 @@
     "url": "git+https://github.com/hetari/sulaf.git",
     "directory": "packages/cli"
   },
+  "scripts": {
+    "test": "vitest run"
+  },
   "keywords": [
     "nuxt",
     "vue",

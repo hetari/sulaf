@@ -10,7 +10,22 @@ import {
   HeatmapGrid,
   HeatmapCell,
   HeatmapRow,
+  HeatmapFooter,
+  HeatmapLegend,
+  HeatmapMonths,
+  HeatmapWeekdays,
+  HeatmapMain,
 } from '../components/contribution-heatmap'
+import {
+  startOfWeek,
+  groupCellsByRow,
+  getActualStartDate,
+  getActualEndDate,
+  getLevels,
+  createHeatmapCells,
+  getWeekdayLabels,
+  getMonthMarkers,
+} from '../components/contribution-heatmap/utils'
 
 // Mock useFetch to avoid network errors and control responses
 vi.mock('@vueuse/core', async importOriginal => {
@@ -321,5 +336,206 @@ describe('ContributionHeatmap GitHub Integration Test', () => {
     const cell = wrapper.find('[data-date="2023-01-01"]')
     expect(cell.exists()).toBe(true)
     expect(cell.attributes('data-level')).toBe('2') // 5/2 = 2.5 -> 2
+  })
+})
+
+describe('ContributionHeatmap Layout & Auxiliary Subcomponents', () => {
+  const FullLayoutTest = defineComponent({
+    components: {
+      Heatmap,
+      HeatmapHeader,
+      HeatmapContent,
+      HeatmapMain,
+      HeatmapMonths,
+      HeatmapWeekdays,
+      HeatmapGrid,
+      HeatmapRow,
+      HeatmapCell,
+      HeatmapFooter,
+      HeatmapLegend,
+    },
+    props: {
+      showAllWeekdays: { type: Boolean, default: false },
+    },
+    template: `
+      <Heatmap :data="{ '2024-01-01': 3 }" :start-date="new Date('2024-01-01')" :end-date="new Date('2024-01-14')">
+        <HeatmapHeader v-slot="{ totalContributions }">
+          <span>{{ totalContributions }} contributions</span>
+        </HeatmapHeader>
+        <HeatmapContent>
+          <HeatmapMain class="custom-main">
+            <HeatmapMonths class="custom-months" />
+            <HeatmapWeekdays :show-all="showAllWeekdays" class="custom-weekdays" />
+            <HeatmapGrid v-slot="{ cellGrid }">
+              <HeatmapRow v-for="row in cellGrid" :key="row[0].date.toISOString()">
+                <HeatmapCell v-for="cell in row" :key="cell.key" :cell="cell" />
+              </HeatmapRow>
+            </HeatmapGrid>
+          </HeatmapMain>
+        </HeatmapContent>
+        <HeatmapFooter class="custom-footer">
+          <HeatmapLegend label="Contributions" class="custom-legend" />
+        </HeatmapFooter>
+      </Heatmap>
+    `,
+  })
+
+  it('renders HeatmapMain, HeatmapMonths, and HeatmapFooter with custom classes', async () => {
+    wrapper = mount(FullLayoutTest, { attachTo: document.body })
+    await flushPromises()
+
+    const main = wrapper.findComponent(HeatmapMain)
+    expect(main.exists()).toBe(true)
+    expect(main.classes()).toContain('custom-main')
+
+    const months = wrapper.findComponent(HeatmapMonths)
+    expect(months.exists()).toBe(true)
+    expect(months.classes()).toContain('custom-months')
+
+    const footer = wrapper.findComponent(HeatmapFooter)
+    expect(footer.exists()).toBe(true)
+    expect(footer.classes()).toContain('custom-footer')
+  })
+
+  it('renders standard weekdays (Mon, Wed, Fri) when showAll is false', async () => {
+    wrapper = mount(FullLayoutTest, {
+      props: { showAllWeekdays: false },
+      attachTo: document.body,
+    })
+    await flushPromises()
+
+    const weekdays = wrapper.findComponent(HeatmapWeekdays)
+    expect(weekdays.exists()).toBe(true)
+    const texts = weekdays
+      .findAll('span')
+      .map((s: any) => s.text())
+      .filter((t: string) => t.length > 0)
+    expect(texts).toEqual(['Mon', 'Wed', 'Fri'])
+  })
+
+  it('renders all weekdays when showAll is true', async () => {
+    wrapper = mount(FullLayoutTest, {
+      props: { showAllWeekdays: true },
+      attachTo: document.body,
+    })
+    await flushPromises()
+
+    const weekdays = wrapper.findComponent(HeatmapWeekdays)
+    const texts = weekdays
+      .findAll('span')
+      .map((s: any) => s.text())
+      .filter((t: string) => t.length > 0)
+    expect(texts).toEqual(['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'])
+  })
+
+  it('renders HeatmapLegend with label, swatches, and custom slots', async () => {
+    const CustomLegendTest = defineComponent({
+      components: { Heatmap, HeatmapFooter, HeatmapLegend },
+      template: `
+        <Heatmap :data="{ '2024-01-01': 5 }" :start-date="new Date('2024-01-01')" :end-date="new Date('2024-01-07')">
+          <HeatmapFooter>
+            <HeatmapLegend>
+              <template #label><span data-testid="custom-label">My Activity</span></template>
+              <template #before><span data-testid="custom-before">Min</span></template>
+              <template #after><span data-testid="custom-after">Max</span></template>
+            </HeatmapLegend>
+          </HeatmapFooter>
+        </Heatmap>
+      `,
+    })
+
+    wrapper = mount(CustomLegendTest, { attachTo: document.body })
+    await flushPromises()
+
+    expect(wrapper.find('[data-testid="custom-label"]').text()).toBe('My Activity')
+    expect(wrapper.find('[data-testid="custom-before"]').text()).toBe('Min')
+    expect(wrapper.find('[data-testid="custom-after"]').text()).toBe('Max')
+  })
+})
+
+describe('ContributionHeatmap pure utilities', () => {
+  it('calculates startOfWeek correctly', () => {
+    // 2024-01-03 was a Wednesday (day 3)
+    const wednesday = new Date(2024, 0, 3)
+    const sunday = startOfWeek(wednesday)
+    expect(sunday.getDay()).toBe(0) // Sunday
+    expect(sunday.getDate()).toBe(31) // Dec 31, 2023
+  })
+
+  it('groups cells by row correctly', () => {
+    const mockCells: any[] = [
+      { row: 0, col: 0, key: '1' },
+      { row: 1, col: 0, key: '2' },
+      { row: 0, col: 1, key: '3' },
+      { row: 1, col: 1, key: '4' },
+    ]
+    const grid = groupCellsByRow(mockCells, 2)
+    expect(grid.length).toBe(2)
+    expect(grid[0].length).toBe(2)
+    expect(grid[1].length).toBe(2)
+  })
+
+  it('computes weekday labels for 7 rows and fallback for other row counts', () => {
+    expect(getWeekdayLabels(5, false)).toEqual([])
+    expect(getWeekdayLabels(7, false)).toEqual(['', 'Mon', '', 'Wed', '', 'Fri', ''])
+    expect(getWeekdayLabels(7, true)).toEqual(['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'])
+  })
+
+  it('computes month markers based on column cells', () => {
+    const mockCells: any[] = [
+      { col: 0, row: 0, date: new Date(2024, 0, 1) },
+      { col: 1, row: 0, date: new Date(2024, 0, 8) },
+      { col: 2, row: 0, date: new Date(2024, 1, 1) },
+    ]
+    const markers = getMonthMarkers(mockCells, 3)
+    expect(markers[0]).toBe('Jan')
+    expect(markers[1]).toBe(null)
+    expect(markers[2]).toBe('Feb')
+  })
+
+  it('calculates actual start and end dates', () => {
+    const customStart = new Date(2023, 5, 1)
+    const customEnd = new Date(2023, 6, 1)
+
+    expect(getActualStartDate(customStart)).toBe(customStart)
+    expect(getActualEndDate(customEnd)).toBe(customEnd)
+
+    const defaultStart = getActualStartDate()
+    expect(defaultStart.getMonth()).toBe(0)
+    expect(defaultStart.getDate()).toBe(1)
+
+    const defaultEnd = getActualEndDate()
+    expect(defaultEnd.getMonth()).toBe(11)
+    expect(defaultEnd.getDate()).toBe(31)
+  })
+
+  it('generates level mappings via getLevels', () => {
+    const levels = getLevels(4, level => level * 2)
+    expect(levels).toEqual([
+      { level: 0, contributions: 0 },
+      { level: 1, contributions: 2 },
+      { level: 2, contributions: 4 },
+      { level: 3, contributions: 6 },
+      { level: 4, contributions: 8 },
+    ])
+  })
+
+  it('creates cells grid with createHeatmapCells', () => {
+    const cells = createHeatmapCells({
+      startDate: new Date(2024, 0, 1),
+      endDate: new Date(2024, 0, 7),
+      data: { '2024-01-01': 4 },
+      rows: 7,
+      cols: 2,
+      dayMs: 86400000,
+      maxLevel: 4,
+      getLevel: count => (count > 0 ? 2 : 0),
+    })
+
+    expect(cells.length).toBeGreaterThan(0)
+    const matching = cells.find(c => c.key === '2024-01-01')
+    expect(matching).toBeDefined()
+    expect(matching?.contributions).toBe(4)
+    expect(matching?.level).toBe(2)
   })
 })

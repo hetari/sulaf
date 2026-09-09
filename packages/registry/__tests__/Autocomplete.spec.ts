@@ -11,6 +11,9 @@ import {
   AutocompleteClear,
   AutocompleteEmpty,
   AutocompleteTrigger,
+  AutocompleteGroup,
+  AutocompleteLabel,
+  AutocompleteLoading,
 } from '../components/autocomplete'
 
 const TestAutocomplete = defineComponent({
@@ -207,6 +210,92 @@ describe('Autocomplete component test', () => {
       await wrapper.find('[data-testid="clear-btn"]').trigger('click')
       await flushPromises()
       expect(wrapper.vm.searchTerm).toBe('')
+    })
+  })
+
+  describe('Groups and Labels', () => {
+    it('renders AutocompleteGroup and AutocompleteLabel with data attributes and custom classes', async () => {
+      const GroupedTest = defineComponent({
+        components: {
+          Autocomplete,
+          AutocompleteContent,
+          AutocompleteList,
+          AutocompleteGroup,
+          AutocompleteLabel,
+          AutocompleteItem,
+        },
+        template: `
+          <Autocomplete :open="true">
+            <AutocompleteContent>
+              <AutocompleteList>
+                <AutocompleteGroup class="custom-group">
+                  <AutocompleteLabel class="custom-label">Fruits</AutocompleteLabel>
+                  <AutocompleteItem value="Apple">Apple</AutocompleteItem>
+                </AutocompleteGroup>
+              </AutocompleteList>
+            </AutocompleteContent>
+          </Autocomplete>
+        `,
+      })
+
+      wrapper = mount(GroupedTest, { attachTo: document.body })
+      await flushPromises()
+
+      const group = wrapper.findComponent(AutocompleteGroup)
+      expect(group.exists()).toBe(true)
+      expect(group.attributes('data-slot')).toBe('autocomplete-group')
+      expect(group.classes()).toContain('custom-group')
+
+      const label = wrapper.findComponent(AutocompleteLabel)
+      expect(label.exists()).toBe(true)
+      expect(label.attributes('data-slot')).toBe('autocomplete-label')
+      expect(label.classes()).toContain('custom-label')
+      expect(label.text()).toBe('Fruits')
+    })
+  })
+
+  describe('Loading State', () => {
+    it('renders default loading spinner and text', () => {
+      const loadingWrapper = mount(AutocompleteLoading)
+      expect(loadingWrapper.attributes('data-slot')).toBe('autocomplete-loading')
+      expect(loadingWrapper.attributes('aria-live')).toBe('polite')
+      expect(loadingWrapper.text()).toContain('Loading...')
+    })
+
+    it('renders custom loading slot and applies custom class', () => {
+      const loadingWrapper = mount(AutocompleteLoading, {
+        props: { class: 'custom-loading' },
+        slots: {
+          default: '<span data-testid="custom-spinner">Fetching data...</span>',
+        },
+      })
+      expect(loadingWrapper.classes()).toContain('custom-loading')
+      expect(loadingWrapper.find('[data-testid="custom-spinner"]').text()).toBe('Fetching data...')
+    })
+  })
+
+  describe('Disabled Contract', () => {
+    it('disables input when disabled prop is true on Autocomplete', async () => {
+      const DisabledTest = defineComponent({
+        components: {
+          Autocomplete,
+          AutocompleteControl,
+          AutocompleteInput,
+        },
+        template: `
+          <Autocomplete :disabled="true">
+            <AutocompleteControl>
+              <AutocompleteInput />
+            </AutocompleteControl>
+          </Autocomplete>
+        `,
+      })
+
+      wrapper = mount(DisabledTest, { attachTo: document.body })
+      await flushPromises()
+
+      const input = wrapper.find('input')
+      expect(input.attributes('disabled')).toBeDefined()
     })
   })
 })

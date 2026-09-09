@@ -26,7 +26,7 @@
     "playground:preview": "bun --filter ./apps/playground preview",
     "registry:delete": "rm -rf ./apps/www/public/r",
     "registry:build": "bun registry:delete && bun --filter ./packages/registry build",
-    "test": "bun --filter ./packages/registry test",
+    "test": "vitest run",
     "release": "bun scripts/release.ts"
   },
   "devDependencies": {
