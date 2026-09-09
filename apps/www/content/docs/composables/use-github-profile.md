@@ -71,16 +71,16 @@ import { useGithubProfile } from '#imports'
 
 const username = ref('octocat') // Default username
 
-const { profile, totalContributions, isLoading, isError } = useGithubProfile(username)
+const { profile, totalContributions, isLoadingProfile, isProfileError } = useGithubProfile(username)
 </script>
 
 <template>
   <div class="flex flex-col gap-4">
     <Input v-model="username" placeholder="Enter GitHub username" />
 
-    <div v-if="isLoading">Loading profile for {{ username }}...</div>
+    <div v-if="isLoadingProfile">Loading profile for {{ username }}...</div>
 
-    <div v-else-if="isError" class="text-red-500">
+    <div v-else-if="isProfileError" class="text-red-500">
       Error fetching profile for {{ username }}. Please check the username.
     </div>
 
@@ -103,17 +103,19 @@ const { profile, totalContributions, isLoading, isError } = useGithubProfile(use
 | Parameter  | Type                                    | Description                                                                                     |
 | ---------- | --------------------------------------- | ----------------------------------------------------------------------------------------------- |
 | `username` | `MaybeRefOrGetter<string \| undefined>` | The GitHub username to fetch data for.                                                          |
-| `options`  | `UseGithubProfileOptions`               | Optional configuration (`year` such as `'last'`, `'all'`, or a year number, custom `endpoint`). |
+| `options`  | `UseGithubProfileOptions`               | Optional configuration. `year` accepts `'last'`, `'all'`, or a year number. `endpoint` is a custom contributions URL template that supports `{username}` and `{year}` placeholders (for example, `https://example.com/{username}/contributions?year={year}`). |
 
 ### Return Values
 
-| Value                | Type                          | Description                                         |
-| -------------------- | ----------------------------- | --------------------------------------------------- |
-| `profile`            | `Ref<GitHubProfile \| null>`  | The GitHub user profile data.                       |
-| `contributionData`   | `Ref<Record<string, number>>` | A map of dates (YYYY-MM-DD) to contribution counts. |
-| `totalContributions` | `Ref<number>`                 | The total number of contributions in the range.     |
-| `isLoading`          | `Ref<boolean>`                | Whether the data is currently being fetched.        |
-| `isError`            | `Ref<boolean>`                | Whether an error occurred during fetching.          |
+| Value                    | Type                          | Description                                                  |
+| ------------------------ | ----------------------------- | ------------------------------------------------------------ |
+| `profile`                | `Ref<GitHubProfile \| null>`  | The GitHub user profile data.                                |
+| `contributionData`       | `Ref<Record<string, number>>` | A map of dates (YYYY-MM-DD) to contribution counts.          |
+| `totalContributions`     | `Ref<number>`                 | The total number of contributions in the range.              |
+| `isLoadingProfile`       | `Ref<boolean>`                | Whether the profile request is in flight.                    |
+| `isLoadingContributions` | `Ref<boolean>`                | Whether the contributions request is in flight.              |
+| `isProfileError`         | `Ref<boolean>`                | Whether the profile request failed.                          |
+| `isContributionsError`   | `Ref<boolean>`                | Whether the contributions request failed.                    |
 
 ## Interfaces
 

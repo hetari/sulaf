@@ -32,8 +32,8 @@ export function useHeatmap(options: UseHeatmapOptions) {
     profile,
     contributionData: githubContributionData,
     totalContributions: githubTotalContributions,
-    isLoading: isGithubLoading,
-    isError: isGithubError,
+    isLoadingContributions: isGithubContributionsLoading,
+    isContributionsError: isGithubContributionsError,
   } = useGithubProfile(resolvedUsername)
 
   const actualStartDate = computed(() => {
@@ -57,8 +57,12 @@ export function useHeatmap(options: UseHeatmapOptions) {
     return getActualEndDate(resolvedEndDate.value)
   })
 
-  const isLoading = computed(() => (resolvedUsername.value ? isGithubLoading.value : false))
-  const isError = computed(() => (resolvedUsername.value ? isGithubError.value : false))
+  const isLoading = computed(() =>
+    resolvedUsername.value ? isGithubContributionsLoading.value : false,
+  )
+  const isError = computed(() =>
+    resolvedUsername.value ? isGithubContributionsError.value : false,
+  )
 
   const contributionData = computed(() => {
     if (resolvedUsername.value) {
