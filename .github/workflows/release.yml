@@ -38,6 +38,15 @@ jobs:
             echo "prerelease=false" >> "$GITHUB_OUTPUT"
           fi
 
+      - name: Verify tag is merged into main
+        run: |
+          git fetch origin main
+          TAG_COMMIT=$(git rev-list -n 1 "${{ steps.vars.outputs.tag }}")
+          if ! git merge-base --is-ancestor "$TAG_COMMIT" origin/main; then
+            echo "::error::Tag ${{ steps.vars.outputs.tag }} is not merged into the 'main' branch. Releases can only be published from main."
+            exit 1
+          fi
+
       - name: Generate Changelog with git-cliff
         id: git-cliff
         uses: orhun/git-cliff-action@v4
