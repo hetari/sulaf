@@ -60,7 +60,7 @@ export function useGithubProfile(
 
   const {
     data: profile,
-    isFetching: isLoadingProfile,
+    isFetching: isFetchingProfile,
     error: profileError,
   } = useFetch(profileUrl, {
     refetch: true,
@@ -87,7 +87,7 @@ export function useGithubProfile(
 
   const {
     data: fetchedData,
-    isFetching: isLoadingContributions,
+    isFetching: isFetchingContributions,
     error: contributionsError,
   } = useFetch(contributionsUrl, {
     refetch: true,
@@ -99,11 +99,13 @@ export function useGithubProfile(
     .get()
     .json<GitHubContributionsResponse>()
 
-  const isLoading = computed(
-    () => !!resolvedUsername.value && (isLoadingProfile.value || isLoadingContributions.value),
+  const isLoadingProfile = computed(() => !!resolvedUsername.value && isFetchingProfile.value)
+  const isLoadingContributions = computed(
+    () => !!resolvedUsername.value && isFetchingContributions.value,
   )
-  const isError = computed(
-    () => !!resolvedUsername.value && (!!profileError.value || !!contributionsError.value),
+  const isProfileError = computed(() => !!resolvedUsername.value && !!profileError.value)
+  const isContributionsError = computed(
+    () => !!resolvedUsername.value && !!contributionsError.value,
   )
 
   const contributionData = computed<Record<string, number>>(() => {
@@ -157,7 +159,9 @@ export function useGithubProfile(
     profile,
     contributionData,
     totalContributions,
-    isLoading,
-    isError,
+    isLoadingProfile,
+    isLoadingContributions,
+    isProfileError,
+    isContributionsError,
   }
 }

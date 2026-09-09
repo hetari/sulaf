@@ -91,11 +91,20 @@ describe('useGithubProfile composable (TDD)', () => {
       }
     })
 
-    const { profile, contributionData, totalContributions, isLoading, isError } =
-      useGithubProfile('hetari')
+    const {
+      profile,
+      contributionData,
+      totalContributions,
+      isLoadingProfile,
+      isLoadingContributions,
+      isProfileError,
+      isContributionsError,
+    } = useGithubProfile('hetari')
 
-    expect(isLoading.value).toBe(false)
-    expect(isError.value).toBe(false)
+    expect(isLoadingProfile.value).toBe(false)
+    expect(isLoadingContributions.value).toBe(false)
+    expect(isProfileError.value).toBe(false)
+    expect(isContributionsError.value).toBe(false)
     expect(profile.value?.name).toBe('Ebraheem Alhetari')
     expect(totalContributions.value).toBe(2256)
     expect(contributionData.value['2026-09-06']).toBe(12)
@@ -215,11 +224,18 @@ describe('useGithubProfile composable (TDD)', () => {
   })
 
   it('handles empty or undefined username gracefully', () => {
-    const { profile, contributionData, totalContributions, isLoading, isError } =
-      useGithubProfile(undefined)
+    const {
+      profile,
+      contributionData,
+      totalContributions,
+      isLoadingProfile,
+      isProfileError,
+      isContributionsError,
+    } = useGithubProfile(undefined)
 
-    expect(isLoading.value).toBe(false)
-    expect(isError.value).toBe(false)
+    expect(isLoadingProfile.value).toBe(false)
+    expect(isProfileError.value).toBe(false)
+    expect(isContributionsError.value).toBe(false)
     expect(profile.value).toBeNull()
     expect(totalContributions.value).toBe(0)
     expect(contributionData.value).toEqual({})
@@ -246,9 +262,9 @@ describe('useGithubProfile composable (TDD)', () => {
       }
     })
 
-    const { isError, totalContributions } = useGithubProfile('nonexistent-user-123')
+    const { isContributionsError, totalContributions } = useGithubProfile('nonexistent-user-123')
 
-    expect(isError.value).toBe(true)
+    expect(isContributionsError.value).toBe(true)
     expect(totalContributions.value).toBe(0)
   })
 })
