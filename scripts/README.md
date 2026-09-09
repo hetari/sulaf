@@ -27,7 +27,24 @@ bun scripts/release.ts
 
 ### Workflow Example
 
-After pushing your changes and tagging a new version:
+#### Automated with GitHub Actions (Recommended)
+
+When you tag a new version and push the tag to GitHub:
+
+```bash
+git tag v0.0.5
+git push origin v0.0.5 # or git push --tags
+```
+
+The GitHub Actions workflow ([`.github/workflows/release.yml`](file:///.github/workflows/release.yml)) will automatically:
+
+1. Generate the changelog section for the tag using `git-cliff` and `cliff.toml`.
+2. Create and publish the GitHub Release with the generated release notes.
+3. Automatically mark pre-releases if the tag contains `-alpha`, `-beta`, or `-rc`.
+
+#### Manual Workflow
+
+Alternatively, you can generate notes and create the release manually:
 
 1.  Generate the changelog and release notes:
     ```bash

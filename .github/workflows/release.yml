@@ -1,0 +1,65 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      tag_name:
+        description: 'Tag to release (leave empty to use current ref)'
+        required: false
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Create GitHub Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Determine tag
+        id: vars
+        run: |
+          TAG="${{ inputs.tag_name }}"
+          if [ -z "$TAG" ]; then
+            TAG="${GITHUB_REF_NAME}"
+          fi
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          if [[ "$TAG" == *"-alpha"* || "$TAG" == *"-beta"* || "$TAG" == *"-rc"* ]]; then
+            echo "prerelease=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "prerelease=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Generate Changelog with git-cliff
+        id: git-cliff
+        uses: orhun/git-cliff-action@v4
+        with:
+          config: cliff.toml
+          args: --latest --strip header
+        env:
+          OUTPUT: RELEASE_NOTES.md
+          GITHUB_REPO: ${{ github.repository }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Ensure release notes exist
+        run: |
+          if [ ! -s RELEASE_NOTES.md ]; then
+            echo "Release ${{ steps.vars.outputs.tag }}" > RELEASE_NOTES.md
+          fi
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v3
+        with:
+          tag_name: ${{ steps.vars.outputs.tag }}
+          name: ${{ steps.vars.outputs.tag }}
+          body_path: RELEASE_NOTES.md
+          draft: false
+          prerelease: ${{ steps.vars.outputs.prerelease == 'true' }}
