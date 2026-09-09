@@ -16,8 +16,14 @@ export default defineConfig({
         find: '@sulaf/ui/components',
         replacement: resolve(import.meta.dirname, '../ui/src/components/ui'),
       },
-      { find: '@sulaf/ui/lib', replacement: resolve(import.meta.dirname, '../ui/src/lib') },
-      { find: '@sulaf/ui', replacement: resolve(import.meta.dirname, '../ui/src') },
+      {
+        find: '@sulaf/ui/lib',
+        replacement: resolve(import.meta.dirname, '../ui/src/lib'),
+      },
+      {
+        find: '@sulaf/ui',
+        replacement: resolve(import.meta.dirname, '../ui/src'),
+      },
       { find: '@', replacement: resolve(import.meta.dirname, '../ui/src') },
     ],
   },
@@ -25,5 +31,6 @@ export default defineConfig({
     name: 'registry',
     environment: 'happy-dom',
     globals: true,
+    pool: 'threads',
   },
 })

@@ -1,12 +1,14 @@
 import { defineConfig } from 'vitest/config'
-import vue from '@vitejs/plugin-vue'
 
 export default defineConfig({
-  plugins: [vue()],
+  cacheDir: 'node_modules/.cache/vitest',
   test: {
     globals: true,
-    environment: 'happy-dom',
+    pool: 'threads',
     projects: ['packages/*', 'scripts'],
     reporters: ['default'],
+    experimental: {
+      fsModuleCache: true,
+    },
   },
 })

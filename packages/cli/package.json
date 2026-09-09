@@ -11,7 +11,7 @@
     "directory": "packages/cli"
   },
   "scripts": {
-    "test": "vitest run"
+    "test": "NODE_COMPILE_CACHE=../../node_modules/.cache/node-compile-cache vitest run"
   },
   "keywords": [
     "nuxt",
