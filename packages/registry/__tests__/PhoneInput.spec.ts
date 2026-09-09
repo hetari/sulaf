@@ -147,6 +147,20 @@ describe('PhoneInput clear interaction', () => {
 })
 
 describe('PhoneInput country select', () => {
+  it('sizes the country dropdown to match the phone input width', async () => {
+    wrapper = mount(TestPhoneInput, {
+      attachTo: document.body,
+    })
+    await flushPromises()
+
+    await wrapper.find('button[aria-label^="Select country"]').trigger('click')
+    await flushPromises()
+
+    const popoverContent = document.body.querySelector('[data-slot="popover-content"]')
+    expect(popoverContent).toBeTruthy()
+    expect(popoverContent?.className).toContain('w-(--reka-popover-trigger-width)')
+  })
+
   it('shows the country name in dropdown items when enabled', async () => {
     wrapper = mount(TestPhoneInputCountryName, {
       attachTo: document.body,

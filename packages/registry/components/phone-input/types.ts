@@ -145,6 +145,7 @@ export type PhoneInputEmits = {
 }
 
 export type PhoneInputContext = {
+  rootRef: Ref<HTMLElement | null>
   value: Ref<string | undefined>
   country: Ref<CountryCode>
   variant: Ref<PhoneInputVariant>
