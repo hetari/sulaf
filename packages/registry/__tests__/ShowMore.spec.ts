@@ -229,7 +229,7 @@ describe('ShowMore component test', () => {
   })
 
   describe('Slot Props', () => {
-    it('exposes isTruncated via slot props', async () => {
+    it('exposes isTruncated via slot props when content exceeds threshold', async () => {
       let callCount = 0
       ;(vueuse.useElementSize as Mock).mockImplementation(() => {
         callCount++
@@ -245,7 +245,70 @@ describe('ShowMore component test', () => {
       })
       await flushPromises()
 
+      // Content (100px) exceeds threshold (20*3=60px), so isTruncated slot prop should be true
+      expect(wrapper.find('[data-testid="is-truncated"]').exists()).toBe(true)
+    })
+  })
+
+  describe('Reactivity Regression', () => {
+    it('reactively shows toggle button when measurement updates after mount', async () => {
+      const lineHeight = ref(0)
+      const contentHeight = ref(0)
+      let callCount = 0
+      ;(vueuse.useElementSize as Mock).mockImplementation(() => {
+        callCount++
+        return {
+          width: ref(100),
+          height: callCount === 1 ? lineHeight : contentHeight,
+          stop: vi.fn<any>(),
+        } as any
+      })
+
+      wrapper = mount(TestShowMore, {
+        attachTo: document.body,
+      })
+      await flushPromises()
+
+      // Before measurement completes, button should not exist
+      expect(wrapper.find('[data-testid="toggle-btn"]').exists()).toBe(false)
+
+      // Simulate async DOM measurement reporting real sizes
+      lineHeight.value = 20
+      contentHeight.value = 100 // 100 > 20 * 3 = 60, so truncated
+      await flushPromises()
+
+      // Button should reactively appear
+      expect(wrapper.find('[data-testid="toggle-btn"]').exists()).toBe(true)
+    })
+
+    it('reactively exposes isTruncated slot prop when measurement updates', async () => {
+      const lineHeight = ref(0)
+      const contentHeight = ref(0)
+      let callCount = 0
+      ;(vueuse.useElementSize as Mock).mockImplementation(() => {
+        callCount++
+        return {
+          width: ref(100),
+          height: callCount === 1 ? lineHeight : contentHeight,
+          stop: vi.fn<any>(),
+        } as any
+      })
+
+      wrapper = mount(TestShowMore, {
+        attachTo: document.body,
+      })
+      await flushPromises()
+
+      // Before measurement, slot prop should be false
       expect(wrapper.find('[data-testid="is-truncated"]').exists()).toBe(false)
+
+      // Simulate async DOM measurement
+      lineHeight.value = 20
+      contentHeight.value = 100
+      await flushPromises()
+
+      // Slot prop should reactively update
+      expect(wrapper.find('[data-testid="is-truncated"]').exists()).toBe(true)
     })
   })
 

@@ -36,8 +36,14 @@ const githubUsername = ref('hetari')
       </div>
     </HeatmapHeader>
 
-    <HeatmapContent>
-      <HeatmapMain>
+    <HeatmapContent v-slot="{ isLoading, isError }">
+      <div v-if="isLoading" class="p-8 text-center text-xs sm:text-sm text-muted-foreground">
+        Loading GitHub activity...
+      </div>
+      <div v-else-if="isError" class="p-8 text-center text-xs sm:text-sm text-destructive">
+        Failed to load GitHub activity for @{{ githubUsername }}.
+      </div>
+      <HeatmapMain v-else>
         <HeatmapMonths />
         <HeatmapWeekdays class="row-start-2" />
 

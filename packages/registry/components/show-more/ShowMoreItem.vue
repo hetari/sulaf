@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, type HTMLAttributes } from 'vue'
+import { ref, reactive, type HTMLAttributes } from 'vue'
 import { useForwardProps, AccordionItem } from 'reka-ui'
 import type { ShowMoreItemProps } from './types'
 import { cn } from '@sulaf/ui/lib/utils'
@@ -9,10 +9,12 @@ const props = defineProps<ShowMoreItemProps & { class?: HTMLAttributes['class'] 
 const forwarded = useForwardProps(props)
 
 const isTruncated = ref(false)
-provideShowMoreItemContext({
-  value: props.value,
-  isTruncated: isTruncated.value,
-})
+provideShowMoreItemContext(
+  reactive({
+    value: props.value,
+    isTruncated,
+  }),
+)
 </script>
 
 <template>

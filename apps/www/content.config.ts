@@ -20,6 +20,7 @@ export default defineContentConfig({
         soon: z.boolean().optional(),
         hide: z.boolean().optional(),
         beta: z.boolean().optional(),
+        deprecated: z.boolean().optional(),
         component: z.boolean().optional(),
         navigation: z
           .object({

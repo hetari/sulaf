@@ -4,6 +4,7 @@ import type { PhoneFieldCountryFlagProps } from './types'
 
 const props = withDefaults(defineProps<PhoneFieldCountryFlagProps>(), {
   type: 'cdn',
+  alt: '',
 })
 </script>
 

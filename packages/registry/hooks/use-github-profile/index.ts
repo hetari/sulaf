@@ -19,25 +19,37 @@ export interface GitHubProfile {
 
 export interface GitHubContributionDay {
   date: string
-  contributionCount: number
+  count?: number
+  level?: number
+  contributionCount?: number
   color?: string
   contributionLevel?: string
 }
 
 export interface GitHubContributionsResponse {
-  contributions: GitHubContributionDay[][]
-  totalContributions: number
+  contributions: GitHubContributionDay[] | GitHubContributionDay[][]
+  total?: number | Record<string, number>
+  totalContributions?: number
 }
 
 export interface UseGithubProfileOptions {
-  username: MaybeRefOrGetter<string | undefined>
+  year?: MaybeRefOrGetter<string | number | undefined>
+  endpoint?: MaybeRefOrGetter<string | undefined>
 }
 
 /**
  * Composable for fetching GitHub profile and contribution data.
  */
-export function useGithubProfile(username: MaybeRefOrGetter<string | undefined>) {
-  const resolvedUsername = computed(() => toValue(username))
+export function useGithubProfile(
+  username: MaybeRefOrGetter<string | undefined>,
+  options?: UseGithubProfileOptions,
+) {
+  const resolvedUsername = computed(() => {
+    const val = toValue(username)
+    return typeof val === 'string' && val.trim() ? val.trim() : undefined
+  })
+  const resolvedYear = computed(() => toValue(options?.year) ?? 'last')
+  const resolvedEndpoint = computed(() => toValue(options?.endpoint))
 
   // Fetch GitHub User Profile
   const profileUrl = computed(() =>
@@ -48,39 +60,64 @@ export function useGithubProfile(username: MaybeRefOrGetter<string | undefined>)
 
   const {
     data: profile,
-    isFetching: isLoadingProfile,
+    isFetching: isFetchingProfile,
     error: profileError,
   } = useFetch(profileUrl, {
     refetch: true,
+    immediate: !!resolvedUsername.value,
+    beforeFetch({ cancel }) {
+      if (!resolvedUsername.value) cancel()
+    },
   })
     .get()
     .json<GitHubProfile>()
 
   // Fetch GitHub Contributions
-  const contributionsUrl = computed(() =>
-    resolvedUsername.value
-      ? `https://github-contributions-api.deno.dev/${resolvedUsername.value}.json`
-      : (null as unknown as string),
-  )
+  const contributionsUrl = computed(() => {
+    if (!resolvedUsername.value) return null as unknown as string
+    if (resolvedEndpoint.value) {
+      return resolvedEndpoint.value
+        .replace('{username}', resolvedUsername.value)
+        .replace('{year}', String(resolvedYear.value))
+    }
+    const yearParam =
+      resolvedYear.value && resolvedYear.value !== 'all' ? `?y=${resolvedYear.value}` : ''
+    return `https://github-contributions-api.jogruber.de/v4/${resolvedUsername.value}${yearParam}`
+  })
 
   const {
     data: fetchedData,
-    isFetching: isLoadingContributions,
+    isFetching: isFetchingContributions,
     error: contributionsError,
   } = useFetch(contributionsUrl, {
     refetch: true,
+    immediate: !!resolvedUsername.value,
+    beforeFetch({ cancel }) {
+      if (!resolvedUsername.value) cancel()
+    },
   })
     .get()
     .json<GitHubContributionsResponse>()
 
-  const isLoading = computed(() => isLoadingProfile.value || isLoadingContributions.value)
-  const isError = computed(() => !!profileError.value || !!contributionsError.value)
+  const isLoadingProfile = computed(() => !!resolvedUsername.value && isFetchingProfile.value)
+  const isLoadingContributions = computed(
+    () => !!resolvedUsername.value && isFetchingContributions.value,
+  )
+  const isProfileError = computed(() => !!resolvedUsername.value && !!profileError.value)
+  const isContributionsError = computed(
+    () => !!resolvedUsername.value && !!contributionsError.value,
+  )
 
-  const contributionData = computed(() => {
+  const contributionData = computed<Record<string, number>>(() => {
     if (resolvedUsername.value && fetchedData.value?.contributions) {
-      return fetchedData.value.contributions.flat().reduce(
+      const list = Array.isArray(fetchedData.value.contributions)
+        ? (fetchedData.value.contributions as any[]).flat()
+        : []
+      return list.reduce(
         (acc, curr) => {
-          acc[curr.date] = curr.contributionCount
+          if (curr?.date) {
+            acc[curr.date] = curr.count ?? curr.contributionCount ?? 0
+          }
           return acc
         },
         {} as Record<string, number>,
@@ -90,17 +127,41 @@ export function useGithubProfile(username: MaybeRefOrGetter<string | undefined>)
   })
 
   const totalContributions = computed(() => {
-    if (resolvedUsername.value && fetchedData.value?.totalContributions !== undefined) {
+    if (!resolvedUsername.value || !fetchedData.value) return 0
+
+    if (typeof fetchedData.value.totalContributions === 'number') {
       return fetchedData.value.totalContributions
     }
-    return 0
+
+    const total = fetchedData.value.total
+    if (typeof total === 'number') {
+      return total
+    }
+
+    if (typeof total === 'object' && total !== null) {
+      const yearKey = String(resolvedYear.value)
+      if (typeof total[yearKey] === 'number') {
+        return total[yearKey]
+      }
+      if (yearKey === 'last' && typeof total.lastYear === 'number') {
+        return total.lastYear
+      }
+      return Object.entries(total).reduce(
+        (acc, [key, curr]) => (key === 'lastYear' ? acc : acc + (Number(curr) || 0)),
+        0,
+      )
+    }
+
+    return Object.values(contributionData.value).reduce((acc, curr) => acc + (Number(curr) || 0), 0)
   })
 
   return {
     profile,
     contributionData,
     totalContributions,
-    isLoading,
-    isError,
+    isLoadingProfile,
+    isLoadingContributions,
+    isProfileError,
+    isContributionsError,
   }
 }

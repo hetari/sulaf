@@ -33,6 +33,13 @@ const list = computed(
         Beta
       </Badge>
       <Badge
+        v-else-if="component.deprecated"
+        variant="outline"
+        class="h-4 px-1.5 text-[0.65rem] border-red-500/40 dark:border-red-500/40 bg-red-500/10 dark:bg-red-500/10 text-red-600 dark:text-red-400"
+      >
+        Deprecated
+      </Badge>
+      <Badge
         v-else-if="component.soon"
         variant="outline"
         class="h-4 px-1.5 text-[0.65rem] leading-none"

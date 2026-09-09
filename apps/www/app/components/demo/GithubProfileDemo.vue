@@ -7,7 +7,8 @@ import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar'
 import { Separator } from '~/components/ui/separator'
 
 const username = ref('hetari')
-const { profile, totalContributions, isLoading, isError } = useGithubProfile(username)
+const { profile, totalContributions, isLoadingProfile, isProfileError, isContributionsError } =
+  useGithubProfile(username)
 
 const safeBlogUrl = computed(() => {
   const raw = profile.value?.blog
@@ -25,13 +26,13 @@ const safeBlogUrl = computed(() => {
   <div class="flex flex-col gap-4">
     <Input v-model="username" placeholder="Enter GitHub username" />
 
-    <Card v-if="isLoading">
+    <Card v-if="isLoadingProfile">
       <CardContent class="py-4">
         <p>Loading profile for {{ username }}...</p>
       </CardContent>
     </Card>
 
-    <Card v-else-if="isError">
+    <Card v-else-if="isProfileError">
       <CardContent class="py-4 text-red-500">
         <p>Error fetching profile for {{ username }}. Please check the username.</p>
       </CardContent>
@@ -71,7 +72,10 @@ const safeBlogUrl = computed(() => {
           </div>
           <div>
             <h4 class="font-medium leading-none">Total Contributions (last year)</h4>
-            <p class="text-sm text-muted-foreground">
+            <p v-if="isContributionsError" class="text-sm text-muted-foreground">
+              Contributions unavailable
+            </p>
+            <p v-else class="text-sm text-muted-foreground">
               {{ totalContributions }}
             </p>
           </div>

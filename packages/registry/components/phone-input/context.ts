@@ -9,6 +9,7 @@ export const usePhoneInputContext = () => {
     'autocomplete',
     'countries',
     'country',
+    'rootRef',
     'disabled',
     'format',
     'locale',

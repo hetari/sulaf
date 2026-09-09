@@ -1,5 +1,13 @@
 <script setup lang="ts">
-import { computed, toRefs, useId, type HTMLAttributes, type Ref } from 'vue'
+import {
+  computed,
+  ref,
+  toRef,
+  useId,
+  type ComponentPublicInstance,
+  type HTMLAttributes,
+  type Ref,
+} from 'vue'
 import type { CountryCode } from 'libphonenumber-js'
 import { useNavigatorLanguage } from '@vueuse/core'
 import { InputGroup } from '@/components/ui/input-group'
@@ -33,6 +41,15 @@ const props = withDefaults(
 
 const emits = defineEmits<PhoneInputEmits>()
 
+const rootRef = ref<HTMLElement | null>(null)
+
+function setRootRef(instance: Element | ComponentPublicInstance | null) {
+  rootRef.value =
+    instance instanceof HTMLElement
+      ? instance
+      : (((instance as ComponentPublicInstance | null)?.$el as HTMLElement | null) ?? null)
+}
+
 const modelValue = defineModel<string>()
 const country = defineModel<CountryCode>('country')
 
@@ -40,22 +57,18 @@ if (!country.value) {
   country.value = props.defaultCountry ?? 'YE'
 }
 
-const {
-  countries: propsCountries,
-  disabled,
-  variant,
-  format,
-  placeholder,
-  locale: propsLocale,
-  name,
-  required,
-  autocomplete,
-  autoDetectCountry,
-} = toRefs(props)
+const disabled = toRef(props, 'disabled')
+const variant = toRef(props, 'variant')
+const format = toRef(props, 'format')
+const placeholder = toRef(props, 'placeholder')
+const name = toRef(props, 'name')
+const required = toRef(props, 'required')
+const autocomplete = toRef(props, 'autocomplete')
+const autoDetectCountry = toRef(props, 'autoDetectCountry')
 
 const browserLanguage = useNavigatorLanguage()
 const locale = computed(() => {
-  const explicitLocale = propsLocale.value?.trim()
+  const explicitLocale = props.locale?.trim()
   if (explicitLocale) {
     return explicitLocale
   }
@@ -64,7 +77,7 @@ const locale = computed(() => {
   return browserLocale || 'en'
 })
 
-const countries = computed(() => propsCountries.value ?? buildCountryOptions(locale.value))
+const countries = computed(() => props.countries ?? buildCountryOptions(locale.value))
 const validationState = computed(() =>
   getPhoneValidationState(modelValue.value ?? '', country.value),
 )
@@ -101,6 +114,7 @@ const onClear = () => {
 }
 
 providePhoneInputContext({
+  rootRef,
   value: modelValue,
   country: country as Ref<CountryCode>,
   variant,
@@ -121,6 +135,7 @@ providePhoneInputContext({
 
 <template>
   <InputGroup
+    :ref="setRootRef"
     :id="elementId"
     data-slot="phone-input"
     :data-country="country"

@@ -6,6 +6,7 @@ export type SidebarNavigationItem = {
   new?: boolean
   beta?: boolean
   soon?: boolean
+  deprecated?: boolean
   hide?: boolean
   navigation?: {
     icon?: string

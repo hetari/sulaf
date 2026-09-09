@@ -10,7 +10,8 @@
   },
   "scripts": {
     "build": "bun ./scripts/registry-builder.ts",
-    "test": "vitest"
+    "test": "NODE_COMPILE_CACHE=../../node_modules/.cache/node-compile-cache vitest run",
+    "test:watch": "NODE_COMPILE_CACHE=../../node_modules/.cache/node-compile-cache vitest"
   },
   "devDependencies": {
     "@types/bun": "latest",

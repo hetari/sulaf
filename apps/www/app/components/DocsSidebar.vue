@@ -87,6 +87,13 @@ function isActive(href: string) {
                     Beta
                   </Badge>
                   <Badge
+                    v-else-if="item.deprecated"
+                    variant="destructive"
+                    class="ms-auto h-4 px-1.5 text-[0.65rem] leading-none"
+                  >
+                    Deprecated
+                  </Badge>
+                  <Badge
                     v-else-if="item.soon"
                     variant="outline"
                     class="ms-auto h-4 px-1.5 text-[0.65rem] leading-none"
@@ -143,6 +150,13 @@ function isActive(href: string) {
                       class="ms-auto h-4 px-1.5 text-[0.65rem] leading-none border-amber-500 dark:border-amber-500 bg-amber-500/10 dark:bg-amber-500/10 text-amber-500 dark:text-amber-500"
                     >
                       Beta
+                    </Badge>
+                    <Badge
+                      v-else-if="childItem.deprecated"
+                      variant="destructive"
+                      class="ms-auto h-4 px-1.5 text-[0.65rem] leading-none"
+                    >
+                      Deprecated
                     </Badge>
                     <Badge
                       v-else-if="childItem.soon"
